@@ -1,6 +1,6 @@
 "use client";
 
-import { Settings } from "lucide-react";
+import { Plus, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -81,7 +81,7 @@ export function SettingButton({
             선택하신 상단의 그룹이 기본 검색 조건으로 설정됩니다
           </div>
           <div>{`keywordSet: ${JSON.stringify(keywordSet)}`}</div>
-          <ul className="keyword">
+          <ul className="keyword mb-4">
             {keywordSet
               ?.filter(({ isPrivate }) => isPrivate === data)
               .map((item) => (
@@ -92,6 +92,11 @@ export function SettingButton({
                 />
               ))}
           </ul>
+          <div className="flex justify-center">
+            <Button variant="ghost">
+              <Plus strokeWidth={3} />
+            </Button>
+          </div>
         </div>
         <DialogFooter className="sm:justify-center">
           <Button type="button" onClick={postKeywordSet}>
