@@ -8,23 +8,21 @@ export interface SelectProduct {
   endAt: Date;
 }
 
-export function getKeywordSets(isPublic = true) {
-  const data = {
-    public: [
-      {
-        id: 1,
-        name: "신규_그룹_공용_2024_11_15",
-      },
-    ],
-    private: [
-      {
-        id: 2,
-        name: "신규_그룹_개인_2024_11_15",
-      },
-    ],
-  };
+export function getKeywordSets() {
+  const data = [
+    {
+      id: 1,
+      name: "신규_그룹_공용_2024_11_15",
+      isPrivate: false,
+    },
+    {
+      id: 2,
+      name: "신규_그룹_개인_2024_11_15",
+      isPrivate: true,
+    },
+  ];
 
-  return isPublic ? data.public : data.private;
+  return data;
 }
 
 export async function getProducts(

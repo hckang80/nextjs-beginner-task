@@ -1,12 +1,11 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
 import { CircleMinus, Pin } from "lucide-react";
 
 export function KeywordSet({
   item: { name },
 }: {
-  item: { id: number; name: string };
+  item: { id: number; name: string; isPrivate: boolean };
 }) {
   return (
     <li className="flex items-center gap-2">

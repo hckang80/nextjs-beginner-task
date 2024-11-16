@@ -48,9 +48,11 @@ export function SettingButton({
           </div>
 
           <ul className="keyword">
-            {getKeywordSets(!data).map((item) => (
-              <KeywordSet key={item.id} item={item} />
-            ))}
+            {getKeywordSets()
+              .filter(({ isPrivate }) => isPrivate === data)
+              .map((item) => (
+                <KeywordSet key={item.id} item={item} />
+              ))}
           </ul>
         </div>
         <DialogFooter className="sm:justify-start">
