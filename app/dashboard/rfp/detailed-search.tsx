@@ -3,6 +3,7 @@
 import { Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 import {
   Dialog,
   DialogClose,
@@ -13,9 +14,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { FormEvent, useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import { getKeywords } from "@/app/lib/db";
+import { KeywordSet } from "./keyword-set";
 
-export function SettingButton() {
+export function SettingButton({
+  data,
+  handler,
+}: {
+  data: boolean;
+  handler: Dispatch<SetStateAction<boolean>>; // TODO: 상태 핸들러 전달 방식 검토 필요
+}) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -26,11 +35,23 @@ export function SettingButton() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>키워드세트 관리</DialogTitle>
-          <DialogDescription>
-            선택하신 상단의 그룹이 기본 검색 조건으로 설정됩니다
-          </DialogDescription>
         </DialogHeader>
-        <div>신규_그룹</div>
+        <div>
+          <div className="flex items-center gap-1 justify-between mb-4">
+            <div className="flex items-center gap-1">
+              공용
+              <Switch checked={data} onCheckedChange={handler} />
+              개인
+            </div>
+            선택하신 상단의 그룹이 기본 검색 조건으로 설정됩니다
+          </div>
+
+          <ul className="keyword">
+            {getKeywords(!data).map((item) => (
+              <KeywordSet item={item} />
+            ))}
+          </ul>
+        </div>
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
             <Button type="button" variant="secondary">
@@ -51,6 +72,8 @@ export function DetailedSearch() {
     ignoreType: "",
     sortType: "",
   });
+
+  const [isPrivate, setIsPublic] = useState(false);
 
   const handleChange = (
     event: React.FormEvent<HTMLInputElement | HTMLSelectElement> // TODO: 동적 타입(Generic?)으로 적용되게 개선 필요
@@ -73,6 +96,7 @@ export function DetailedSearch() {
 
   return (
     <form onSubmit={handleSubmit}>
+      {`isPrivate: ${isPrivate}`}
       {`formModal: ${JSON.stringify(formModal)}`}
       <table>
         <tbody>
@@ -84,7 +108,7 @@ export function DetailedSearch() {
                   <option value="">그룹을 선택하세요</option>
                 </select>
                 <Button type="button">현재 세트 저장</Button>
-                <SettingButton />
+                <SettingButton data={isPrivate} handler={setIsPublic} />
               </div>
             </td>
           </tr>

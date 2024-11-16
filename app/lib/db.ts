@@ -8,6 +8,27 @@ export interface SelectProduct {
   endAt: Date;
 }
 
+export type Keyword = "public" | "private";
+
+export function getKeywords(isPublic = true) {
+  const data = {
+    public: [
+      {
+        id: 1,
+        name: "신규_그룹_공용_2024_11_15",
+      },
+    ],
+    private: [
+      {
+        id: 2,
+        name: "신규_그룹_개인_2024_11_15",
+      },
+    ],
+  };
+
+  return isPublic ? data.public : data.private;
+}
+
 export async function getProducts(
   search: string,
   offset: number
