@@ -1,5 +1,6 @@
 "use client";
 
+import { KeywordSet } from "@/app/lib/db";
 import { Input } from "@/components/ui/input";
 import { CircleMinus, Pin } from "lucide-react";
 
@@ -7,7 +8,7 @@ export function KeywordSetItem({
   item: { id, name },
   handler,
 }: {
-  item: { id: number; name: string; isPrivate: boolean };
+  item: KeywordSet;
   handler: (id: number) => (event: React.FormEvent<HTMLInputElement>) => void;
 }) {
   return (
