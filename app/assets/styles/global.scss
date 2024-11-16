@@ -94,6 +94,10 @@ label {
   -webkit-tap-highlight-color: transparent;
 }
 
+code {
+  word-break: break-all;
+}
+
 table[class] {
   table-layout: fixed;
   border-collapse: collapse;

@@ -20,6 +20,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { toast, useToast } from "@/hooks/use-toast";
 import { getKeywordSets, type KeywordSet } from "@/app/lib/db";
 import { KeywordSetItem } from "./keyword-set-item";
 
@@ -49,8 +50,13 @@ export function SettingButton({
       );
     };
 
+  const { toast } = useToast();
+
   const postKeywordSet = () => {
-    alert(JSON.stringify(keywordSet));
+    toast({
+      title: "You submitted the following values:",
+      description: <code>{JSON.stringify(keywordSet)}</code>,
+    });
   };
 
   return (
@@ -124,7 +130,10 @@ export function DetailedSearch() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    alert(JSON.stringify(formModal));
+    toast({
+      title: "You submitted the following values:",
+      description: <code>{JSON.stringify(formModal)}</code>,
+    });
   };
 
   return (
