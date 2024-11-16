@@ -1,8 +1,13 @@
 "use client";
 
+import { useState } from "react";
+
 export function DetailedSearch() {
+  const [isPriceLimit, togglePriceLimit] = useState(true);
+
   return (
     <form action="">
+      {`isPriceLimit: ${isPriceLimit}`}
       <table>
         <tbody>
           <tr>
@@ -19,11 +24,21 @@ export function DetailedSearch() {
           <tr>
             <th>사업 금액</th>
             <td colSpan={5}>
-              <input type="number" />
+              <input type="number" inputMode="numeric" value={0} />
               ~
-              <input type="number" />
+              <input
+                type="number"
+                inputMode="numeric"
+                className={isPriceLimit ? "invisible" : ""}
+              />
               <label htmlFor="">
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  checked={isPriceLimit}
+                  onChange={({ target: { checked } }) => {
+                    togglePriceLimit(checked);
+                  }}
+                />
                 금액 제한 없음
               </label>
             </td>
