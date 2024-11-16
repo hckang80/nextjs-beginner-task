@@ -1,4 +1,4 @@
-import { SelectProduct } from "@/app/lib/db";
+import { SelectProduct } from "@/lib";
 
 export function Product({
   product: { id, name, price, type, source, createAt, endAt },

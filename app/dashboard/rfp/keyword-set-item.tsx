@@ -1,6 +1,6 @@
 "use client";
 
-import { KeywordSet } from "@/app/lib/db";
+import type { KeywordSet } from "@/lib";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CircleMinus, Pin } from "lucide-react";

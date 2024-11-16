@@ -1,6 +1,6 @@
 import { DetailedSearch } from "./detailed-search";
 import { ProductsTable } from "./products-table";
-import { getProducts } from "@/app/lib/db";
+import { getProducts } from "@/lib";
 
 export default async function Rfp(props: {
   searchParams: Promise<{ q: string; offset: string }>;

@@ -21,9 +21,9 @@ import {
   useState,
 } from "react";
 import { toast, useToast } from "@/hooks/use-toast";
-import { getKeywordSets, type KeywordSet } from "@/app/lib/db";
+import { getKeywordSets, type KeywordSet } from "@/lib";
 import { KeywordSetItem } from "./keyword-set-item";
-import { getMaxNumber } from "@/lib/utils";
+import { getMaxNumber } from "@/lib";
 
 export function SettingButton({
   data,
