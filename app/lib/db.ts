@@ -8,9 +8,7 @@ export interface SelectProduct {
   endAt: Date;
 }
 
-export type Keyword = "public" | "private";
-
-export function getKeywords(isPublic = true) {
+export function getKeywordSets(isPublic = true) {
   const data = {
     public: [
       {

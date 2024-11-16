@@ -15,7 +15,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import { getKeywords } from "@/app/lib/db";
+import { getKeywordSets } from "@/app/lib/db";
 import { KeywordSet } from "./keyword-set";
 
 export function SettingButton({
@@ -47,8 +47,8 @@ export function SettingButton({
           </div>
 
           <ul className="keyword">
-            {getKeywords(!data).map((item) => (
-              <KeywordSet item={item} />
+            {getKeywordSets(!data).map((item) => (
+              <KeywordSet key={item.id} item={item} />
             ))}
           </ul>
         </div>
