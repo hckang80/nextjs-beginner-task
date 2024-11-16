@@ -27,9 +27,11 @@ import { KeywordSetItem } from "./keyword-set-item";
 export function SettingButton({
   data,
   handler,
+  isPrivate,
 }: {
   data: boolean;
   handler: Dispatch<SetStateAction<boolean>>; // TODO: 상태 핸들러 전달 방식 검토 필요
+  isPrivate: boolean;
 }) {
   const [keywordSet, setKeywordSet] = useState<KeywordSet[] | null>(null);
 
@@ -51,6 +53,37 @@ export function SettingButton({
     };
 
   const { toast } = useToast();
+
+  const generatedId = (array: KeywordSet[]) => {
+    return getMaxNumber(array.map(({ id }) => id));
+  };
+
+  const getMaxNumber = (array: number[]) => {
+    return Math.max(...array) + 1;
+  };
+
+  const getKeywordSetName = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, "0");
+    const day = today.getDate().toString().padStart(2, "0");
+    const dateString = `${year}_${month}_${day}`;
+
+    return `신규_그룹_${isPrivate ? "개인" : "공용"}_${dateString}`;
+  };
+
+  const addKeywordSet = () => {
+    if (!keywordSet) return;
+
+    setKeywordSet([
+      ...keywordSet,
+      {
+        id: generatedId(keywordSet),
+        name: getKeywordSetName(),
+        isPrivate,
+      },
+    ]);
+  };
 
   const postKeywordSet = () => {
     toast({
@@ -93,7 +126,7 @@ export function SettingButton({
               ))}
           </ul>
           <div className="flex justify-center">
-            <Button variant="ghost">
+            <Button variant="ghost" onClick={addKeywordSet}>
               <Plus strokeWidth={3} />
             </Button>
           </div>
@@ -155,7 +188,11 @@ export function DetailedSearch() {
                   <option value="">그룹을 선택하세요</option>
                 </select>
                 <Button type="button">현재 세트 저장</Button>
-                <SettingButton data={isPrivate} handler={setIsPublic} />
+                <SettingButton
+                  data={isPrivate}
+                  handler={setIsPublic}
+                  isPrivate={isPrivate}
+                />
               </div>
             </td>
           </tr>
