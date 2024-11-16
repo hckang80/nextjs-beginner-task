@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { getKeywordSets } from "@/app/lib/db";
-import { KeywordSet } from "./keyword-set";
+import { KeywordSetItem } from "./keyword-set-item";
 
 export function SettingButton({
   data,
@@ -51,7 +51,7 @@ export function SettingButton({
             {getKeywordSets()
               .filter(({ isPrivate }) => isPrivate === data)
               .map((item) => (
-                <KeywordSet key={item.id} item={item} />
+                <KeywordSetItem key={item.id} item={item} />
               ))}
           </ul>
         </div>

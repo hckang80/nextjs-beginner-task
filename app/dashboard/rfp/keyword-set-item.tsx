@@ -2,7 +2,7 @@
 
 import { CircleMinus, Pin } from "lucide-react";
 
-export function KeywordSet({
+export function KeywordSetItem({
   item: { name },
 }: {
   item: { id: number; name: string; isPrivate: boolean };
