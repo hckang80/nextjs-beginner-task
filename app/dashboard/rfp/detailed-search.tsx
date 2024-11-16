@@ -23,6 +23,7 @@ import {
 import { toast, useToast } from "@/hooks/use-toast";
 import { getKeywordSets, type KeywordSet } from "@/app/lib/db";
 import { KeywordSetItem } from "./keyword-set-item";
+import { getMaxNumber } from "@/lib/utils";
 
 export function SettingButton({
   data,
@@ -61,11 +62,7 @@ export function SettingButton({
   const { toast } = useToast();
 
   const generatedId = (array: KeywordSet[]) => {
-    return getMaxNumber(array.map(({ id }) => id));
-  };
-
-  const getMaxNumber = (array: number[]) => {
-    return Math.max(...array) + 1;
+    return getMaxNumber(array.map(({ id }) => id)) + 1;
   };
 
   const getKeywordSetName = () => {
