@@ -41,6 +41,12 @@ export function SettingButton({
     setKeywordSet(getKeywordSets());
   }, [keywordSet]);
 
+  const deleteKeywordSetItem = (id: number) => {
+    if (!keywordSet) return;
+
+    setKeywordSet(keywordSet.filter((item) => item.id !== id));
+  };
+
   const changeKeywordSetName =
     (id: number) => (event: React.FormEvent<HTMLInputElement>) => {
       if (!keywordSet) return;
@@ -83,6 +89,7 @@ export function SettingButton({
         isPrivate,
       },
     ]);
+    // console.log(keywordSet); // TODO: 화면 출력은 올바르게 되지만 콘솔은 setKeywordSet 실행 직전의 값으로 찍힘. 원래 이런건가 ?_?
   };
 
   const postKeywordSet = () => {
@@ -121,6 +128,7 @@ export function SettingButton({
                 <KeywordSetItem
                   key={item.id}
                   item={item}
+                  deleteItem={deleteKeywordSetItem}
                   handler={changeKeywordSetName}
                 />
               ))}

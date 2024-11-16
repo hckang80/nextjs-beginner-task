@@ -1,14 +1,17 @@
 "use client";
 
 import { KeywordSet } from "@/app/lib/db";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CircleMinus, Pin } from "lucide-react";
 
 export function KeywordSetItem({
   item: { id, name },
+  deleteItem,
   handler,
 }: {
   item: KeywordSet;
+  deleteItem: (id: number) => void;
   handler: (id: number) => (event: React.FormEvent<HTMLInputElement>) => void;
 }) {
   return (
@@ -20,7 +23,9 @@ export function KeywordSetItem({
         <Input value={name} onChange={handler(id)} />
       </div>
       <div>
-        <CircleMinus color="#f00" />
+        <Button variant="ghost" onClick={() => deleteItem(id)}>
+          <CircleMinus color="#f00" />
+        </Button>
       </div>
     </li>
   );
