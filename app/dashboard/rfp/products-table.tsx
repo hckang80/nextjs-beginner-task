@@ -1,6 +1,6 @@
 "use client";
 import { Product } from "./product";
-import { SelectProduct } from "../../lib/db";
+import { SelectProduct } from "@/app/lib/db";
 
 export function ProductsTable({
   products,
