@@ -21,8 +21,14 @@ export function DetailedSearch() {
 
   const [isPriceLimit, togglePriceLimit] = useState(true);
 
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    alert(JSON.stringify(formModal));
+  };
+
   return (
-    <form action="">
+    <form onSubmit={handleSubmit}>
       {`formModal: ${JSON.stringify(formModal)}`}
       <table>
         <tbody>
