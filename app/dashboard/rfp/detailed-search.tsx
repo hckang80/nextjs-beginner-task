@@ -46,7 +46,7 @@ export function SettingButton() {
 export function DetailedSearch() {
   const [formModal, setFormModel] = useState({
     priceFrom: 0,
-    priceTo: 0,
+    priceTo: 5_000_000,
     businessType: "",
     ignoreType: "",
     sortType: "",
@@ -63,7 +63,7 @@ export function DetailedSearch() {
     });
   };
 
-  const [isPriceLimit, togglePriceLimit] = useState(true);
+  const [isPriceLimit, togglePriceLimit] = useState(false);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
