@@ -79,11 +79,13 @@ export function DetailedSearch() {
           <tr>
             <th>키워드세트</th>
             <td colSpan={5}>
-              <select name="" id="">
-                <option value="">그룹을 선택하세요</option>
-              </select>
-              <Button type="button">현재 세트 저장</Button>
-              <SettingButton />
+              <div className="flex items-center gap-1">
+                <select name="" id="">
+                  <option value="">그룹을 선택하세요</option>
+                </select>
+                <Button type="button">현재 세트 저장</Button>
+                <SettingButton />
+              </div>
             </td>
           </tr>
           <tr>
