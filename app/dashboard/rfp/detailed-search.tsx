@@ -6,12 +6,13 @@ export function DetailedSearch() {
   const [formModal, setFormModel] = useState({
     priceFrom: 0,
     priceTo: 0,
+    businessType: "",
   });
 
-  const handleChange = ({ target }: FormEvent) => {
-    if (!(target instanceof HTMLInputElement)) return;
-
-    const { name, value } = target;
+  const handleChange = (
+    event: React.FormEvent<HTMLInputElement | HTMLSelectElement> // TODO: 동적 타입(Generic?)으로 적용되게 개선 필요
+  ) => {
+    const { name, value } = event.currentTarget;
 
     setFormModel({
       ...formModal,
@@ -82,8 +83,17 @@ export function DetailedSearch() {
           <tr>
             <th>사업 구분</th>
             <td>
-              <select name="" id="">
-                <option value="">용역</option>
+              <select
+                name="businessType"
+                value={formModal.businessType}
+                onChange={handleChange}
+              >
+                <option value="">전체</option>
+                <option value="용역">용역</option>
+                <option value="물품">물품</option>
+                <option value="공사">공사</option>
+                <option value="외자">외자</option>
+                <option value="기타">기타</option>
               </select>
             </td>
             <th>기업 제한</th>
