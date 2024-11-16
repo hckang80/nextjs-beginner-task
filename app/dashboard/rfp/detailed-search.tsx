@@ -64,7 +64,7 @@ export function DetailedSearch() {
                 onChange={handleChange}
                 className={isPriceLimit ? "invisible" : ""}
               />
-              <label htmlFor="">
+              <label>
                 <input
                   type="checkbox"
                   checked={isPriceLimit}
@@ -132,23 +132,23 @@ export function DetailedSearch() {
           <tr>
             <th>조건</th>
             <td colSpan={5}>
-              <label htmlFor="">
+              <label>
                 <input type="checkbox" />
                 업종조건 충족
               </label>
-              <label htmlFor="">
+              <label>
                 <input type="checkbox" />
                 물품조건 충족
               </label>
-              <label htmlFor="">
+              <label>
                 <input type="checkbox" />
                 공동수급 허용
               </label>
-              <label htmlFor="">
+              <label>
                 <input type="checkbox" />
                 실적제한 없음
               </label>
-              <label htmlFor="">
+              <label>
                 <input type="checkbox" />
                 인적제한 없음
               </label>
