@@ -39,6 +39,17 @@ export function SettingButton({
     setKeywordSet(getKeywordSets());
   }, [keywordSet]);
 
+  const changeKeywordSetName =
+    (id: number) => (event: React.FormEvent<HTMLInputElement>) => {
+      if (!keywordSet) return;
+
+      setKeywordSet(
+        keywordSet.map((item) =>
+          item.id === id ? { ...item, name: event.currentTarget.value } : item
+        )
+      );
+    };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -62,10 +73,14 @@ export function SettingButton({
           </div>
           <div>{`keywordSet: ${JSON.stringify(keywordSet)}`}</div>
           <ul className="keyword">
-            {getKeywordSets()
-              .filter(({ isPrivate }) => isPrivate === data)
+            {keywordSet
+              ?.filter(({ isPrivate }) => isPrivate === data)
               .map((item) => (
-                <KeywordSetItem key={item.id} item={item} />
+                <KeywordSetItem
+                  key={item.id}
+                  item={item}
+                  handler={changeKeywordSetName}
+                />
               ))}
           </ul>
         </div>
