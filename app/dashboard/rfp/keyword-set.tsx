@@ -13,9 +13,7 @@ export function KeywordSet({
       <div>
         <Pin color="hsl(var(--border))" />
       </div>
-      <div className="grow">
-        <Input value={name} />
-      </div>
+      <div className="grow">{/* <Input value={name} /> */}</div>
       <div>
         <CircleMinus color="#f00" />
       </div>
