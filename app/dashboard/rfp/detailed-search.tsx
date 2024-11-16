@@ -1,6 +1,47 @@
 "use client";
 
+import { Settings } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { FormEvent, useState } from "react";
+
+export function SettingButton() {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="ghost">
+          <Settings />
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>키워드세트 관리</DialogTitle>
+          <DialogDescription>
+            선택하신 상단의 그룹이 기본 검색 조건으로 설정됩니다
+          </DialogDescription>
+        </DialogHeader>
+        <div>신규_그룹</div>
+        <DialogFooter className="sm:justify-start">
+          <DialogClose asChild>
+            <Button type="button" variant="secondary">
+              설정 완료
+            </Button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
 
 export function DetailedSearch() {
   const [formModal, setFormModel] = useState({
@@ -41,39 +82,44 @@ export function DetailedSearch() {
               <select name="" id="">
                 <option value="">그룹을 선택하세요</option>
               </select>
-              <button type="button">현재 세트 저장</button>
-              <button>세팅 버튼</button>
+              <Button type="button">현재 세트 저장</Button>
+              <SettingButton />
             </td>
           </tr>
           <tr>
             <th>사업 금액</th>
             <td colSpan={5}>
-              <input
-                type="number"
-                inputMode="numeric"
-                name="priceFrom"
-                value={formModal.priceFrom}
-                onChange={handleChange}
-              />
-              ~
-              <input
-                type="number"
-                inputMode="numeric"
-                name="priceTo"
-                value={formModal.priceTo}
-                onChange={handleChange}
-                className={isPriceLimit ? "invisible" : ""}
-              />
-              <label>
-                <input
-                  type="checkbox"
-                  checked={isPriceLimit}
-                  onChange={({ target: { checked } }) => {
-                    togglePriceLimit(checked);
-                  }}
-                />
-                금액 제한 없음
-              </label>
+              <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1">
+                  <Input
+                    type="number"
+                    inputMode="numeric"
+                    name="priceFrom"
+                    value={formModal.priceFrom}
+                    onChange={handleChange}
+                  />
+                  ~
+                  <Input
+                    type="number"
+                    inputMode="numeric"
+                    name="priceTo"
+                    value={formModal.priceTo}
+                    onChange={handleChange}
+                    className={isPriceLimit ? "invisible" : ""}
+                  />
+                </div>
+
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={isPriceLimit}
+                    onChange={({ target: { checked } }) => {
+                      togglePriceLimit(checked);
+                    }}
+                  />
+                  금액 제한 없음
+                </label>
+              </div>
             </td>
           </tr>
 
