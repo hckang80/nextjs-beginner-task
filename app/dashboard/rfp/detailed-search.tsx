@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -50,6 +49,10 @@ export function SettingButton({
       );
     };
 
+  const postKeywordSet = () => {
+    alert(JSON.stringify(keywordSet));
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -84,12 +87,10 @@ export function SettingButton({
               ))}
           </ul>
         </div>
-        <DialogFooter className="sm:justify-start">
-          <DialogClose asChild>
-            <Button type="button" variant="secondary">
-              설정 완료
-            </Button>
-          </DialogClose>
+        <DialogFooter className="sm:justify-center">
+          <Button type="button" onClick={postKeywordSet}>
+            설정 완료
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
