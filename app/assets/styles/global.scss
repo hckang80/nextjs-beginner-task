@@ -15,9 +15,9 @@ h2,
 h3,
 h4,
 p,
-ul[class],
-ol[class],
-menu[class],
+ul,
+ol,
+menu,
 li,
 figure,
 figcaption,
@@ -40,12 +40,10 @@ body {
   background: var(--background);
 }
 
-ul[class],
-ol[class],
-menu[class] {
+ul,
+ol,
+menu {
   list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 img,
