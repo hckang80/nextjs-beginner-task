@@ -26,13 +26,11 @@ import { KeywordSetItem } from "./keyword-set-item";
 import { getMaxNumber } from "@/lib";
 
 export function SettingButton({
-  data,
+  data: isPrivate,
   handler,
-  isPrivate,
 }: {
   data: boolean;
   handler: Dispatch<SetStateAction<boolean>>; // TODO: 상태 핸들러 전달 방식 검토 필요
-  isPrivate: boolean;
 }) {
   const [keywordSet, setKeywordSet] = useState<KeywordSet[] | null>(null);
 
@@ -112,7 +110,7 @@ export function SettingButton({
           <div className="flex items-center gap-1 justify-between mb-4">
             <div className="flex items-center gap-1">
               공용
-              <Switch checked={data} onCheckedChange={handler} />
+              <Switch checked={isPrivate} onCheckedChange={handler} />
               개인
             </div>
             선택하신 상단의 그룹이 기본 검색 조건으로 설정됩니다
@@ -120,7 +118,7 @@ export function SettingButton({
           <div>{`keywordSet: ${JSON.stringify(keywordSet)}`}</div>
           <ul className="keyword mb-4">
             {keywordSet
-              ?.filter(({ isPrivate }) => isPrivate === data)
+              ?.filter((item) => item.isPrivate === isPrivate)
               .map((item) => (
                 <KeywordSetItem
                   key={item.id}
@@ -193,11 +191,7 @@ export function DetailedSearch() {
                   <option value="">그룹을 선택하세요</option>
                 </select>
                 <Button type="button">현재 세트 저장</Button>
-                <SettingButton
-                  data={isPrivate}
-                  handler={setIsPublic}
-                  isPrivate={isPrivate}
-                />
+                <SettingButton data={isPrivate} handler={setIsPublic} />
               </div>
             </td>
           </tr>
