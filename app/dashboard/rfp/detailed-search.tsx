@@ -35,6 +35,7 @@ export function SettingButton({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>키워드세트 관리</DialogTitle>
+          <DialogDescription />
         </DialogHeader>
         <div>
           <div className="flex items-center gap-1 justify-between mb-4">
