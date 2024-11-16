@@ -7,6 +7,8 @@ export function DetailedSearch() {
     priceFrom: 0,
     priceTo: 0,
     businessType: "",
+    ignoreType: "",
+    sortType: "",
   });
 
   const handleChange = (
@@ -98,14 +100,31 @@ export function DetailedSearch() {
             </td>
             <th>기업 제한</th>
             <td>
-              <select name="" id="">
+              <select
+                name="ignoreType"
+                value={formModal.ignoreType}
+                onChange={handleChange}
+              >
                 <option value="">전체 보기</option>
+                <option value="문서 참조 필요">문서 참조 필요</option>
+                <option value="대기업 참여 불가">대기업 참여 불가</option>
+                <option value="대기업 참여 가능">대기업 참여 가능</option>
               </select>
             </td>
             <th>정렬 기준</th>
             <td>
-              <select name="" id="">
-                <option value="">마감일 오름차순</option>
+              <select
+                name="sortType"
+                value={formModal.sortType}
+                onChange={handleChange}
+              >
+                <option value="">정확도</option>
+                <option value="게시일 내림차순">게시일 내림차순</option>
+                <option value="게시일 오름차순">게시일 오름차순</option>
+                <option value="마감일 내림차순">마감일 내림차순</option>
+                <option value="마감일 오름차순">마감일 오름차순</option>
+                <option value="금액 내림차순">금액 내림차순</option>
+                <option value="금액 오름차순">금액 오름차순</option>
               </select>
             </td>
           </tr>
