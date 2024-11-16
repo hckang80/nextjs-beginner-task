@@ -14,8 +14,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import { getKeywordSets } from "@/app/lib/db";
+import {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
+import { getKeywordSets, type KeywordSet } from "@/app/lib/db";
 import { KeywordSetItem } from "./keyword-set-item";
 
 export function SettingButton({
@@ -25,6 +31,14 @@ export function SettingButton({
   data: boolean;
   handler: Dispatch<SetStateAction<boolean>>; // TODO: 상태 핸들러 전달 방식 검토 필요
 }) {
+  const [keywordSet, setKeywordSet] = useState<KeywordSet[] | null>(null);
+
+  useEffect(() => {
+    if (keywordSet?.length) return; // TODO: 이 부분 제거하면 useEffect 무한루프 발생. 더 적절한 방법 확인 필요
+
+    setKeywordSet(getKeywordSets());
+  }, [keywordSet]);
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -46,7 +60,7 @@ export function SettingButton({
             </div>
             선택하신 상단의 그룹이 기본 검색 조건으로 설정됩니다
           </div>
-
+          <div>{`keywordSet: ${JSON.stringify(keywordSet)}`}</div>
           <ul className="keyword">
             {getKeywordSets()
               .filter(({ isPrivate }) => isPrivate === data)

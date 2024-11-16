@@ -1,3 +1,9 @@
+export interface KeywordSet {
+  id: number;
+  name: string;
+  isPrivate: boolean;
+}
+
 export interface SelectProduct {
   id: number;
   name: string;
@@ -9,7 +15,7 @@ export interface SelectProduct {
 }
 
 export function getKeywordSets() {
-  const data = [
+  const data: KeywordSet[] = [
     {
       id: 1,
       name: "신규_그룹_공용_2024_11_15",
