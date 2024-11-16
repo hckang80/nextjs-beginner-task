@@ -29,14 +29,13 @@ dd {
 }
 
 html {
-  font-size: 10px;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
-  font: 1.5rem/1.5 Arial, Helvetica, sans-serif;
+  font: 15px/1.5 Arial, Helvetica, sans-serif;
   color: var(--foreground);
   background: var(--background);
 }
