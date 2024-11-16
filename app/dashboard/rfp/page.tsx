@@ -1,4 +1,17 @@
-export default function Rfp() {
+import { ProductsTable } from "./products-table";
+import { getProducts } from "../../lib/db";
+
+export default async function Rfp(props: {
+  searchParams: Promise<{ q: string; offset: string }>;
+}) {
+  const searchParams = await props.searchParams;
+  const search = searchParams.q ?? "";
+  const offset = searchParams.offset ?? 0;
+  const { products, newOffset, totalProducts } = await getProducts(
+    search,
+    Number(offset)
+  );
+
   return (
     <div>
       <div>
@@ -116,28 +129,11 @@ export default function Rfp() {
       </div>
 
       <div>
-        <table>
-          <thead>
-            <tr>
-              <th>관심공고</th>
-              <th>#</th>
-              <th>공고명</th>
-              <th>금액(원)</th>
-              <th>구분</th>
-              <th>공고기관</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>a</td>
-              <td>b</td>
-              <td>c</td>
-              <td>d</td>
-              <td>e</td>
-              <td>f</td>
-            </tr>
-          </tbody>
-        </table>
+        <ProductsTable
+          products={products}
+          offset={newOffset ?? 0}
+          totalProducts={totalProducts}
+        />
       </div>
     </div>
   );
