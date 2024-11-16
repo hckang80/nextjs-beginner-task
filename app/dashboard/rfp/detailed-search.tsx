@@ -1,13 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 export function DetailedSearch() {
+  const [formModal, setFormModel] = useState({
+    priceFrom: 0,
+    priceTo: 0,
+  });
+
+  const handleChange = ({ target }: FormEvent) => {
+    if (!(target instanceof HTMLInputElement)) return;
+
+    const { name, value } = target;
+
+    setFormModel({
+      ...formModal,
+      [name]: value,
+    });
+  };
+
   const [isPriceLimit, togglePriceLimit] = useState(true);
 
   return (
     <form action="">
-      {`isPriceLimit: ${isPriceLimit}`}
+      {`formModal: ${JSON.stringify(formModal)}`}
       <table>
         <tbody>
           <tr>
@@ -20,15 +36,23 @@ export function DetailedSearch() {
               <button>세팅 버튼</button>
             </td>
           </tr>
-
           <tr>
             <th>사업 금액</th>
             <td colSpan={5}>
-              <input type="number" inputMode="numeric" value={0} />
+              <input
+                type="number"
+                inputMode="numeric"
+                name="priceFrom"
+                value={formModal.priceFrom}
+                onChange={handleChange}
+              />
               ~
               <input
                 type="number"
                 inputMode="numeric"
+                name="priceTo"
+                value={formModal.priceTo}
+                onChange={handleChange}
                 className={isPriceLimit ? "invisible" : ""}
               />
               <label htmlFor="">
