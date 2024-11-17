@@ -217,6 +217,20 @@ export function DetailedSearch() {
     });
   };
 
+  const addTag = (path: string, tag: string) => {
+    setFormModel({
+      ...formModel,
+      keywordSets: {
+        ...formModel.keywordSets,
+        [path]: {
+          ...formModel.keywordSets[path],
+          text: "",
+          tags: [...formModel.keywordSets[path].tags, tag],
+        },
+      },
+    });
+  };
+
   const handleChange = (
     event: React.FormEvent<HTMLInputElement | HTMLSelectElement> // TODO: 동적 타입(Generic?)으로 적용되게 개선 필요
   ) => {
@@ -312,6 +326,12 @@ export function DetailedSearch() {
                         placeholder="키워드를 입력해보세요"
                         onChange={handleChangeKeywordSet}
                       />
+                      <Button
+                        type="button"
+                        onClick={() => addTag(key, context.text)}
+                      >
+                        <Plus />
+                      </Button>
                     </div>
                   );
                 })}
