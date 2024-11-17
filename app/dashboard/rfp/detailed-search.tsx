@@ -20,7 +20,7 @@ import {
   useState,
 } from "react";
 import { toast, useToast } from "@/hooks/use-toast";
-import { DetailedSearchForm, getKeywordSets, type KeywordSet } from "@/lib";
+import { cn, DetailedSearchForm, getKeywordSets, type KeywordSet } from "@/lib";
 import { KeywordSetItem, ToggleController } from ".";
 import { getMaxNumber } from "@/lib";
 
@@ -624,6 +624,7 @@ export function DetailedSearch() {
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-2">
                   <Input
+                    className="w-[140px]"
                     type="number"
                     inputMode="numeric"
                     name="priceFrom"
@@ -632,12 +633,12 @@ export function DetailedSearch() {
                   />
                   ~
                   <Input
+                    className={cn("w-[140px]", isPriceLimit ? "invisible" : "")}
                     type="number"
                     inputMode="numeric"
                     name="priceTo"
                     value={formModel.priceTo}
                     onChange={handleChange}
-                    className={isPriceLimit ? "invisible" : ""}
                   />
                 </div>
 
@@ -665,7 +666,7 @@ export function DetailedSearch() {
             <th>사업 구분</th>
             <td>
               <select
-                className="w-[120px]"
+                className="w-[140px]"
                 name="businessType"
                 value={formModel.businessType}
                 onChange={handleChange}
@@ -681,7 +682,7 @@ export function DetailedSearch() {
             <th>기업 제한</th>
             <td>
               <select
-                className="w-[120px]"
+                className="w-[140px]"
                 name="ignoreType"
                 value={formModel.ignoreType}
                 onChange={handleChange}
@@ -695,7 +696,7 @@ export function DetailedSearch() {
             <th>정렬 기준</th>
             <td>
               <select
-                className="w-[120px]"
+                className="w-[140px]"
                 name="sortType"
                 value={formModel.sortType}
                 onChange={handleChange}
