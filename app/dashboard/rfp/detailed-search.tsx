@@ -119,7 +119,7 @@ export function SettingButton({
             선택하신 상단의 그룹이 기본 검색 조건으로 설정됩니다
           </div>
           <div>{`keywordSet: ${JSON.stringify(keywordSet)}`}</div>
-          <ul className="keyword mb-4">
+          <ul className="flex flex-col gap-2 mb-4">
             {keywordSet
               ?.filter((item) => item.isPrivate === isPrivate)
               .map((item) => (
