@@ -31,7 +31,7 @@ export function SettingButton({
   setKeywordSet,
 }: {
   data: boolean;
-  handler: Dispatch<SetStateAction<boolean>>; // TODO: 상태 핸들러 전달 방식 검토 필요
+  handler: Dispatch<SetStateAction<boolean>>;
   keywordSet: KeywordSet[] | null;
   setKeywordSet: Dispatch<SetStateAction<KeywordSet[] | null>>;
 }) {
@@ -308,6 +308,7 @@ export function DetailedSearch() {
   }, [keywordSet]);
 
   return (
+    // TODO: react hook form 으로 개선하기
     <form onSubmit={handleSubmit}>
       <table>
         <tbody>
