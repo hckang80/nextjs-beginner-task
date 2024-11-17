@@ -155,7 +155,27 @@ export function SettingButton({
 }
 
 export function DetailedSearch() {
-  const [formModel, setFormModel] = useState({
+  const [formModel, setFormModel] = useState<{
+    keywordSets: Record<
+      string,
+      { type: string; operation: string; keyword: string[] }
+    >;
+    priceFrom: number;
+    priceTo: number;
+    businessType: string;
+    ignoreType: "";
+    sortType: "";
+    condition: {
+      [key: string]: boolean;
+    };
+  }>({
+    keywordSets: {
+      set1: {
+        type: "title",
+        operation: "or",
+        keyword: [],
+      },
+    },
     priceFrom: 0,
     priceTo: 5_000_000,
     businessType: "",
@@ -171,6 +191,24 @@ export function DetailedSearch() {
   });
 
   const [isPrivate, setIsPublic] = useState(false);
+
+  const handleChangeKeywordSet = (
+    event: React.FormEvent<HTMLSelectElement>
+  ) => {
+    const { name, value } = event.currentTarget;
+    const [depth1, depth2] = name.split(".");
+
+    setFormModel({
+      ...formModel,
+      keywordSets: {
+        ...formModel.keywordSets,
+        [depth1]: {
+          ...formModel.keywordSets[depth1],
+          [depth2]: value,
+        },
+      },
+    });
+  };
 
   const handleChange = (
     event: React.FormEvent<HTMLInputElement | HTMLSelectElement> // TODO: 동적 타입(Generic?)으로 적용되게 개선 필요
@@ -239,6 +277,24 @@ export function DetailedSearch() {
                   keywordSet={keywordSet}
                   setKeywordSet={setKeywordSet}
                 />
+              </div>
+              <div className="flex flex-col gap-2">
+                <select
+                  name="set1.type"
+                  value={formModel.keywordSets.set1.type}
+                  onChange={handleChangeKeywordSet}
+                >
+                  <option value="title">제목</option>
+                  <option value="text">본문</option>
+                </select>
+                <select
+                  name="set1.operation"
+                  value={formModel.keywordSets.set1.operation}
+                  onChange={handleChangeKeywordSet}
+                >
+                  <option value="or">OR</option>
+                  <option value="and">AND</option>
+                </select>
               </div>
             </td>
           </tr>
