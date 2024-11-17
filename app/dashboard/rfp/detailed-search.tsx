@@ -217,6 +217,19 @@ export function DetailedSearch() {
     });
   };
 
+  const handleEnter =
+    (path: string) => (event: React.KeyboardEvent<HTMLInputElement>) => {
+      const {
+        key,
+        currentTarget: { value },
+      } = event;
+
+      if (key !== "Enter") return;
+
+      event.preventDefault();
+      addTag(path, value);
+    };
+
   const addTag = (path: string, tag: string) => {
     setFormModel({
       ...formModel,
@@ -341,6 +354,7 @@ export function DetailedSearch() {
                         value={context.text}
                         placeholder="키워드를 입력해보세요"
                         onChange={handleChangeKeywordSet}
+                        onKeyDown={handleEnter(key)}
                       />
                       <Button
                         type="button"
