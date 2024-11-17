@@ -45,7 +45,7 @@ export function SettingButton({
 
     setKeywordSet(keywordSet.filter((item) => item.id !== id));
     toast({
-      description: "그룹이 삭제되었습니다.",
+      title: "그룹이 삭제되었습니다.",
     });
     // console.log(keywordSet); // TODO: 화면 출력은 올바르게 되지만 콘솔은 setKeywordSet 실행 직전의 값으로 찍힘. 원래 이런건가 ?_?
   };
@@ -92,7 +92,7 @@ export function SettingButton({
 
   const postKeywordSet = () => {
     toast({
-      title: "You submitted the following values:",
+      title: "검색 그룹이 설정되었습니다.",
       description: <code>{JSON.stringify(keywordSet)}</code>,
     });
   };
