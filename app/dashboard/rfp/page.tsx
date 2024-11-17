@@ -51,27 +51,29 @@ export default function Rfp(props: {
         </a>
       </div>
 
-      <Card className="p-6">
-        <DetailedSearch />
-      </Card>
+      <div className="grid gap-[15px]">
+        <Card className="p-6">
+          <DetailedSearch />
+        </Card>
 
-      <Card className="p-6">
-        <table>
-          <tbody>
-            <tr>
-              <th>채널</th>
-              <td>TODO: 채널 검색</td>
-            </tr>
-          </tbody>
-        </table>
-      </Card>
+        <Card className="p-6">
+          <table>
+            <tbody>
+              <tr>
+                <th>채널</th>
+                <td>TODO: 채널 검색</td>
+              </tr>
+            </tbody>
+          </table>
+        </Card>
 
-      <div>
-        <ProductsTable
-          products={products}
-          offset={newOffset ?? 0}
-          totalProducts={totalProducts}
-        />
+        <div>
+          <ProductsTable
+            products={products}
+            offset={newOffset ?? 0}
+            totalProducts={totalProducts}
+          />
+        </div>
       </div>
     </div>
   );
