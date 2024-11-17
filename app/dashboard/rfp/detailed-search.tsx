@@ -331,7 +331,7 @@ export function DetailedSearch() {
               <div className="flex flex-col gap-2">
                 {Object.entries(formModel.keywordSets).map(([key, context]) => {
                   return (
-                    <div key={key} className="flex gap-2">
+                    <div key={key} className="flex flex-wrap gap-2">
                       <select
                         name={`${key}.type`}
                         value={context.type}
@@ -363,7 +363,7 @@ export function DetailedSearch() {
                         <Plus />
                       </Button>
 
-                      <ul className="flex items-center gap-2">
+                      <ul className="flex flex-wrap items-center gap-2">
                         {context.tags.map((tag) => (
                           <li
                             key={tag}
