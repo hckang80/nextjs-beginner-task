@@ -285,7 +285,7 @@ export function AnnouncementDate({
 
   return (
     <tr>
-      <th>공고일</th>
+      <th className="align-top">공고일</th>
       <td colSpan={5}>
         <div className="flex items-center gap-2 mb-[10px]">
           <div className="flex items-center gap-2">
