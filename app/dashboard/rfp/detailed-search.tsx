@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, Settings, X } from "lucide-react";
+import { Plus, Search, Settings, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -765,7 +765,12 @@ export function DetailedSearch() {
           </tr>
         </tbody>
       </table>
-      <button>검색하기</button>
+      <div className="text-right">
+        <Button>
+          <Search color="#ffffff" strokeWidth={3} />
+          검색하기
+        </Button>
+      </div>
     </form>
   );
 }
