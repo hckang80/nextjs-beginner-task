@@ -40,6 +40,16 @@ export function SettingButton({
     setKeywordSet(getKeywordSets());
   }, [keywordSet]);
 
+  const pinKeywordSetItem = (id: number) => {
+    if (!keywordSet) return;
+
+    setKeywordSet(
+      keywordSet.map((item) =>
+        item.id === id ? { ...item, isPined: !item.isPined } : item
+      )
+    );
+  };
+
   const deleteKeywordSetItem = (id: number) => {
     if (!keywordSet) return;
 
@@ -127,6 +137,7 @@ export function SettingButton({
                 <KeywordSetItem
                   key={item.id}
                   item={item}
+                  pinItem={pinKeywordSetItem}
                   deleteItem={deleteKeywordSetItem}
                   handler={changeKeywordSetName}
                 />
