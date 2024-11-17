@@ -28,18 +28,14 @@ import { getMaxNumber } from "@/lib";
 export function SettingButton({
   data: isPrivate,
   handler,
+  keywordSet,
+  setKeywordSet,
 }: {
   data: boolean;
   handler: Dispatch<SetStateAction<boolean>>; // TODO: 상태 핸들러 전달 방식 검토 필요
+  keywordSet: KeywordSet[] | null;
+  setKeywordSet: Dispatch<SetStateAction<KeywordSet[] | null>>;
 }) {
-  const [keywordSet, setKeywordSet] = useState<KeywordSet[] | null>(null);
-
-  useEffect(() => {
-    if (keywordSet?.length) return; // TODO: 이 부분 제거하면 useEffect 무한루프 발생. 더 적절한 방법 확인 필요
-
-    setKeywordSet(getKeywordSets());
-  }, [keywordSet]);
-
   const pinKeywordSetItem = (id: number) => {
     if (!keywordSet) return;
 
@@ -191,6 +187,14 @@ export function DetailedSearch() {
     });
   };
 
+  const [keywordSet, setKeywordSet] = useState<KeywordSet[] | null>(null);
+
+  useEffect(() => {
+    if (keywordSet?.length) return; // TODO: 이 부분 제거하면 useEffect 무한루프 발생. useCallback으로 개선 필요
+
+    setKeywordSet(getKeywordSets());
+  }, [keywordSet]);
+
   return (
     <form onSubmit={handleSubmit}>
       <table>
@@ -199,11 +203,23 @@ export function DetailedSearch() {
             <th>키워드세트</th>
             <td colSpan={5}>
               <div className="flex items-center gap-1">
-                <select name="" id="">
+                <select>
                   <option value="">그룹을 선택하세요</option>
+                  {keywordSet
+                    ?.filter((item) => item.isPrivate === isPrivate)
+                    .map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
                 </select>
                 <Button type="button">현재 세트 저장</Button>
-                <SettingButton data={isPrivate} handler={setIsPublic} />
+                <SettingButton
+                  data={isPrivate}
+                  handler={setIsPublic}
+                  keywordSet={keywordSet}
+                  setKeywordSet={setKeywordSet}
+                />
               </div>
             </td>
           </tr>
