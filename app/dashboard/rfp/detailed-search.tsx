@@ -154,11 +154,11 @@ export function SettingButton({
 }
 
 export function KeywordSetSelect({
-  key,
+  target,
   context,
   handleChangeKeywordSet,
 }: {
-  key: string;
+  target: string;
   context: {
     label?: string;
     type?: string;
@@ -173,7 +173,7 @@ export function KeywordSetSelect({
   return (
     <>
       <select
-        name={`${key}.type`}
+        name={`${target}.type`}
         value={context.type}
         onChange={handleChangeKeywordSet}
       >
@@ -181,7 +181,7 @@ export function KeywordSetSelect({
         <option value="text">본문</option>
       </select>
       <select
-        name={`${key}.operation`}
+        name={`${target}.operation`}
         value={context.operation}
         onChange={handleChangeKeywordSet}
       >
@@ -441,7 +441,7 @@ export function DetailedSearch() {
                       >
                         {context.label || (
                           <KeywordSetSelect
-                            key={key}
+                            target={key}
                             context={context}
                             handleChangeKeywordSet={handleChangeKeywordSet}
                           />
