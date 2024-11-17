@@ -290,6 +290,7 @@ export function AnnouncementDate({
         <div className="flex items-center gap-1 mb-[10px]">
           <div className="flex items-center gap-1">
             <Input
+              readOnly={!isFreeInput(announcementDate)}
               className="w-[140px]"
               type="date"
               name="announcementDateFrom"
@@ -298,6 +299,7 @@ export function AnnouncementDate({
             />
             ~
             <Input
+              readOnly={!isFreeInput(announcementDate)}
               className="w-[140px]"
               type="date"
               name="announcementDateTo"
