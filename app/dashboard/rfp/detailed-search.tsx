@@ -339,6 +339,10 @@ export function DetailedSearch() {
                   handler={setIsPublic}
                 />
               </div>
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={6}>
               <div className="flex flex-col gap-2">
                 {Object.entries(formModel.keywordSets).map(([key, context]) => {
                   return (
