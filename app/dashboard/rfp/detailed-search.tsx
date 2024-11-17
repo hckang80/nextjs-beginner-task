@@ -3,7 +3,6 @@
 import { Plus, Settings, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
 import {
   Dialog,
   DialogContent,
@@ -24,6 +23,7 @@ import { toast, useToast } from "@/hooks/use-toast";
 import { getKeywordSets, type KeywordSet } from "@/lib";
 import { KeywordSetItem } from "./keyword-set-item";
 import { getMaxNumber } from "@/lib";
+import { ToggleController } from "./toggle-controller";
 
 export function SettingButton({
   data: isPrivate,
@@ -118,11 +118,7 @@ export function SettingButton({
         </DialogHeader>
         <div>
           <div className="flex items-center gap-4 justify-between mb-4">
-            <div className="flex items-center gap-1">
-              <span className="shrink-0">공용</span>
-              <Switch checked={isPrivate} onCheckedChange={handler} />
-              <span className="shrink-0">개인</span>
-            </div>
+            <ToggleController data={isPrivate} handler={handler} />
             선택하신 상단의 그룹이 기본 검색 조건으로 설정됩니다
           </div>
           <ul className="flex flex-col gap-2 mb-4">
@@ -327,13 +323,11 @@ export function DetailedSearch() {
                   keywordSet={keywordSet}
                   setKeywordSet={setKeywordSet}
                 />
-                <div className="ml-auto">
-                  <div className="flex items-center gap-1">
-                    <span className="shrink-0">공용</span>
-                    <Switch checked={isPrivate} onCheckedChange={setIsPublic} />
-                    <span className="shrink-0">개인</span>
-                  </div>
-                </div>
+                <ToggleController
+                  className="ml-auto"
+                  data={isPrivate}
+                  handler={setIsPublic}
+                />
               </div>
               <div className="flex flex-col gap-2">
                 {Object.entries(formModel.keywordSets).map(([key, context]) => {
