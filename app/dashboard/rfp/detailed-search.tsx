@@ -99,7 +99,11 @@ export function SettingButton({
   const postKeywordSet = () => {
     toast({
       title: "검색 그룹이 설정되었습니다.",
-      description: <code>{JSON.stringify(keywordSet)}</code>,
+      description: (
+        <pre>
+          <code>{JSON.stringify(keywordSet, null, 2)}</code>
+        </pre>
+      ),
     });
   };
 
@@ -287,7 +291,11 @@ export function DetailedSearch() {
 
     toast({
       title: "You submitted the following values:",
-      description: <code>{JSON.stringify(formModel)}</code>,
+      description: (
+        <pre>
+          <code>{JSON.stringify(formModel, null, 2)}</code>
+        </pre>
+      ),
     });
   };
 
