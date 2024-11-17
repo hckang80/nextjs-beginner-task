@@ -262,12 +262,16 @@ export function AnnouncementDate({
     if (!item) return;
 
     const date = item.calculatedDate?.();
-    if (!date) return;
+    const isFreeInput = !date;
 
     setFormModel({
       ...formModel,
-      announcementDateFrom: new Intl.DateTimeFormat("en-CA").format(date),
-      announcementDateTo: new Intl.DateTimeFormat("en-CA").format(),
+      announcementDateFrom: isFreeInput
+        ? ""
+        : new Intl.DateTimeFormat("en-CA").format(date),
+      announcementDateTo: isFreeInput
+        ? ""
+        : new Intl.DateTimeFormat("en-CA").format(),
     });
   };
 
