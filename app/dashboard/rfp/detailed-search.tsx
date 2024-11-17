@@ -257,7 +257,11 @@ export function AnnouncementDate({
     },
   ];
 
-  const setDateRange = (date?: Date) => {
+  const setDateRange = (value: string) => {
+    const item = dateRange.find((item) => item.value === value);
+    if (!item) return;
+
+    const date = item.calculatedDate?.();
     if (!date) return;
 
     setFormModel({
@@ -265,7 +269,16 @@ export function AnnouncementDate({
       announcementDateFrom: new Intl.DateTimeFormat("en-CA").format(date),
       announcementDateTo: new Intl.DateTimeFormat("en-CA").format(),
     });
+
+    setAnnouncementDate(value);
   };
+
+  const [announcementDate, setAnnouncementDate] = useState("");
+
+  useEffect(() => {
+    console.log("useEffect"); // TODO: 초기에 콘솔 두번 찍힘. 확인 필요
+    setDateRange("inAWeek");
+  }, []);
 
   return (
     <tr>
@@ -297,14 +310,15 @@ export function AnnouncementDate({
         </div>
 
         <div className="flex flex-wrap items-center gap-x-[20px] gap-y-[5px]">
-          {dateRange.map(({ label, value, calculatedDate }) => (
+          {dateRange.map(({ label, value }) => (
             <label key={label} className="flex items-center gap-2">
               <input
                 name="announcementDate"
+                checked={value === announcementDate}
                 value={value}
                 type="radio"
                 onChange={() => {
-                  setDateRange(calculatedDate?.());
+                  setDateRange(value);
                 }}
               />
               {label}
