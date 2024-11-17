@@ -231,6 +231,22 @@ export function DetailedSearch() {
     });
   };
 
+  const deleteTag = (path: string, tag: string) => {
+    setFormModel({
+      ...formModel,
+      keywordSets: {
+        ...formModel.keywordSets,
+        [path]: {
+          ...formModel.keywordSets[path],
+          text: "",
+          tags: formModel.keywordSets[path].tags.filter(
+            (originTag) => originTag !== tag
+          ),
+        },
+      },
+    });
+  };
+
   const handleChange = (
     event: React.FormEvent<HTMLInputElement | HTMLSelectElement> // TODO: 동적 타입(Generic?)으로 적용되게 개선 필요
   ) => {
@@ -340,7 +356,10 @@ export function DetailedSearch() {
                             className="flex items-center gap-2 bg-violet-400 text-white h-[30px] px-[10px] rounded-[30px]"
                           >
                             {tag}
-                            <button type="button">
+                            <button
+                              type="button"
+                              onClick={() => deleteTag(key, tag)}
+                            >
                               <X size={12} color="#ffffff" strokeWidth={3} />
                             </button>
                           </li>
