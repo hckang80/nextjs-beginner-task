@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DetailedSearch } from "./detailed-search";
-import { ProductsTable } from "./products-table";
 import { getProducts, SelectProduct } from "@/lib";
+import { ProductsTable, DetailedSearch } from ".";
 
 export default function Rfp(props: {
   searchParams: Promise<{ q: string; offset: string }>;

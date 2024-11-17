@@ -21,9 +21,8 @@ import {
 } from "react";
 import { toast, useToast } from "@/hooks/use-toast";
 import { getKeywordSets, type KeywordSet } from "@/lib";
-import { KeywordSetItem } from "./keyword-set-item";
+import { KeywordSetItem, ToggleController } from ".";
 import { getMaxNumber } from "@/lib";
-import { ToggleController } from "./toggle-controller";
 
 export function SettingButton({
   data: isPrivate,
