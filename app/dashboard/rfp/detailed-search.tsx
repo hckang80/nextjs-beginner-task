@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, Settings } from "lucide-react";
+import { Plus, Settings, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -333,9 +333,17 @@ export function DetailedSearch() {
                         <Plus />
                       </Button>
 
-                      <ul>
+                      <ul className="flex items-center gap-2">
                         {context.tags.map((tag) => (
-                          <li key={tag}>{tag}</li>
+                          <li
+                            key={tag}
+                            className="flex items-center gap-2 bg-violet-400 text-white h-[30px] px-[10px] rounded-[30px]"
+                          >
+                            {tag}
+                            <button type="button">
+                              <X size={12} color="#ffffff" strokeWidth={3} />
+                            </button>
+                          </li>
                         ))}
                       </ul>
                     </div>
