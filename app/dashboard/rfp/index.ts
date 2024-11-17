@@ -1,4 +1,4 @@
-export * from "./channel-search";
+export * from "./(channel)/channel-search";
 export * from "./detailed-search";
 export * from "./keyword-set-item";
 export * from "./product";
