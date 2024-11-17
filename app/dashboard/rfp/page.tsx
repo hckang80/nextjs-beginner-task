@@ -1,17 +1,35 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { DetailedSearch } from "./detailed-search";
 import { ProductsTable } from "./products-table";
-import { getProducts } from "@/lib";
+import { getProducts, SelectProduct } from "@/lib";
 
-export default async function Rfp(props: {
+export default function Rfp(props: {
   searchParams: Promise<{ q: string; offset: string }>;
 }) {
-  const searchParams = await props.searchParams;
-  const search = searchParams.q ?? "";
-  const offset = searchParams.offset ?? 0;
-  const { products, newOffset, totalProducts } = await getProducts(
-    search,
-    Number(offset)
-  );
+  const [data, setData] = useState<{
+    products: SelectProduct[];
+    newOffset: number | null;
+    totalProducts: number;
+  } | null>(null);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const searchParams = await props.searchParams;
+    const search = searchParams.q ?? "";
+    const offset = searchParams.offset ?? 0;
+    setData(await getProducts(search, Number(offset)));
+  };
+
+  if (!data) {
+    return "Loading...";
+  }
+
+  const { products, newOffset, totalProducts } = data;
 
   return (
     <div>
