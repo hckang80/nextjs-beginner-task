@@ -257,19 +257,20 @@ export function AnnouncementDate({
     },
   ];
 
+  const isFreeInput = (value: string) => value === "etc";
+
   const setDateRange = (value: string) => {
     const item = dateRange.find((item) => item.value === value);
     if (!item) return;
 
     const date = item.calculatedDate?.();
-    const isFreeInput = !date;
 
     setFormModel({
       ...formModel,
-      announcementDateFrom: isFreeInput
+      announcementDateFrom: isFreeInput(value)
         ? ""
         : new Intl.DateTimeFormat("en-CA").format(date),
-      announcementDateTo: isFreeInput
+      announcementDateTo: isFreeInput(value)
         ? ""
         : new Intl.DateTimeFormat("en-CA").format(),
     });
