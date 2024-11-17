@@ -203,7 +203,7 @@ export function DetailedSearch() {
             <th>키워드세트</th>
             <td colSpan={5}>
               <div className="flex items-center gap-1">
-                <select>
+                <select className="w-[160px]">
                   <option value="">그룹을 선택하세요</option>
                   {keywordSet
                     ?.filter((item) => item.isPrivate === isPrivate)
@@ -269,6 +269,7 @@ export function DetailedSearch() {
             <th>사업 구분</th>
             <td>
               <select
+                className="w-[120px]"
                 name="businessType"
                 value={formModal.businessType}
                 onChange={handleChange}
@@ -284,6 +285,7 @@ export function DetailedSearch() {
             <th>기업 제한</th>
             <td>
               <select
+                className="w-[120px]"
                 name="ignoreType"
                 value={formModal.ignoreType}
                 onChange={handleChange}
@@ -297,6 +299,7 @@ export function DetailedSearch() {
             <th>정렬 기준</th>
             <td>
               <select
+                className="w-[120px]"
                 name="sortType"
                 value={formModal.sortType}
                 onChange={handleChange}
