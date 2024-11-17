@@ -226,6 +226,8 @@ export function DetailedSearch() {
     };
 
   const addTag = (path: string, tag: string) => {
+    if (!tag) return;
+
     setFormModel({
       ...formModel,
       keywordSets: {
