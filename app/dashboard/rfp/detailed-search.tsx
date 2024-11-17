@@ -206,6 +206,8 @@ export function DetailedSearch() {
     >;
     priceFrom: number;
     priceTo: number;
+    announcementDateFrom: string;
+    announcementDateTo: string;
     businessType: string;
     ignoreType: "";
     sortType: "";
@@ -257,6 +259,8 @@ export function DetailedSearch() {
     },
     priceFrom: 0,
     priceTo: 5_000_000,
+    announcementDateFrom: "",
+    announcementDateTo: "",
     businessType: "",
     ignoreType: "",
     sortType: "",
@@ -531,7 +535,32 @@ export function DetailedSearch() {
 
           <tr>
             <th>공고일</th>
-            <td colSpan={5}>TODO: 달력 범위 선택</td>
+            <td colSpan={5}>
+              <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1">
+                  <Input
+                    className="w-[140px]"
+                    type="date"
+                    name="announcementDateFrom"
+                    value={formModel.announcementDateFrom}
+                    onChange={handleChange}
+                  />
+                  ~
+                  <Input
+                    className="w-[140px]"
+                    type="date"
+                    name="announcementDateTo"
+                    value={formModel.announcementDateTo}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <label className="flex items-center gap-2">
+                  <input type="checkbox" />
+                  마감일 지난 공고 포함
+                </label>
+              </div>
+            </td>
           </tr>
 
           <tr>
