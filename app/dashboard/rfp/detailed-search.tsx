@@ -194,18 +194,84 @@ export function KeywordSetSelect({
 
 export function AnnouncementDate({
   formModel,
+  setFormModel,
   handleChange,
 }: {
   formModel: DetailedSearchForm;
+  setFormModel: Dispatch<SetStateAction<DetailedSearchForm>>;
   handleChange: (
     event: React.FormEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
 }) {
+  const dateRange = [
+    {
+      label: "하루 전",
+      value: "inADay",
+      calculatedDate() {
+        const today = new Date();
+        const date = new Date(today);
+        date.setDate(today.getDate() - 1);
+        return date;
+      },
+    },
+    {
+      label: "일주일 전",
+      value: "inAWeek",
+      calculatedDate() {
+        const today = new Date();
+        const date = new Date(today);
+        date.setDate(today.getDate() - 7);
+        return date;
+      },
+    },
+    {
+      label: "한 달 전",
+      value: "inAMonth",
+      calculatedDate() {
+        const today = new Date();
+        const date = new Date(today);
+        date.setMonth(today.getMonth() - 1);
+        return date;
+      },
+    },
+    {
+      label: "일 년 전",
+      value: "inAYear",
+      calculatedDate() {
+        const today = new Date();
+        const date = new Date(today);
+        date.setFullYear(today.getFullYear() - 1);
+        return date;
+      },
+    },
+    {
+      label: "전체 조회",
+      value: "all",
+      calculatedDate() {
+        return new Date(2020, 0, 1);
+      },
+    },
+    {
+      label: "자유 입력",
+      value: "etc",
+    },
+  ];
+
+  const setDateRange = (date?: Date) => {
+    if (!date) return;
+
+    setFormModel({
+      ...formModel,
+      announcementDateFrom: new Intl.DateTimeFormat("en-CA").format(date),
+      announcementDateTo: new Intl.DateTimeFormat("en-CA").format(),
+    });
+  };
+
   return (
     <tr>
       <th>공고일</th>
       <td colSpan={5}>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 mb-[10px]">
           <div className="flex items-center gap-1">
             <Input
               className="w-[140px]"
@@ -228,6 +294,22 @@ export function AnnouncementDate({
             <input type="checkbox" />
             마감일 지난 공고 포함
           </label>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-x-[20px] gap-y-[5px]">
+          {dateRange.map(({ label, value, calculatedDate }) => (
+            <label key={label} className="flex items-center gap-2">
+              <input
+                name="announcementDate"
+                value={value}
+                type="radio"
+                onChange={() => {
+                  setDateRange(calculatedDate?.());
+                }}
+              />
+              {label}
+            </label>
+          ))}
         </div>
       </td>
     </tr>
@@ -554,7 +636,11 @@ export function DetailedSearch() {
             </td>
           </tr>
 
-          <AnnouncementDate formModel={formModel} handleChange={handleChange} />
+          <AnnouncementDate
+            formModel={formModel}
+            setFormModel={setFormModel}
+            handleChange={handleChange}
+          />
 
           <tr>
             <th>사업 구분</th>
