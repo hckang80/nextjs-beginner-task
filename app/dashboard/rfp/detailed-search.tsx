@@ -287,8 +287,8 @@ export function AnnouncementDate({
     <tr>
       <th>공고일</th>
       <td colSpan={5}>
-        <div className="flex items-center gap-1 mb-[10px]">
-          <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2 mb-[10px]">
+          <div className="flex items-center gap-2">
             <Input
               readOnly={!isFreeInput(announcementDate)}
               className="w-[140px]"
@@ -528,7 +528,7 @@ export function DetailedSearch() {
           <tr>
             <th>키워드세트</th>
             <td colSpan={5}>
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-2">
                 <select className="w-[160px]">
                   <option value="">그룹을 선택하세요</option>
                   {keywordSet
@@ -621,8 +621,8 @@ export function DetailedSearch() {
           <tr>
             <th>사업 금액</th>
             <td colSpan={5}>
-              <div className="flex items-center gap-1">
-                <div className="flex items-center gap-1">
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2">
                   <Input
                     type="number"
                     inputMode="numeric"
