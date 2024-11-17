@@ -153,11 +153,56 @@ export function SettingButton({
   );
 }
 
+export function KeywordSetSelect({
+  key,
+  context,
+  handleChangeKeywordSet,
+}: {
+  key: string;
+  context: {
+    label?: string;
+    type?: string;
+    operation?: string;
+    text: string;
+    tags: string[];
+  };
+  handleChangeKeywordSet: (
+    event: React.FormEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+}) {
+  return (
+    <>
+      <select
+        name={`${key}.type`}
+        value={context.type}
+        onChange={handleChangeKeywordSet}
+      >
+        <option value="title">제목</option>
+        <option value="text">본문</option>
+      </select>
+      <select
+        name={`${key}.operation`}
+        value={context.operation}
+        onChange={handleChangeKeywordSet}
+      >
+        <option value="or">OR</option>
+        <option value="and">AND</option>
+      </select>
+    </>
+  );
+}
+
 export function DetailedSearch() {
   const [formModel, setFormModel] = useState<{
     keywordSets: Record<
       string,
-      { type: string; operation: string; text: string; tags: string[] }
+      {
+        label?: string;
+        type?: string;
+        operation?: string;
+        text: string;
+        tags: string[];
+      }
     >;
     priceFrom: number;
     priceTo: number;
@@ -196,6 +241,16 @@ export function DetailedSearch() {
       setF: {
         type: "title",
         operation: "or",
+        text: "",
+        tags: [],
+      },
+      exceptionTitle: {
+        label: "제목 제외 키워드",
+        text: "",
+        tags: [],
+      },
+      exceptionKeyword: {
+        label: "본문 제외 키워드",
         text: "",
         tags: [],
       },
@@ -384,22 +439,13 @@ export function DetailedSearch() {
                         key={key}
                         className="flex flex-wrap items-center gap-2"
                       >
-                        <select
-                          name={`${key}.type`}
-                          value={context.type}
-                          onChange={handleChangeKeywordSet}
-                        >
-                          <option value="title">제목</option>
-                          <option value="text">본문</option>
-                        </select>
-                        <select
-                          name={`${key}.operation`}
-                          value={context.operation}
-                          onChange={handleChangeKeywordSet}
-                        >
-                          <option value="or">OR</option>
-                          <option value="and">AND</option>
-                        </select>
+                        {context.label || (
+                          <KeywordSetSelect
+                            key={key}
+                            context={context}
+                            handleChangeKeywordSet={handleChangeKeywordSet}
+                          />
+                        )}
                         <Input
                           className="w-[180px]"
                           name={`${key}.text`}
