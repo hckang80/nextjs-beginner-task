@@ -327,6 +327,13 @@ export function DetailedSearch() {
                   keywordSet={keywordSet}
                   setKeywordSet={setKeywordSet}
                 />
+                <div className="ml-auto">
+                  <div className="flex items-center gap-1">
+                    <span className="shrink-0">공용</span>
+                    <Switch checked={isPrivate} onCheckedChange={setIsPublic} />
+                    <span className="shrink-0">개인</span>
+                  </div>
+                </div>
               </div>
               <div className="flex flex-col gap-2">
                 {Object.entries(formModel.keywordSets).map(([key, context]) => {
