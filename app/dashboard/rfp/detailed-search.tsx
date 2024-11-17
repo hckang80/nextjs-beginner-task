@@ -44,6 +44,10 @@ export function SettingButton({
     if (!keywordSet) return;
 
     setKeywordSet(keywordSet.filter((item) => item.id !== id));
+    toast({
+      description: "그룹이 삭제되었습니다.",
+    });
+    // console.log(keywordSet); // TODO: 화면 출력은 올바르게 되지만 콘솔은 setKeywordSet 실행 직전의 값으로 찍힘. 원래 이런건가 ?_?
   };
 
   const changeKeywordSetName =
@@ -84,7 +88,6 @@ export function SettingButton({
         isPrivate,
       },
     ]);
-    // console.log(keywordSet); // TODO: 화면 출력은 올바르게 되지만 콘솔은 setKeywordSet 실행 직전의 값으로 찍힘. 원래 이런건가 ?_?
   };
 
   const postKeywordSet = () => {
