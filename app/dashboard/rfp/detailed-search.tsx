@@ -161,6 +161,13 @@ export function DetailedSearch() {
     businessType: "",
     ignoreType: "",
     sortType: "",
+    condition: {
+      업종조건_충족: true,
+      물품조건_충족: false,
+      공동수급_허용: false,
+      실적제한_없음: false,
+      인적제한_없음: false,
+    },
   });
 
   const [isPrivate, setIsPublic] = useState(false);
@@ -173,6 +180,18 @@ export function DetailedSearch() {
     setFormModel({
       ...formModel,
       [name]: value,
+    });
+  };
+
+  const handleCondition = (event: React.FormEvent<HTMLInputElement>) => {
+    const { name, checked } = event.currentTarget;
+
+    setFormModel({
+      ...formModel,
+      condition: {
+        ...formModel.condition,
+        [name]: checked,
+      },
     });
   };
 
@@ -319,23 +338,48 @@ export function DetailedSearch() {
             <th>조건</th>
             <td colSpan={5}>
               <label>
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  name="업종조건_충족"
+                  checked={formModel.condition.업종조건_충족}
+                  onChange={handleCondition}
+                />
                 업종조건 충족
               </label>
               <label>
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  name="물품조건_충족"
+                  checked={formModel.condition.물품조건_충족}
+                  onChange={handleCondition}
+                />
                 물품조건 충족
               </label>
               <label>
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  name="공동수급_허용"
+                  checked={formModel.condition.공동수급_허용}
+                  onChange={handleCondition}
+                />
                 공동수급 허용
               </label>
               <label>
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  name="실적제한_없음"
+                  checked={formModel.condition.실적제한_없음}
+                  onChange={handleCondition}
+                />
                 실적제한 없음
               </label>
               <label>
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  name="인적제한_없음"
+                  checked={formModel.condition.인적제한_없음}
+                  onChange={handleCondition}
+                />
                 인적제한 없음
               </label>
             </td>
