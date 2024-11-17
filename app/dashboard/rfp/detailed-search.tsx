@@ -332,6 +332,12 @@ export function DetailedSearch() {
                       >
                         <Plus />
                       </Button>
+
+                      <ul>
+                        {context.tags.map((tag) => (
+                          <li key={tag}>{tag}</li>
+                        ))}
+                      </ul>
                     </div>
                   );
                 })}
