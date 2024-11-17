@@ -121,11 +121,11 @@ export function SettingButton({
           <DialogDescription />
         </DialogHeader>
         <div>
-          <div className="flex items-center gap-1 justify-between mb-4">
+          <div className="flex items-center gap-4 justify-between mb-4">
             <div className="flex items-center gap-1">
-              공용
+              <span className="shrink-0">공용</span>
               <Switch checked={isPrivate} onCheckedChange={handler} />
-              개인
+              <span className="shrink-0">개인</span>
             </div>
             선택하신 상단의 그룹이 기본 검색 조건으로 설정됩니다
           </div>
