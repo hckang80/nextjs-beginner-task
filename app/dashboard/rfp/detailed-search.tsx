@@ -181,6 +181,24 @@ export function DetailedSearch() {
         text: "",
         tags: [],
       },
+      setC: {
+        type: "title",
+        operation: "or",
+        text: "",
+        tags: [],
+      },
+      setD: {
+        type: "title",
+        operation: "or",
+        text: "",
+        tags: [],
+      },
+      setF: {
+        type: "title",
+        operation: "or",
+        text: "",
+        tags: [],
+      },
     },
     priceFrom: 0,
     priceTo: 5_000_000,
@@ -307,6 +325,20 @@ export function DetailedSearch() {
     setKeywordSet(getKeywordSets());
   }, [keywordSet]);
 
+  const DEFAULT_KEYWORD_SET_SIZE = 2;
+  const [keywordSetSize, setKeywordSetSize] = useState(
+    DEFAULT_KEYWORD_SET_SIZE
+  );
+  const toggleButtonLabel =
+    keywordSetSize === DEFAULT_KEYWORD_SET_SIZE ? "열기" : "접기";
+  const toggleKeywordSetSize = () => {
+    setKeywordSetSize(
+      keywordSetSize === DEFAULT_KEYWORD_SET_SIZE
+        ? Object.keys(formModel.keywordSets).length
+        : DEFAULT_KEYWORD_SET_SIZE
+    );
+  };
+
   return (
     // TODO: react hook form 으로 개선하기
     <form onSubmit={handleSubmit}>
@@ -344,59 +376,73 @@ export function DetailedSearch() {
           <tr>
             <td colSpan={6}>
               <div className="flex flex-col gap-2">
-                {Object.entries(formModel.keywordSets).map(([key, context]) => {
-                  return (
-                    <div key={key} className="flex flex-wrap gap-2">
-                      <select
-                        name={`${key}.type`}
-                        value={context.type}
-                        onChange={handleChangeKeywordSet}
+                {Object.entries(formModel.keywordSets)
+                  .slice(0, keywordSetSize)
+                  .map(([key, context], index) => {
+                    return (
+                      <div
+                        key={key}
+                        className="flex flex-wrap items-center gap-2"
                       >
-                        <option value="title">제목</option>
-                        <option value="text">본문</option>
-                      </select>
-                      <select
-                        name={`${key}.operation`}
-                        value={context.operation}
-                        onChange={handleChangeKeywordSet}
-                      >
-                        <option value="or">OR</option>
-                        <option value="and">AND</option>
-                      </select>
-                      <Input
-                        className="w-[180px]"
-                        name={`${key}.text`}
-                        value={context.text}
-                        placeholder="키워드를 입력해보세요"
-                        onChange={handleChangeKeywordSet}
-                        onKeyDown={handleEnter(key)}
-                      />
-                      <Button
-                        type="button"
-                        onClick={() => addTag(key, context.text)}
-                      >
-                        <Plus />
-                      </Button>
-
-                      <ul className="flex flex-wrap items-center gap-2">
-                        {context.tags.map((tag) => (
-                          <li
-                            key={tag}
-                            className="flex items-center gap-2 bg-violet-400 text-white h-[30px] px-[10px] rounded-[30px]"
-                          >
-                            {tag}
-                            <button
-                              type="button"
-                              onClick={() => deleteTag(key, tag)}
+                        <select
+                          name={`${key}.type`}
+                          value={context.type}
+                          onChange={handleChangeKeywordSet}
+                        >
+                          <option value="title">제목</option>
+                          <option value="text">본문</option>
+                        </select>
+                        <select
+                          name={`${key}.operation`}
+                          value={context.operation}
+                          onChange={handleChangeKeywordSet}
+                        >
+                          <option value="or">OR</option>
+                          <option value="and">AND</option>
+                        </select>
+                        <Input
+                          className="w-[180px]"
+                          name={`${key}.text`}
+                          value={context.text}
+                          placeholder="키워드를 입력해보세요"
+                          onChange={handleChangeKeywordSet}
+                          onKeyDown={handleEnter(key)}
+                        />
+                        <Button
+                          type="button"
+                          onClick={() => addTag(key, context.text)}
+                        >
+                          <Plus />
+                        </Button>
+                        <ul className="flex flex-wrap items-center gap-2">
+                          {context.tags.map((tag) => (
+                            <li
+                              key={tag}
+                              className="flex items-center gap-2 bg-violet-400 text-white h-[30px] px-[10px] rounded-[30px]"
                             >
-                              <X size={12} color="#ffffff" strokeWidth={3} />
-                            </button>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  );
-                })}
+                              {tag}
+                              <button
+                                type="button"
+                                onClick={() => deleteTag(key, tag)}
+                              >
+                                <X size={12} color="#ffffff" strokeWidth={3} />
+                              </button>
+                            </li>
+                          ))}
+                        </ul>
+                        {index + 1 === DEFAULT_KEYWORD_SET_SIZE && (
+                          <Button
+                            type="button"
+                            variant="secondary"
+                            className="ml-auto"
+                            onClick={toggleKeywordSetSize}
+                          >
+                            키워드셋 {toggleButtonLabel}
+                          </Button>
+                        )}
+                      </div>
+                    );
+                  })}
               </div>
             </td>
           </tr>
