@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getProducts, SelectProduct } from "@/lib";
-import { ProductsTable, DetailedSearch } from ".";
+import { ProductsTable, DetailedSearch, ChannelSearch } from ".";
 import { Card } from "@/components/ui/card";
 
 export default function Rfp(props: {
@@ -57,14 +57,7 @@ export default function Rfp(props: {
         </Card>
 
         <Card className="p-6">
-          <table>
-            <tbody>
-              <tr>
-                <th>채널</th>
-                <td>TODO: 채널 검색</td>
-              </tr>
-            </tbody>
-          </table>
+          <ChannelSearch />
         </Card>
 
         <div>
