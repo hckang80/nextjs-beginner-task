@@ -225,7 +225,7 @@ export function DetailedSearch() {
         [path]: {
           ...formModel.keywordSets[path],
           text: "",
-          tags: [...formModel.keywordSets[path].tags, tag],
+          tags: [...new Set([...formModel.keywordSets[path].tags, tag])],
         },
       },
     });
