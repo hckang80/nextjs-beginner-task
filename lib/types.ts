@@ -1,6 +1,7 @@
 export interface KeywordSet {
   id: number;
   name: string;
+  isPined: boolean;
   isPrivate: boolean;
 }
 

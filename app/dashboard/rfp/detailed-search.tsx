@@ -85,6 +85,7 @@ export function SettingButton({
       {
         id: generatedId(keywordSet),
         name: getKeywordSetName(),
+        isPined: false,
         isPrivate,
       },
     ]);

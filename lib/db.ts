@@ -5,11 +5,13 @@ export function getKeywordSets() {
     {
       id: 1,
       name: "신규_그룹_공용_2024_11_15",
+      isPined: true,
       isPrivate: false,
     },
     {
       id: 2,
       name: "신규_그룹_개인_2024_11_15",
+      isPined: false,
       isPrivate: true,
     },
   ];
