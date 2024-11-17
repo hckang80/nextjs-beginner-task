@@ -24,9 +24,13 @@ export function KeywordSetItem({
         </Button>
       </div>
       <div className="grow">
-        <Input value={name} onChange={handler(id)} />
+        <Input
+          value={name}
+          onChange={handler(id)}
+          className={isPined ? "bg-violet-400 text-white" : ""}
+        />
       </div>
-      <div>
+      <div className={isPined ? "invisible" : ""}>
         <Button variant="ghost" onClick={() => deleteItem(id)}>
           <CircleMinus color="#f00" />
         </Button>
