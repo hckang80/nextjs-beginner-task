@@ -170,7 +170,12 @@ export function DetailedSearch() {
     };
   }>({
     keywordSets: {
-      set1: {
+      setA: {
+        type: "title",
+        operation: "or",
+        keyword: [],
+      },
+      setB: {
         type: "title",
         operation: "or",
         keyword: [],
@@ -279,22 +284,28 @@ export function DetailedSearch() {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <select
-                  name="set1.type"
-                  value={formModel.keywordSets.set1.type}
-                  onChange={handleChangeKeywordSet}
-                >
-                  <option value="title">제목</option>
-                  <option value="text">본문</option>
-                </select>
-                <select
-                  name="set1.operation"
-                  value={formModel.keywordSets.set1.operation}
-                  onChange={handleChangeKeywordSet}
-                >
-                  <option value="or">OR</option>
-                  <option value="and">AND</option>
-                </select>
+                {Object.entries(formModel.keywordSets).map(([key, context]) => {
+                  return (
+                    <div key={key} className="flex gap-2">
+                      <select
+                        name={`${key}.type`}
+                        value={context.type}
+                        onChange={handleChangeKeywordSet}
+                      >
+                        <option value="title">제목</option>
+                        <option value="text">본문</option>
+                      </select>
+                      <select
+                        name={`${key}.operation`}
+                        value={context.operation}
+                        onChange={handleChangeKeywordSet}
+                      >
+                        <option value="or">OR</option>
+                        <option value="and">AND</option>
+                      </select>
+                    </div>
+                  );
+                })}
               </div>
             </td>
           </tr>
