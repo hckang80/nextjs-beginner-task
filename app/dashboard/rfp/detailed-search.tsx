@@ -158,7 +158,7 @@ export function DetailedSearch() {
   const [formModel, setFormModel] = useState<{
     keywordSets: Record<
       string,
-      { type: string; operation: string; keyword: string[] }
+      { type: string; operation: string; text: string; tags: string[] }
     >;
     priceFrom: number;
     priceTo: number;
@@ -173,12 +173,14 @@ export function DetailedSearch() {
       setA: {
         type: "title",
         operation: "or",
-        keyword: [],
+        text: "",
+        tags: [],
       },
       setB: {
         type: "title",
         operation: "or",
-        keyword: [],
+        text: "",
+        tags: [],
       },
     },
     priceFrom: 0,
@@ -198,7 +200,7 @@ export function DetailedSearch() {
   const [isPrivate, setIsPublic] = useState(false);
 
   const handleChangeKeywordSet = (
-    event: React.FormEvent<HTMLSelectElement>
+    event: React.FormEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = event.currentTarget;
     const [depth1, depth2] = name.split(".");
@@ -303,6 +305,13 @@ export function DetailedSearch() {
                         <option value="or">OR</option>
                         <option value="and">AND</option>
                       </select>
+                      <Input
+                        className="w-[180px]"
+                        name={`${key}.text`}
+                        value={context.text}
+                        placeholder="키워드를 입력해보세요"
+                        onChange={handleChangeKeywordSet}
+                      />
                     </div>
                   );
                 })}
