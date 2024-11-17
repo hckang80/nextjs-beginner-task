@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { getProducts, SelectProduct } from "@/lib";
 import { ProductsTable, DetailedSearch } from ".";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 
 export default function Rfp(props: {
   searchParams: Promise<{ q: string; offset: string }>;
