@@ -20,7 +20,7 @@ import {
   useState,
 } from "react";
 import { toast, useToast } from "@/hooks/use-toast";
-import { getKeywordSets, type KeywordSet } from "@/lib";
+import { DetailedSearchForm, getKeywordSets, type KeywordSet } from "@/lib";
 import { KeywordSetItem, ToggleController } from ".";
 import { getMaxNumber } from "@/lib";
 
@@ -192,29 +192,50 @@ export function KeywordSetSelect({
   );
 }
 
+export function AnnouncementDate({
+  formModel,
+  handleChange,
+}: {
+  formModel: DetailedSearchForm;
+  handleChange: (
+    event: React.FormEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+}) {
+  return (
+    <tr>
+      <th>공고일</th>
+      <td colSpan={5}>
+        <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1">
+            <Input
+              className="w-[140px]"
+              type="date"
+              name="announcementDateFrom"
+              value={formModel.announcementDateFrom}
+              onChange={handleChange}
+            />
+            ~
+            <Input
+              className="w-[140px]"
+              type="date"
+              name="announcementDateTo"
+              value={formModel.announcementDateTo}
+              onChange={handleChange}
+            />
+          </div>
+
+          <label className="flex items-center gap-2">
+            <input type="checkbox" />
+            마감일 지난 공고 포함
+          </label>
+        </div>
+      </td>
+    </tr>
+  );
+}
+
 export function DetailedSearch() {
-  const [formModel, setFormModel] = useState<{
-    keywordSets: Record<
-      string,
-      {
-        label?: string;
-        type?: string;
-        operation?: string;
-        text: string;
-        tags: string[];
-      }
-    >;
-    priceFrom: number;
-    priceTo: number;
-    announcementDateFrom: string;
-    announcementDateTo: string;
-    businessType: string;
-    ignoreType: "";
-    sortType: "";
-    condition: {
-      [key: string]: boolean;
-    };
-  }>({
+  const [formModel, setFormModel] = useState<DetailedSearchForm>({
     keywordSets: {
       setA: {
         type: "title",
@@ -533,35 +554,7 @@ export function DetailedSearch() {
             </td>
           </tr>
 
-          <tr>
-            <th>공고일</th>
-            <td colSpan={5}>
-              <div className="flex items-center gap-1">
-                <div className="flex items-center gap-1">
-                  <Input
-                    className="w-[140px]"
-                    type="date"
-                    name="announcementDateFrom"
-                    value={formModel.announcementDateFrom}
-                    onChange={handleChange}
-                  />
-                  ~
-                  <Input
-                    className="w-[140px]"
-                    type="date"
-                    name="announcementDateTo"
-                    value={formModel.announcementDateTo}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" />
-                  마감일 지난 공고 포함
-                </label>
-              </div>
-            </td>
-          </tr>
+          <AnnouncementDate formModel={formModel} handleChange={handleChange} />
 
           <tr>
             <th>사업 구분</th>
