@@ -25,3 +25,18 @@
   flex: 1 1 100%;
   overflow: auto;
 }
+
+table.search-table {
+  table-layout: auto;
+
+  th,
+  td {
+    padding: 5px;
+  }
+
+  th {
+    width: 80px;
+    text-align: left;
+    white-space: nowrap;
+  }
+}

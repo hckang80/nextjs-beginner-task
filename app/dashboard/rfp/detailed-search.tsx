@@ -310,7 +310,7 @@ export function DetailedSearch() {
   return (
     // TODO: react hook form 으로 개선하기
     <form onSubmit={handleSubmit}>
-      <table>
+      <table className="search-table">
         <tbody>
           <tr>
             <th>키워드세트</th>
@@ -491,7 +491,7 @@ export function DetailedSearch() {
           <tr>
             <th>조건</th>
             <td colSpan={5}>
-              <div className="flex items-center gap-6">
+              <div className="flex flex-wrap items-center gap-x-[20px] gap-y-[5px]">
                 <label className="flex items-center gap-1">
                   <input
                     type="checkbox"
