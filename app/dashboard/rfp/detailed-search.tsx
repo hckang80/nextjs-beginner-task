@@ -155,7 +155,7 @@ export function SettingButton({
 }
 
 export function DetailedSearch() {
-  const [formModal, setFormModel] = useState({
+  const [formModel, setFormModel] = useState({
     priceFrom: 0,
     priceTo: 5_000_000,
     businessType: "",
@@ -171,7 +171,7 @@ export function DetailedSearch() {
     const { name, value } = event.currentTarget;
 
     setFormModel({
-      ...formModal,
+      ...formModel,
       [name]: value,
     });
   };
@@ -183,7 +183,7 @@ export function DetailedSearch() {
 
     toast({
       title: "You submitted the following values:",
-      description: <code>{JSON.stringify(formModal)}</code>,
+      description: <code>{JSON.stringify(formModel)}</code>,
     });
   };
 
@@ -232,7 +232,7 @@ export function DetailedSearch() {
                     type="number"
                     inputMode="numeric"
                     name="priceFrom"
-                    value={formModal.priceFrom}
+                    value={formModel.priceFrom}
                     onChange={handleChange}
                   />
                   ~
@@ -240,7 +240,7 @@ export function DetailedSearch() {
                     type="number"
                     inputMode="numeric"
                     name="priceTo"
-                    value={formModal.priceTo}
+                    value={formModel.priceTo}
                     onChange={handleChange}
                     className={isPriceLimit ? "invisible" : ""}
                   />
@@ -271,7 +271,7 @@ export function DetailedSearch() {
               <select
                 className="w-[120px]"
                 name="businessType"
-                value={formModal.businessType}
+                value={formModel.businessType}
                 onChange={handleChange}
               >
                 <option value="">전체</option>
@@ -287,7 +287,7 @@ export function DetailedSearch() {
               <select
                 className="w-[120px]"
                 name="ignoreType"
-                value={formModal.ignoreType}
+                value={formModel.ignoreType}
                 onChange={handleChange}
               >
                 <option value="">전체 보기</option>
@@ -301,7 +301,7 @@ export function DetailedSearch() {
               <select
                 className="w-[120px]"
                 name="sortType"
-                value={formModal.sortType}
+                value={formModel.sortType}
                 onChange={handleChange}
               >
                 <option value="">정확도</option>
