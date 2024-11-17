@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { getProducts, SelectProduct } from "@/lib";
 import { ProductsTable, DetailedSearch } from ".";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 export default function Rfp(props: {
   searchParams: Promise<{ q: string; offset: string }>;
@@ -50,11 +51,11 @@ export default function Rfp(props: {
         </a>
       </div>
 
-      <div className="global-card">
+      <Card className="p-6">
         <DetailedSearch />
-      </div>
+      </Card>
 
-      <div>
+      <Card className="p-6">
         <table>
           <tbody>
             <tr>
@@ -63,7 +64,7 @@ export default function Rfp(props: {
             </tr>
           </tbody>
         </table>
-      </div>
+      </Card>
 
       <div>
         <ProductsTable
