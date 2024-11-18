@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
@@ -12,6 +14,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
@@ -86,9 +95,7 @@ export function Product({
           <td colSpan={8}>
             <div className="flex justify-between items-center gap-2 px-[20px]">
               <div className="shrink-0">
-                <button>
-                  <Pencil size={16} />
-                </button>
+                <TagEditButton name={name} />
               </div>
               <dl className="flex items-center gap-6">
                 <div className="flex items-center gap-2">
@@ -124,6 +131,27 @@ export function Product({
         </tr>
       )}
     </tbody>
+  );
+}
+
+export function TagEditButton({ name }: { name: string }) {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <button className="p-[12px]">
+          <Pencil size={16} />
+        </button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{name}</DialogTitle>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4"></div>
+          <div className="grid grid-cols-4 items-center gap-4"></div>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
 
