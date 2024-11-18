@@ -27,6 +27,8 @@ export function ProductsTable({
     } | null>
   >;
 }) {
+  let productsPerPage = 5;
+
   const [sortConfig, setSortConfig] = useState<SortConfig>({
     key: null,
     direction: null,
@@ -81,7 +83,7 @@ export function ProductsTable({
         </tr>
       </thead>
       <tbody>
-        {products.map((product) => (
+        {products.slice(offset, offset + productsPerPage).map((product) => (
           <Product key={product.id} product={product} />
         ))}
       </tbody>

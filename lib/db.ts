@@ -126,7 +126,7 @@ export async function getProducts(
 
   return {
     products: items,
-    newOffset: null,
+    newOffset: offset,
     totalProducts: items.length,
   };
 }
