@@ -21,17 +21,18 @@ export function Product({
     (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       event.stopPropagation();
 
-      const result = hasFavorite(id)
-        ? currentFavorites.filter((uid) => uid !== id)
-        : [...currentFavorites, id];
-
-      localStorage.setItem(storageKey, JSON.stringify(result));
+      localStorage.setItem(storageKey, JSON.stringify(getSaveResult(id)));
 
       toast({
         title: getToastTitle(id),
         variant: "destructive",
       });
     };
+
+  const getSaveResult = (id: number) =>
+    hasFavorite(id)
+      ? currentFavorites.filter((uid) => uid !== id)
+      : [...currentFavorites, id];
 
   const getToastTitle = (id: number) =>
     hasFavorite(id)
