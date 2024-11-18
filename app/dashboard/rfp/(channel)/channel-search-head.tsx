@@ -2,9 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export function ChannelSearchHead({
+  isAllSelected,
+  handleSelectAll,
   searchQuery,
   handleSearch,
 }: {
+  isAllSelected: boolean;
+  handleSelectAll: (event: React.ChangeEvent<HTMLInputElement>) => void;
   searchQuery: string;
   handleSearch: (event: React.FormEvent<HTMLInputElement>) => void;
 }) {
@@ -24,7 +28,11 @@ export function ChannelSearchHead({
           </div>
 
           <label className="flex items-center gap-2">
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={isAllSelected}
+              onChange={handleSelectAll}
+            />
             채널 전부 보기
           </label>
 

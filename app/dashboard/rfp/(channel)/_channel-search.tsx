@@ -41,6 +41,13 @@ export function ChannelSearch() {
     );
   };
 
+  const isAllSelected = dataGroups.every((item) => item.checked);
+
+  const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked } = event.target;
+    setDataGroups((list) => list.map((item) => ({ ...item, checked })));
+  };
+
   const isGroupSelected = (type: string) =>
     dataGroups
       .filter((item) => item.type === type)
@@ -58,6 +65,8 @@ export function ChannelSearch() {
     <table className="search-table">
       <tbody>
         <ChannelSearchHead
+          isAllSelected={isAllSelected}
+          handleSelectAll={handleSelectAll}
           searchQuery={searchQuery}
           handleSearch={handleSearch}
         />
