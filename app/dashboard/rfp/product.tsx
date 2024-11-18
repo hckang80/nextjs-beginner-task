@@ -1,4 +1,3 @@
-import { Toast } from "@/components/ui/toast";
 import { useToast } from "@/hooks/use-toast";
 import { SelectProduct } from "@/lib";
 import { Star } from "lucide-react";
