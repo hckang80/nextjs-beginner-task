@@ -6,11 +6,15 @@
 }
 
 .global-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: fixed;
   top: 0;
   z-index: 2;
   inset: auto 0;
   height: var(--header-height);
+  padding: 10px 40px;
   border-bottom: 1px solid hsl(var(--input));
   background: #fff;
 }
