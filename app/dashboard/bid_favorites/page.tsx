@@ -5,6 +5,7 @@ import { getProducts, MY_FAVORITES, AnnouncementContext } from "@/lib";
 import { ProductsTable } from ".";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/compat/router";
 
 export default function BidFavorites(props: {
   searchParams: Promise<{ q: string; offset: string }>;
@@ -53,6 +54,7 @@ export default function BidFavorites(props: {
             메모표시
           </label>
         </div>
+        <RefreshPage />
       </Card>
 
       <ProductsTable
@@ -64,4 +66,14 @@ export default function BidFavorites(props: {
       />
     </>
   );
+}
+
+export function RefreshPage() {
+  const router = useRouter();
+
+  const handleRefresh = () => {
+    router?.replace(router.asPath);
+  };
+
+  return <Button onClick={handleRefresh}>새로고침</Button>;
 }
