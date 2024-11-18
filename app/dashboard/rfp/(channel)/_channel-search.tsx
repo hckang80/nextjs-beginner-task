@@ -3,7 +3,7 @@ import { ChannelSearchHead } from "./channel-search-head";
 import { ChannelSearchList } from "./channel-search-list";
 import { ChannelItem } from "@/lib";
 
-const sampleData: ChannelItem[] = [
+const biddingAgencies: ChannelItem[] = [
   { id: 1, name: "BioIN" },
   { id: 2, name: "IBK 시스템" },
   { id: 3, name: "IBK 저축은행" },
@@ -15,13 +15,13 @@ const sampleData: ChannelItem[] = [
 
 export function ChannelSearch() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredData, setFilteredData] = useState(sampleData);
+  const [filteredData, setFilteredData] = useState(biddingAgencies);
 
   const handleSearch = (event: React.FormEvent<HTMLInputElement>) => {
     const { value: query } = event.currentTarget;
     setSearchQuery(query);
 
-    const filtered = sampleData.filter((item) =>
+    const filtered = biddingAgencies.filter((item) =>
       item.name.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredData(filtered);
