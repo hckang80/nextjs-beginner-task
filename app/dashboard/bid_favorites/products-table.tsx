@@ -27,7 +27,7 @@ export function ProductsTable({
     } | null>
   >;
 }) {
-  let productsPerPage = 10;
+  const productsPerPage = 10;
 
   const [sortConfig, setSortConfig] = useState<SortConfig>({
     key: null,
@@ -68,7 +68,8 @@ export function ProductsTable({
     const isPaginationTouch = new URLSearchParams(location.search).has(
       "offset"
     );
-    isPaginationTouch && focusDataTable();
+    if (!isPaginationTouch) return;
+    focusDataTable();
   }, [offset]);
 
   return (
