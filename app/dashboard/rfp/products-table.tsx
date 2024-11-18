@@ -27,7 +27,7 @@ export function ProductsTable({
     } | null>
   >;
 }) {
-  const productsPerPage = 5;
+  const PRODUCTS_PER_PAGE = 5;
 
   const [sortConfig, setSortConfig] = useState<SortConfig>({
     key: null,
@@ -98,15 +98,15 @@ export function ProductsTable({
           </tr>
         </thead>
         <tbody>
-          {products.slice(offset, offset + productsPerPage).map((product) => (
+          {products.slice(offset, offset + PRODUCTS_PER_PAGE).map((product) => (
             <Product key={product.id} product={product} />
           ))}
         </tbody>
       </table>
 
-      {productsPerPage < totalProducts && (
+      {PRODUCTS_PER_PAGE < totalProducts && (
         <ProductPagination
-          productsPerPage={productsPerPage}
+          productsPerPage={PRODUCTS_PER_PAGE}
           offset={offset}
           totalProducts={totalProducts}
         />
