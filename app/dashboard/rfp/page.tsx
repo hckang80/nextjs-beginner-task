@@ -26,7 +26,7 @@ export default function Rfp(props: {
   };
 
   if (!data) {
-    return "Loading...";
+    return "Loading..."; // TODO: 새로고침시에도 로딩이 안나오고 데이터를 좀 더 빠르게 가져올 수 없을까? getServerSideProps를 이용해보자
   }
 
   const { products, newOffset, totalProducts } = data;
