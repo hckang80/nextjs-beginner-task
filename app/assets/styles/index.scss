@@ -21,6 +21,11 @@
 }
 
 .global-aside {
+  display: flex;
+  flex-flow: column;
+  overflow: auto;
+  max-height: calc(100vh - var(--header-height));
+  max-height: calc(100dvh - var(--header-height));
   margin: var(--header-height) 0 0;
   padding: 30px;
   flex: 0 0 240px;
@@ -40,6 +45,7 @@
 }
 
 .global-address {
+  margin: auto 0 0;
   font-size: 12px;
 }
 
