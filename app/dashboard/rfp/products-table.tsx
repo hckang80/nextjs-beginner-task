@@ -39,6 +39,16 @@ export function ProductsTable({
   return (
     <>
       <table className="data-table" ref={tableRef}>
+        <colgroup>
+          <col />
+          <col />
+          <col className="w-[260px]" />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+        </colgroup>
         <thead>
           <tr>
             <th>관심공고</th>

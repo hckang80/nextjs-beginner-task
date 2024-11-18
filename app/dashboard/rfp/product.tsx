@@ -54,7 +54,7 @@ export function Product({ product }: { product: SelectProduct }) {
         </button>
       </td>
       <td>{id}</td>
-      <td>{name}</td>
+      <td style={{ textAlign: "left" }}>{name}</td>
       <td>{price}</td>
       <td>{type}</td>
       <td>{source}</td>
