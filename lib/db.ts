@@ -122,6 +122,15 @@ export async function getProducts(
       createAt: new Date(),
       endAt: new Date(),
     },
+    {
+      id: 11,
+      name: "히든 사업공고",
+      price: "0.3억",
+      type: "용역",
+      source: "충청남도교육청",
+      createAt: new Date(),
+      endAt: new Date(),
+    },
   ];
 
   return {
