@@ -81,23 +81,28 @@ export function ProductsTable({
         <thead>
           <tr>
             <th>관심공고</th>
+            <th>#</th>
+            <th>공고명</th>
             <th>
-              #
-              <button onClick={() => handleSort("id")}>
+              금액(원)
+              <button onClick={() => handleSort("price")}>
                 <ArrowUpDown />
               </button>
             </th>
-            <th>
-              공고명
-              <button onClick={() => handleSort("name")}>
-                <ArrowUpDown />
-              </button>
-            </th>
-            <th>금액(원)</th>
             <th>구분</th>
             <th>공고기관</th>
-            <th>게시일</th>
-            <th>마김일</th>
+            <th>
+              게시일
+              <button onClick={() => handleSort("createAt")}>
+                <ArrowUpDown />
+              </button>
+            </th>
+            <th>
+              마감일
+              <button onClick={() => handleSort("endAt")}>
+                <ArrowUpDown />
+              </button>
+            </th>
           </tr>
         </thead>
         {products.slice(offset, offset + PRODUCTS_PER_PAGE).map((product) => (

@@ -42,19 +42,21 @@ export default function BidFavorites(props: {
   return (
     <>
       <Card className="rounded-[2px] p-[10px]">
-        <div className="flex items-center gap-2">
-          필터 기능은 미구현
-          <Button>태그 필터</Button>
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              checked={isVisibleMemo}
-              onChange={() => setIsVisibleMemo(!isVisibleMemo)}
-            />
-            메모표시
-          </label>
+        <div className="flex justify-between">
+          <div className="flex items-center gap-2">
+            필터 기능은 미구현
+            <Button>태그 필터</Button>
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={isVisibleMemo}
+                onChange={() => setIsVisibleMemo(!isVisibleMemo)}
+              />
+              메모표시
+            </label>
+          </div>
+          <RefreshPage />
         </div>
-        <RefreshPage />
       </Card>
 
       <ProductsTable
@@ -72,6 +74,7 @@ export function RefreshPage() {
   const router = useRouter();
 
   const handleRefresh = () => {
+    // TODO: API 호출이 없어서 동작 여부는 확인 못함
     router?.replace(router.asPath);
   };
 
