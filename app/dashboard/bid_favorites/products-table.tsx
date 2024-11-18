@@ -3,7 +3,8 @@
 import { SelectProduct } from "@/lib";
 import { ArrowUpDown } from "lucide-react";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import { Product, ProductPagination } from ".";
+import { Product } from ".";
+import { ProductPagination } from "../product-pagination";
 
 interface SortConfig {
   key: keyof SelectProduct | null;

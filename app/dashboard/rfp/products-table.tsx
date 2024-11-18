@@ -2,7 +2,8 @@
 
 import { SelectProduct } from "@/lib";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
-import { Product, ProductPagination } from ".";
+import { Product } from ".";
+import { ProductPagination } from "../product-pagination";
 
 export function ProductsTable({
   products,
