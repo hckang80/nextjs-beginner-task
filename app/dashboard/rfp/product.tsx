@@ -6,28 +6,32 @@ export function Product({
 }: {
   product: SelectProduct;
 }) {
+  const storageKey = "myFavorites";
+  const currentFavorites: number[] = JSON.parse(
+    localStorage.getItem(storageKey) || "[]"
+  );
+  const hasFavorite = (id: number) => currentFavorites.includes(id);
+
   const saveFavorite =
     (id: number) =>
     (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       event.stopPropagation();
 
-      const storageKey = "myFavorites";
-      const currentFavorites: number[] = JSON.parse(
-        localStorage.getItem(storageKey) || "[]"
-      );
-      const hasFavorite = currentFavorites.includes(id);
-      const result = hasFavorite
+      const result = hasFavorite(id)
         ? currentFavorites.filter((uid) => uid !== id)
         : [...currentFavorites, id];
 
       localStorage.setItem(storageKey, JSON.stringify(result));
     };
 
+  const getStateColor = (id: number) =>
+    hasFavorite(id) ? "hsl(var(--chart-4))" : "hsl(var(--input))";
+
   return (
     <tr>
       <td>
         <button onClick={saveFavorite(id)}>
-          <Star fill="hsl(var(--input))" strokeWidth={0} />
+          <Star fill={getStateColor(id)} strokeWidth={0} />
         </button>
       </td>
       <td>{id}</td>
