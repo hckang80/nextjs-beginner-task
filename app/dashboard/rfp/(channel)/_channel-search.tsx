@@ -41,12 +41,12 @@ export function ChannelSearch() {
     );
   };
 
-  const isAllSelectedGroup = (type: string) =>
+  const isGroupSelected = (type: string) =>
     dataGroups
       .filter((item) => item.type === type)
       .every((item) => item.checked);
 
-  const handleSelectAll =
+  const handleSelectGroup =
     (type: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
       const { checked } = event.target;
       setDataGroups((list) =>
@@ -67,8 +67,8 @@ export function ChannelSearch() {
             key={label}
             label={label}
             type={type}
-            isAllSelectedGroup={isAllSelectedGroup}
-            handleSelectAll={handleSelectAll}
+            isGroupSelected={isGroupSelected}
+            handleSelectGroup={handleSelectGroup}
             filteredData={filteredData}
             handleItemCheckboxChange={handleItemCheckboxChange}
           />
