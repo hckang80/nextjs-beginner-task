@@ -2,6 +2,9 @@ import { useState } from "react";
 import { ChannelSearchHead } from "./channel-search-head";
 import { ChannelSearchList } from "./channel-search-list";
 import { channelContext, ChannelItem } from "@/lib";
+import { Button } from "@/components/ui/button";
+import { Search } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 const data: ChannelItem[] = [
   { id: 1, name: "BioIN", type: "agency" },
@@ -62,31 +65,52 @@ export function ChannelSearch() {
       );
     };
 
-  return (
-    <table className="search-table">
-      <tbody>
-        <ChannelSearchHead
-          isAllSelected={isAllSelected}
-          handleSelectAll={handleSelectAll}
-          searchQuery={searchQuery}
-          handleSearch={handleSearch}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-        />
+  const handleSubmit = () => {
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <pre>
+          <code>{JSON.stringify(dataGroups, null, 2)}</code>
+        </pre>
+      ),
+    });
+  };
 
-        {isOpen &&
-          channelContext.map(({ label, type }) => (
-            <ChannelSearchList
-              key={label}
-              label={label}
-              type={type}
-              isGroupSelected={isGroupSelected}
-              handleSelectGroup={handleSelectGroup}
-              filteredData={filteredData}
-              handleItemCheckboxChange={handleItemCheckboxChange}
-            />
-          ))}
-      </tbody>
-    </table>
+  return (
+    <>
+      <table className="search-table">
+        <tbody>
+          <ChannelSearchHead
+            isAllSelected={isAllSelected}
+            handleSelectAll={handleSelectAll}
+            searchQuery={searchQuery}
+            handleSearch={handleSearch}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+          />
+
+          {isOpen &&
+            channelContext.map(({ label, type }) => (
+              <ChannelSearchList
+                key={label}
+                label={label}
+                type={type}
+                isGroupSelected={isGroupSelected}
+                handleSelectGroup={handleSelectGroup}
+                filteredData={filteredData}
+                handleItemCheckboxChange={handleItemCheckboxChange}
+              />
+            ))}
+        </tbody>
+      </table>
+      {isOpen && (
+        <div className="text-right">
+          <Button onClick={handleSubmit}>
+            <Search color="#ffffff" strokeWidth={3} />
+            검색하기
+          </Button>
+        </div>
+      )}
+    </>
   );
 }
