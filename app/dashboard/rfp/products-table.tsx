@@ -1,7 +1,7 @@
 "use client";
 
 import { AnnouncementContext } from "@/lib";
-import { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Product } from ".";
 import { ProductPagination } from "../product-pagination";
 
@@ -13,13 +13,6 @@ export function ProductsTable({
   products: AnnouncementContext[];
   offset: number;
   totalProducts: number;
-  setData: Dispatch<
-    SetStateAction<{
-      products: AnnouncementContext[];
-      newOffset: number | null;
-      totalProducts: number;
-    } | null>
-  >;
 }) {
   const PRODUCTS_PER_PAGE = 5;
 
