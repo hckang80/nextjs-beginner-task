@@ -136,7 +136,7 @@ export function Product({
 
 export function DeleteButton({
   id,
-  deleteFavorite,
+  deleteFavorite, // TODO: Props Drilling이 심함. 개선 필요
 }: {
   id: number;
   deleteFavorite: (
