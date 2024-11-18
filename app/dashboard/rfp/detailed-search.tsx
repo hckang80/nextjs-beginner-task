@@ -279,9 +279,8 @@ export function AnnouncementDate({
   const [announcementDate, setAnnouncementDate] = useState("inAWeek");
 
   useEffect(() => {
-    // console.log("useEffect"); TODO: 초기에 콘솔 두번 찍힘. 콘솔 하나는 어두운걸로 보아 상관없는걸지도...
     setDateRange(announcementDate);
-  }, [announcementDate]); // TODO: 경고 발생 원인 분석 필요
+  }, [announcementDate]);
 
   return (
     <tr>
