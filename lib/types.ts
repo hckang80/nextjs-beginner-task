@@ -38,8 +38,14 @@ export interface DetailedSearchForm {
   };
 }
 
+export const channelContext = [
+  { label: "입찰기관", type: "agency" },
+  { label: "대학교", type: "university" },
+];
+
 export interface ChannelItem {
   id: number;
   name: string;
+  type: string;
   checked: boolean;
 }
