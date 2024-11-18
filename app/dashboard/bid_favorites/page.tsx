@@ -38,7 +38,7 @@ export default function BidFavorites(props: {
     <ProductsTable
       products={favoriteProducts}
       offset={newOffset ?? 0}
-      totalProducts={totalProducts}
+      totalProducts={favoriteProducts.length}
       setData={setData}
     />
   );
