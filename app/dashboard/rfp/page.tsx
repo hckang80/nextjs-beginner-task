@@ -65,6 +65,7 @@ export default function Rfp(props: {
             products={products}
             offset={newOffset ?? 0}
             totalProducts={totalProducts}
+            setData={setData}
           />
         </div>
       </div>
