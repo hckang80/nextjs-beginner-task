@@ -1,20 +1,13 @@
 "use client";
 
 import { SelectProduct } from "@/lib";
-import { ArrowUpDown } from "lucide-react";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { Product, ProductPagination } from ".";
-
-interface SortConfig {
-  key: keyof SelectProduct | null;
-  direction: "ascending" | "descending" | null;
-}
 
 export function ProductsTable({
   products,
   offset,
   totalProducts,
-  setData,
 }: {
   products: SelectProduct[];
   offset: number;
@@ -28,35 +21,6 @@ export function ProductsTable({
   >;
 }) {
   const PRODUCTS_PER_PAGE = 5;
-
-  const [sortConfig, setSortConfig] = useState<SortConfig>({
-    key: null,
-    direction: null,
-  });
-
-  const handleSort = (key: keyof SelectProduct) => {
-    const direction =
-      sortConfig.key === key && sortConfig.direction === "ascending"
-        ? "descending"
-        : "ascending";
-
-    const sortedData = [...products].sort((a, b) => {
-      if (a[key] < b[key]) {
-        return direction === "ascending" ? -1 : 1;
-      }
-      if (a[key] > b[key]) {
-        return direction === "ascending" ? 1 : -1;
-      }
-      return 0;
-    });
-
-    setData({
-      newOffset: offset,
-      totalProducts,
-      products: sortedData,
-    });
-    setSortConfig({ key, direction });
-  };
 
   const tableRef = useRef<HTMLTableElement | null>(null);
 
@@ -78,18 +42,8 @@ export function ProductsTable({
         <thead>
           <tr>
             <th>관심공고</th>
-            <th>
-              #
-              <button onClick={() => handleSort("id")}>
-                <ArrowUpDown />
-              </button>
-            </th>
-            <th>
-              공고명
-              <button onClick={() => handleSort("name")}>
-                <ArrowUpDown />
-              </button>
-            </th>
+            <th>#</th>
+            <th>공고명</th>
             <th>금액(원)</th>
             <th>구분</th>
             <th>공고기관</th>
