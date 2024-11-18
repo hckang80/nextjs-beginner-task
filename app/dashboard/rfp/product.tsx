@@ -49,7 +49,7 @@ export function Product({ product }: { product: SelectProduct }) {
   return (
     <tr className="cursor-pointer" onClick={() => handleRowClick(product)}>
       <td>
-        <button onClick={saveFavorite(id)}>
+        <button onClick={saveFavorite(id)} className="p-[10px]">
           <Star fill={getStateColor(id)} strokeWidth={0} />
         </button>
       </td>
