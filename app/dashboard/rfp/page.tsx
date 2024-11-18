@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getProducts, SelectProduct } from "@/lib";
+import { getProducts, AnnouncementContext } from "@/lib";
 import { ProductsTable, DetailedSearch, ChannelSearch } from ".";
 import { Card } from "@/components/ui/card";
 
@@ -9,7 +9,7 @@ export default function Rfp(props: {
   searchParams: Promise<{ q: string; offset: string }>;
 }) {
   const [data, setData] = useState<{
-    products: SelectProduct[];
+    products: AnnouncementContext[];
     newOffset: number | null;
     totalProducts: number;
   } | null>(null);

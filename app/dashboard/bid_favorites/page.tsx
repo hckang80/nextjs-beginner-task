@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getProducts, MY_FAVORITES, SelectProduct } from "@/lib";
+import { getProducts, MY_FAVORITES, AnnouncementContext } from "@/lib";
 import { ProductsTable } from ".";
 
 export default function BidFavorites(props: {
   searchParams: Promise<{ q: string; offset: string }>;
 }) {
   const [data, setData] = useState<{
-    products: SelectProduct[];
+    products: AnnouncementContext[];
     newOffset: number | null;
     totalProducts: number;
   } | null>(null);

@@ -5,7 +5,7 @@ export interface KeywordSet {
   isPrivate: boolean;
 }
 
-export interface SelectProduct {
+export interface AnnouncementContext {
   id: number;
   name: string;
   price: string;

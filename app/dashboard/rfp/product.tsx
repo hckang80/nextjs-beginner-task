@@ -1,9 +1,9 @@
 import { useToast } from "@/hooks/use-toast";
-import { MY_FAVORITES, SelectProduct, toReadableDate } from "@/lib";
+import { MY_FAVORITES, AnnouncementContext, toReadableDate } from "@/lib";
 import { Star } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-export function Product({ product }: { product: SelectProduct }) {
+export function Product({ product }: { product: AnnouncementContext }) {
   const { id, name, price, type, source, createAt, endAt } = product;
 
   const { toast } = useToast();
@@ -42,7 +42,7 @@ export function Product({ product }: { product: SelectProduct }) {
 
   const router = useRouter();
 
-  const handleRowClick = (row: SelectProduct) => {
+  const handleRowClick = (row: AnnouncementContext) => {
     router.push(`/dashboard/rfp/${row.id}`);
   };
 

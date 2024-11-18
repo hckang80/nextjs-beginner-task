@@ -1,12 +1,12 @@
-import { SelectProduct, toReadableDate } from "@/lib";
+import { AnnouncementContext, toReadableDate } from "@/lib";
 import { useRouter } from "next/navigation";
 
-export function Product({ product }: { product: SelectProduct }) {
+export function Product({ product }: { product: AnnouncementContext }) {
   const { id, name, price, type, source, createAt, endAt } = product;
 
   const router = useRouter();
 
-  const handleRowClick = (row: SelectProduct) => {
+  const handleRowClick = (row: AnnouncementContext) => {
     router.push(`/dashboard/rfp/${row.id}`);
   };
 

@@ -1,4 +1,4 @@
-import type { KeywordSet, SelectProduct } from "./types";
+import type { KeywordSet, AnnouncementContext } from "./types";
 
 export function getKeywordSets() {
   const data: KeywordSet[] = [
@@ -23,7 +23,7 @@ export async function getProducts(
   search: string,
   offset: number
 ): Promise<{
-  products: SelectProduct[];
+  products: AnnouncementContext[];
   newOffset: number | null;
   totalProducts: number;
 }> {
@@ -31,7 +31,7 @@ export async function getProducts(
     return { products: [], newOffset: null, totalProducts: 0 };
   }
 
-  const items: SelectProduct[] = [
+  const items: AnnouncementContext[] = [
     {
       id: 1,
       name: "가칭 인공지능 직업교육센터 신축공사 폐기물 처리용역",

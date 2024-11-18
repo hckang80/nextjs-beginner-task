@@ -1,13 +1,13 @@
 "use client";
 
-import { SelectProduct } from "@/lib";
+import { AnnouncementContext } from "@/lib";
 import { ArrowUpDown } from "lucide-react";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Product } from ".";
 import { ProductPagination } from "../product-pagination";
 
 interface SortConfig {
-  key: keyof SelectProduct | null;
+  key: keyof AnnouncementContext | null;
   direction: "ascending" | "descending" | null;
 }
 
@@ -17,12 +17,12 @@ export function ProductsTable({
   totalProducts,
   setData,
 }: {
-  products: SelectProduct[];
+  products: AnnouncementContext[];
   offset: number;
   totalProducts: number;
   setData: Dispatch<
     SetStateAction<{
-      products: SelectProduct[];
+      products: AnnouncementContext[];
       newOffset: number | null;
       totalProducts: number;
     } | null>
@@ -35,7 +35,7 @@ export function ProductsTable({
     direction: null,
   });
 
-  const handleSort = (key: keyof SelectProduct) => {
+  const handleSort = (key: keyof AnnouncementContext) => {
     const direction =
       sortConfig.key === key && sortConfig.direction === "ascending"
         ? "descending"
