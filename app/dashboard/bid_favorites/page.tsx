@@ -1,11 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getProducts, MY_FAVORITES, AnnouncementContext } from "@/lib";
+import {
+  getProducts,
+  MY_FAVORITES,
+  AnnouncementContext,
+  announcementSteps,
+  suggestedStates,
+  announcementPrices,
+  announcementTypes,
+} from "@/lib";
 import { ProductsTable } from ".";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/compat/router";
+import { Input } from "@/components/ui/input";
 
 export default function BidFavorites(props: {
   searchParams: Promise<{ q: string; offset: string }>;
@@ -42,10 +51,45 @@ export default function BidFavorites(props: {
   return (
     <>
       <Card className="rounded-[2px] p-[10px]">
-        <div className="flex justify-between">
-          <div className="flex items-center gap-2">
-            필터 기능은 미구현
+        <div className="flex justify-between gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <select>
+              <option value="">공고 단계</option>
+              {announcementSteps.map(({ label, value }) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+            <Input placeholder="공고명 검색" className="w-[150px]" />
+            <Input placeholder="기관 검색" className="w-[150px]" />
+            <select>
+              <option value="">구분</option>
+              {announcementTypes.map(({ label, value }) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+            <select>
+              <option value="">금액</option>
+              {announcementPrices.map(({ label, value }) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+            <select>
+              <option value="">제안 선택</option>
+              {suggestedStates.map(({ label, value }) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+
             <Button>태그 필터</Button>
+
             <label className="flex items-center gap-2">
               <input
                 type="checkbox"
