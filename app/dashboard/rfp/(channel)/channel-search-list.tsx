@@ -17,6 +17,11 @@ export function ChannelSearchList({
   filteredData: ChannelItem[];
   handleItemCheckboxChange: (id: number) => void;
 }) {
+  const bgColor: Record<string, string> = {
+    agency: "bg-violet-400",
+    university: "bg-red-300",
+  };
+
   return (
     <>
       <tr>
@@ -38,7 +43,7 @@ export function ChannelSearchList({
             {filteredData
               .filter((item) => item.type === type)
               .map((item) => (
-                <li key={item.id}>
+                <li key={item.id} className={item.checked ? bgColor[type] : ""}>
                   <label className="flex items-center gap-2">
                     <input
                       type="checkbox"
