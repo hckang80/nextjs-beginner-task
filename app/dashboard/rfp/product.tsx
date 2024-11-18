@@ -4,7 +4,7 @@ import { Star } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export function Product({ product }: { product: AnnouncementContext }) {
-  const { id, name, price, type, source, createAt, endAt } = product;
+  const { id, name, price, type, source, createdAt, endedAt } = product;
 
   const { toast } = useToast();
 
@@ -58,8 +58,8 @@ export function Product({ product }: { product: AnnouncementContext }) {
       <td>{price}</td>
       <td>{type}</td>
       <td>{source}</td>
-      <td>{toReadableDate(createAt)}</td>
-      <td>{toReadableDate(endAt)}</td>
+      <td>{toReadableDate(createdAt)}</td>
+      <td>{toReadableDate(endedAt)}</td>
     </tr>
   );
 }

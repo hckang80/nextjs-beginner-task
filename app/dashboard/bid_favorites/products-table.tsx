@@ -93,13 +93,13 @@ export function ProductsTable({
             <th>공고기관</th>
             <th>
               게시일
-              <button onClick={() => handleSort("createAt")}>
+              <button onClick={() => handleSort("createdAt")}>
                 <ArrowUpDown />
               </button>
             </th>
             <th>
               마감일
-              <button onClick={() => handleSort("endAt")}>
+              <button onClick={() => handleSort("endedAt")}>
                 <ArrowUpDown />
               </button>
             </th>

@@ -13,7 +13,7 @@ export function Product({
   isVisibleMemo: boolean;
   product: AnnouncementContext;
 }) {
-  const { id, name, price, type, source, createAt, endAt } = product;
+  const { id, name, price, type, source, createdAt, endedAt } = product;
 
   const router = useRouter();
 
@@ -68,8 +68,8 @@ export function Product({
         <td>{price}</td>
         <td>{type}</td>
         <td>{source}</td>
-        <td>{toReadableDate(createAt)}</td>
-        <td>{toReadableDate(endAt)}</td>
+        <td>{toReadableDate(createdAt)}</td>
+        <td>{toReadableDate(endedAt)}</td>
       </tr>
       {isVisibleMemo && (
         <tr>

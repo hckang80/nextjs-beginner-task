@@ -59,8 +59,8 @@ export interface AnnouncementContext {
   price: string;
   type: AnnouncementTypes;
   source: string;
-  createAt: Date;
-  endAt: Date;
+  createdAt: Date;
+  endedAt: Date;
 }
 
 export interface DetailedSearchForm {
