@@ -168,6 +168,10 @@ label {
   -webkit-tap-highlight-color: transparent;
 }
 
+label {
+  cursor: pointer;
+}
+
 table[class] {
   table-layout: fixed;
   border-collapse: collapse;
