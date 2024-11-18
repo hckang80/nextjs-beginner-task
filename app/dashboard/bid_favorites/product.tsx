@@ -23,9 +23,7 @@ export function Product({
 }: {
   isVisibleMemoContext: boolean;
   product: AnnouncementContext;
-  deleteFavorite: (
-    id: number
-  ) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  deleteFavorite: (id: number) => void;
 }) {
   const { id, name, price, type, source, createdAt, endedAt } = product;
 
@@ -134,17 +132,12 @@ export function DeleteButton({
   deleteFavorite, // TODO: Props Drilling이 심함. 개선 필요
 }: {
   id: number;
-  deleteFavorite: (
-    id: number
-  ) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  deleteFavorite: (id: number) => void;
 }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <button
-          className="p-[10px]"
-          onClick={(event) => event.stopPropagation()}
-        >
+        <button className="p-[10px]">
           <Trash2 size={20} />
         </button>
       </AlertDialogTrigger>
@@ -155,10 +148,8 @@ export function DeleteButton({
           </AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={(event) => event.stopPropagation()}>
-            아니오
-          </AlertDialogCancel>
-          <AlertDialogAction onClick={deleteFavorite(id)}>
+          <AlertDialogCancel>아니오</AlertDialogCancel>
+          <AlertDialogAction onClick={() => deleteFavorite(id)}>
             삭제하기
           </AlertDialogAction>
         </AlertDialogFooter>

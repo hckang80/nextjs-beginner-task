@@ -75,23 +75,19 @@ export function ProductsTable({
     focusDataTable();
   }, [offset]);
 
-  const deleteFavorite =
-    (id: number) =>
-    (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      event.stopPropagation();
+  const deleteFavorite = (id: number) => {
+    const currentFavorites: number[] = JSON.parse(
+      localStorage.getItem(MY_FAVORITES) || "[]"
+    );
+    const result = currentFavorites.filter((uid) => uid !== id);
+    localStorage.setItem(MY_FAVORITES, JSON.stringify(result));
 
-      const currentFavorites: number[] = JSON.parse(
-        localStorage.getItem(MY_FAVORITES) || "[]"
-      );
-      const result = currentFavorites.filter((uid) => uid !== id);
-      localStorage.setItem(MY_FAVORITES, JSON.stringify(result));
-
-      setData({
-        newOffset: offset,
-        totalProducts,
-        products: products.filter((item) => item.id !== id),
-      });
-    };
+    setData({
+      newOffset: offset,
+      totalProducts,
+      products: products.filter((item) => item.id !== id),
+    });
+  };
 
   return (
     <>
