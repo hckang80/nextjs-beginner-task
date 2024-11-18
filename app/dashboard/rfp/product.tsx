@@ -1,12 +1,11 @@
 import { useToast } from "@/hooks/use-toast";
 import { SelectProduct } from "@/lib";
 import { Star } from "lucide-react";
+import { useRouter } from "next/navigation";
 
-export function Product({
-  product: { id, name, price, type, source, createAt, endAt },
-}: {
-  product: SelectProduct;
-}) {
+export function Product({ product }: { product: SelectProduct }) {
+  const { id, name, price, type, source, createAt, endAt } = product;
+
   const { toast } = useToast();
 
   const storageKey = "myFavorites";
@@ -41,8 +40,14 @@ export function Product({
   const getStateColor = (id: number) =>
     hasFavorite(id) ? "hsl(var(--chart-4))" : "hsl(var(--input))";
 
+  const router = useRouter();
+
+  const handleRowClick = (row: SelectProduct) => {
+    router.push(`/dashboard/rfp/${row.id}`);
+  };
+
   return (
-    <tr>
+    <tr onClick={() => handleRowClick(product)}>
       <td>
         <button onClick={saveFavorite(id)}>
           <Star fill={getStateColor(id)} strokeWidth={0} />
