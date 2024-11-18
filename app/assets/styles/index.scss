@@ -22,8 +22,21 @@
 
 .global-aside {
   margin: var(--header-height) 0 0;
+  padding: 30px;
   flex: 0 0 240px;
   border-right: 1px solid hsl(var(--input));
+}
+
+.global-nav {
+  font-size: 17px;
+}
+
+.global-sub-menu {
+  margin: 0 0 0 20px;
+
+  .is-active {
+    font-weight: bold;
+  }
 }
 
 .global-main {
