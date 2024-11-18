@@ -70,7 +70,7 @@ export async function getProducts(
     },
     {
       id: 5,
-      name: "가칭 인공지능 직업교육센터 신축공사 폐기물 처리용역",
+      name: "서울 직업교육센터 신축공사 폐기물 처리용역",
       price: "0.3억",
       type: "용역",
       source: "충청남도교육청",
@@ -79,7 +79,7 @@ export async function getProducts(
     },
     {
       id: 6,
-      name: "가칭 인공지능 직업교육센터 신축공사 폐기물 처리용역",
+      name: "대전 직업교육센터 신축공사 폐기물 처리용역",
       price: "0.3억",
       type: "용역",
       source: "충청남도교육청",
@@ -88,7 +88,7 @@ export async function getProducts(
     },
     {
       id: 7,
-      name: "가칭 인공지능 직업교육센터 신축공사 폐기물 처리용역",
+      name: "대구 직업교육센터 신축공사 폐기물 처리용역",
       price: "0.3억",
       type: "용역",
       source: "충청남도교육청",
@@ -97,7 +97,7 @@ export async function getProducts(
     },
     {
       id: 8,
-      name: "가칭 인공지능 직업교육센터 신축공사 폐기물 처리용역",
+      name: "부산 직업교육센터 신축공사 폐기물 처리용역",
       price: "0.3억",
       type: "용역",
       source: "충청남도교육청",
@@ -106,7 +106,7 @@ export async function getProducts(
     },
     {
       id: 9,
-      name: "가칭 인공지능 직업교육센터 신축공사 폐기물 처리용역",
+      name: "광주 직업교육센터 신축공사 폐기물 처리용역",
       price: "0.3억",
       type: "용역",
       source: "충청남도교육청",
@@ -115,7 +115,7 @@ export async function getProducts(
     },
     {
       id: 10,
-      name: "가칭 인공지능 직업교육센터 신축공사 폐기물 처리용역",
+      name: "울산 직업교육센터 신축공사 폐기물 처리용역",
       price: "0.3억",
       type: "용역",
       source: "충청남도교육청",
