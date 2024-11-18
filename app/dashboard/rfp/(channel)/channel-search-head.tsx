@@ -1,16 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Dispatch, SetStateAction } from "react";
 
 export function ChannelSearchHead({
   isAllSelected,
   handleSelectAll,
   searchQuery,
   handleSearch,
+  isOpen,
+  setIsOpen,
 }: {
   isAllSelected: boolean;
   handleSelectAll: (event: React.ChangeEvent<HTMLInputElement>) => void;
   searchQuery: string;
   handleSearch: (event: React.FormEvent<HTMLInputElement>) => void;
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) {
   return (
     <tr>
@@ -36,8 +41,13 @@ export function ChannelSearchHead({
             채널 전부 보기
           </label>
 
-          <Button type="button" variant="secondary" className="ml-auto">
-            채널 목록
+          <Button
+            type="button"
+            variant="secondary"
+            className="ml-auto"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            채널 목록 {!isOpen ? "열기" : "접기"}
           </Button>
         </div>
       </td>

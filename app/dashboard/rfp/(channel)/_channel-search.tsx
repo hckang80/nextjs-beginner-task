@@ -22,6 +22,7 @@ const data: ChannelItem[] = [
 
 export function ChannelSearch() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
   const [dataGroups, setDataGroups] = useState(data);
 
   const filteredData = dataGroups.filter((item) =>
@@ -69,19 +70,22 @@ export function ChannelSearch() {
           handleSelectAll={handleSelectAll}
           searchQuery={searchQuery}
           handleSearch={handleSearch}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
         />
 
-        {channelContext.map(({ label, type }) => (
-          <ChannelSearchList
-            key={label}
-            label={label}
-            type={type}
-            isGroupSelected={isGroupSelected}
-            handleSelectGroup={handleSelectGroup}
-            filteredData={filteredData}
-            handleItemCheckboxChange={handleItemCheckboxChange}
-          />
-        ))}
+        {isOpen &&
+          channelContext.map(({ label, type }) => (
+            <ChannelSearchList
+              key={label}
+              label={label}
+              type={type}
+              isGroupSelected={isGroupSelected}
+              handleSelectGroup={handleSelectGroup}
+              filteredData={filteredData}
+              handleItemCheckboxChange={handleItemCheckboxChange}
+            />
+          ))}
       </tbody>
     </table>
   );
