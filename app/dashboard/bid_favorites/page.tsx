@@ -27,7 +27,7 @@ export default function BidFavorites(props: {
     setData(await getProducts(search, Number(offset)));
   };
 
-  const [isVisibleMemo, setIsVisibleMemo] = useState(false);
+  const [isVisibleMemoContext, setIsVisibleMemoContext] = useState(false);
 
   if (!data) {
     return "Loading...";
@@ -49,8 +49,8 @@ export default function BidFavorites(props: {
             <label className="flex items-center gap-2">
               <input
                 type="checkbox"
-                checked={isVisibleMemo}
-                onChange={() => setIsVisibleMemo(!isVisibleMemo)}
+                checked={isVisibleMemoContext}
+                onChange={() => setIsVisibleMemoContext(!isVisibleMemoContext)}
               />
               메모표시
             </label>
@@ -60,7 +60,7 @@ export default function BidFavorites(props: {
       </Card>
 
       <ProductsTable
-        isVisibleMemo={isVisibleMemo}
+        isVisibleMemoContext={isVisibleMemoContext}
         products={favoriteProducts}
         offset={newOffset ?? 0}
         totalProducts={favoriteProducts.length}

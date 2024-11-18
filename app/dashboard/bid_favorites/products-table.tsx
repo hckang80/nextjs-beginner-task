@@ -12,13 +12,13 @@ interface SortConfig {
 }
 
 export function ProductsTable({
-  isVisibleMemo,
+  isVisibleMemoContext,
   products,
   offset,
   totalProducts,
   setData,
 }: {
-  isVisibleMemo: boolean;
+  isVisibleMemoContext: boolean;
   products: AnnouncementContext[];
   offset: number;
   totalProducts: number;
@@ -127,7 +127,7 @@ export function ProductsTable({
         {products.slice(offset, offset + PRODUCTS_PER_PAGE).map((product) => (
           <Product
             key={product.id}
-            isVisibleMemo={isVisibleMemo}
+            isVisibleMemoContext={isVisibleMemoContext}
             product={product}
           />
         ))}

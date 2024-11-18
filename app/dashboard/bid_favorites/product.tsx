@@ -7,10 +7,10 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function Product({
-  isVisibleMemo,
+  isVisibleMemoContext,
   product,
 }: {
-  isVisibleMemo: boolean;
+  isVisibleMemoContext: boolean;
   product: AnnouncementContext;
 }) {
   const { id, name, price, type, source, createdAt, endedAt } = product;
@@ -71,13 +71,15 @@ export function Product({
         <td>{toReadableDate(createdAt)}</td>
         <td>{toReadableDate(endedAt)}</td>
       </tr>
-      {isVisibleMemo && (
+      {isVisibleMemoContext && (
         <tr>
           <td colSpan={8}>
             <div className="flex justify-between gap-2 px-[20px]">
-              <button>
-                <Pencil size={16} />
-              </button>
+              <div className="shrink-0">
+                <button>
+                  <Pencil size={16} />
+                </button>
+              </div>
               <dl className="flex items-center gap-6">
                 <div className="flex items-center gap-2">
                   <dt className="shrink-0 font-bold">담당</dt>
