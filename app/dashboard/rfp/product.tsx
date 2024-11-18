@@ -34,7 +34,7 @@ export function Product({ product }: { product: AnnouncementContext }) {
 
   const getToastTitle = (id: number) =>
     hasFavorite(id)
-      ? "프로젝트(My Projects)에서 삭제되었습니다."
+      ? "관심 공고에서 삭제되었습니다."
       : "관심 공고에 추가되었습니다.";
 
   const getStateColor = (id: number) =>
