@@ -78,29 +78,48 @@ export function ProductsTable({
   return (
     <>
       <table className="data-table" ref={tableRef}>
+        <colgroup>
+          <col />
+          <col />
+          <col className="w-[260px]" />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+        </colgroup>
         <thead>
           <tr>
             <th>관심공고</th>
             <th>#</th>
             <th>공고명</th>
             <th>
-              금액(원)
-              <button onClick={() => handleSort("price")}>
-                <ArrowUpDown />
+              <button
+                className="inline-flex items-center gap-[4px]"
+                onClick={() => handleSort("price")}
+              >
+                금액(원)
+                <ArrowUpDown size={16} />
               </button>
             </th>
             <th>구분</th>
             <th>공고기관</th>
             <th>
-              게시일
-              <button onClick={() => handleSort("createdAt")}>
-                <ArrowUpDown />
+              <button
+                className="inline-flex items-center gap-[4px]"
+                onClick={() => handleSort("createdAt")}
+              >
+                게시일
+                <ArrowUpDown size={16} />
               </button>
             </th>
             <th>
-              마감일
-              <button onClick={() => handleSort("endedAt")}>
-                <ArrowUpDown />
+              <button
+                className="inline-flex items-center gap-[4px]"
+                onClick={() => handleSort("endedAt")}
+              >
+                마감일
+                <ArrowUpDown size={16} />
               </button>
             </th>
           </tr>
