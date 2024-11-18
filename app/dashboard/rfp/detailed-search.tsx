@@ -20,7 +20,13 @@ import {
   useState,
 } from "react";
 import { toast, useToast } from "@/hooks/use-toast";
-import { cn, DetailedSearchForm, getKeywordSets, type KeywordSet } from "@/lib";
+import {
+  cn,
+  DetailedSearchForm,
+  getKeywordSets,
+  toReadableDate,
+  type KeywordSet,
+} from "@/lib";
 import { KeywordSetItem, ToggleController } from ".";
 import { getMaxNumber } from "@/lib";
 
@@ -267,12 +273,8 @@ export function AnnouncementDate({
 
     setFormModel({
       ...formModel,
-      announcementDateFrom: isFreeInput(value)
-        ? ""
-        : new Intl.DateTimeFormat("en-CA").format(),
-      announcementDateTo: isFreeInput(value)
-        ? ""
-        : new Intl.DateTimeFormat("en-CA").format(),
+      announcementDateFrom: isFreeInput(value) ? "" : toReadableDate(),
+      announcementDateTo: isFreeInput(value) ? "" : toReadableDate(),
     });
   };
 

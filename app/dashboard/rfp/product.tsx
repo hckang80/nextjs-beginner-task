@@ -1,5 +1,5 @@
 import { useToast } from "@/hooks/use-toast";
-import { SelectProduct } from "@/lib";
+import { SelectProduct, toReadableDate } from "@/lib";
 import { Star } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -58,8 +58,8 @@ export function Product({ product }: { product: SelectProduct }) {
       <td>{price}</td>
       <td>{type}</td>
       <td>{source}</td>
-      <td>{createAt.toISOString()}</td>
-      <td>{endAt.toISOString()}</td>
+      <td>{toReadableDate(createAt)}</td>
+      <td>{toReadableDate(endAt)}</td>
     </tr>
   );
 }
