@@ -1,6 +1,6 @@
 "use client";
 
-import { AnnouncementContext } from "@/lib";
+import { AnnouncementContext, MY_FAVORITES } from "@/lib";
 import { ArrowUpDown } from "lucide-react";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Product } from ".";
@@ -75,6 +75,24 @@ export function ProductsTable({
     focusDataTable();
   }, [offset]);
 
+  const deleteFavorite =
+    (id: number) =>
+    (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      event.stopPropagation();
+
+      const currentFavorites: number[] = JSON.parse(
+        localStorage.getItem(MY_FAVORITES) || "[]"
+      );
+      const result = currentFavorites.filter((uid) => uid !== id);
+      localStorage.setItem(MY_FAVORITES, JSON.stringify(result));
+
+      setData({
+        newOffset: offset,
+        totalProducts,
+        products: products.filter((item) => item.id !== id),
+      });
+    };
+
   return (
     <>
       <table className="data-table" ref={tableRef}>
@@ -129,6 +147,7 @@ export function ProductsTable({
             key={product.id}
             isVisibleMemoContext={isVisibleMemoContext}
             product={product}
+            deleteFavorite={deleteFavorite}
           />
         ))}
       </table>

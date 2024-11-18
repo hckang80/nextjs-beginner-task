@@ -2,6 +2,17 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { AnnouncementContext, suggestedStates, toReadableDate } from "@/lib";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Pencil, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -9,9 +20,13 @@ import { useState } from "react";
 export function Product({
   isVisibleMemoContext,
   product,
+  deleteFavorite,
 }: {
   isVisibleMemoContext: boolean;
   product: AnnouncementContext;
+  deleteFavorite: (
+    id: number
+  ) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }) {
   const { id, name, price, type, source, createdAt, endedAt } = product;
 
@@ -70,9 +85,7 @@ export function Product({
         <td>{toReadableDate(createdAt)}</td>
         <td>{toReadableDate(endedAt)}</td>
         <td>
-          <button className="p-[10px]">
-            <Trash2 size={20} />
-          </button>
+          <DeleteButton id={id} deleteFavorite={deleteFavorite} />
         </td>
       </tr>
       {isVisibleMemoContext && (
@@ -118,5 +131,45 @@ export function Product({
         </tr>
       )}
     </tbody>
+  );
+}
+
+export function DeleteButton({
+  id,
+  deleteFavorite,
+}: {
+  id: number;
+  deleteFavorite: (
+    id: number
+  ) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+}) {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <button
+          className="p-[10px]"
+          onClick={(event) => event.stopPropagation()}
+        >
+          <Trash2 size={20} />
+        </button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. This will permanently delete your
+            account and remove your data from our servers.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel onClick={(event) => event.stopPropagation()}>
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={deleteFavorite(id)}>
+            Continue
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
