@@ -98,11 +98,9 @@ export function ProductsTable({
             <th>마김일</th>
           </tr>
         </thead>
-        <tbody>
-          {products.slice(offset, offset + PRODUCTS_PER_PAGE).map((product) => (
-            <Product key={product.id} product={product} />
-          ))}
-        </tbody>
+        {products.slice(offset, offset + PRODUCTS_PER_PAGE).map((product) => (
+          <Product key={product.id} product={product} />
+        ))}
       </table>
 
       {PRODUCTS_PER_PAGE < totalProducts && (
