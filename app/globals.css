@@ -106,6 +106,7 @@ body {
   font: 15px/1.5 Arial, Helvetica, sans-serif;
   color: var(--foreground);
   background: var(--background);
+  overflow-y: hidden;
 }
 
 ul,
