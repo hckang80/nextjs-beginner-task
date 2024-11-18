@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
 import { AnnouncementContext, suggestedStates, toReadableDate } from "@/lib";
 import { Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export function Product({ product }: { product: AnnouncementContext }) {
   const { id, name, price, type, source, createAt, endAt } = product;
@@ -11,6 +13,31 @@ export function Product({ product }: { product: AnnouncementContext }) {
 
   const handleRowClick = (row: AnnouncementContext) => {
     router.push(`/dashboard/rfp/${row.id}`);
+  };
+
+  const [memo, setMemo] = useState<Record<string, string>>({});
+
+  const handleMemo =
+    (id: number) => (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+      const { value } = event.currentTarget;
+
+      setMemo({
+        ...memo,
+        [id]: value,
+      });
+    };
+
+  const { toast } = useToast();
+
+  const saveMemo = (id: number) => {
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <pre>
+          <code>{JSON.stringify({ id, text: memo[id] }, null, 2)}</code>
+        </pre>
+      ),
+    });
   };
 
   return (
@@ -54,8 +81,9 @@ export function Product({ product }: { product: AnnouncementContext }) {
                   <Textarea
                     placeholder="Type your message here."
                     className="bg-white"
+                    onChange={handleMemo(id)}
                   />
-                  <Button>수정</Button>
+                  <Button onClick={() => saveMemo(id)}>수정</Button>
                 </dd>
               </div>
             </dl>
