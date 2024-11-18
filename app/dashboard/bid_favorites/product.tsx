@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { AnnouncementContext, suggestedStates, toReadableDate } from "@/lib";
 import { Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -50,7 +51,10 @@ export function Product({ product }: { product: AnnouncementContext }) {
               <div>
                 <dt>비고</dt>
                 <dd>
-                  <textarea></textarea>
+                  <Textarea
+                    placeholder="Type your message here."
+                    className="bg-white"
+                  />
                   <Button>수정</Button>
                 </dd>
               </div>
