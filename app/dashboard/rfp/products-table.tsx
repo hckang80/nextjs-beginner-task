@@ -2,7 +2,7 @@
 
 import { SelectProduct } from "@/lib";
 import { ArrowUpDown } from "lucide-react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Product, ProductPagination } from ".";
 
 interface SortConfig {
@@ -58,9 +58,22 @@ export function ProductsTable({
     setSortConfig({ key, direction });
   };
 
+  const tableRef = useRef<HTMLTableElement | null>(null);
+
+  const focusDataTable = () => {
+    tableRef?.current?.scrollIntoView();
+  };
+
+  useEffect(() => {
+    const isPaginationTouch = new URLSearchParams(location.search).has(
+      "offset"
+    );
+    isPaginationTouch && focusDataTable();
+  }, [offset]);
+
   return (
     <>
-      <table className="data-table">
+      <table className="data-table" ref={tableRef}>
         <thead>
           <tr>
             <th>관심공고</th>
