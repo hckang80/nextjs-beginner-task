@@ -10,8 +10,10 @@ export function ChannelSearchList({
 }: {
   label: string;
   type: string;
-  isAllSelected: boolean;
-  handleSelectAll: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  isAllSelected: (type: string) => boolean;
+  handleSelectAll: (
+    type: string
+  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
   filteredData: ChannelItem[];
   handleItemCheckboxChange: (id: number) => void;
 }) {
@@ -22,8 +24,8 @@ export function ChannelSearchList({
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
-            checked={isAllSelected}
-            onChange={handleSelectAll}
+            checked={isAllSelected(type)}
+            onChange={handleSelectAll(type)}
           />
           {`${label} 전부 보기`}
         </label>

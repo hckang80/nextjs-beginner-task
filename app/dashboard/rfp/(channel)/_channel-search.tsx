@@ -22,33 +22,37 @@ const sampleData: ChannelItem[] = [
 
 export function ChannelSearch() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredData, setFilteredData] = useState(sampleData);
+  const [dataGroups, setDataGroups] = useState(sampleData);
+
+  const filteredData = dataGroups.filter((item) =>
+    item.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleSearch = (event: React.FormEvent<HTMLInputElement>) => {
     const { value: query } = event.currentTarget;
     setSearchQuery(query);
-
-    const filtered = sampleData.filter((item) =>
-      item.name.toLowerCase().includes(query.toLowerCase())
-    );
-    setFilteredData(filtered);
   };
 
   const handleItemCheckboxChange = (id: number) => {
-    setFilteredData((list) =>
+    setDataGroups((list) =>
       list.map((item) => {
         return item.id === id ? { ...item, checked: !item.checked } : item;
       })
     );
   };
 
-  const isAllSelected = filteredData.every((item) => item.checked);
+  const isAllSelected = (type: string) =>
+    filteredData
+      .filter((item) => item.type === type)
+      .every((item) => item.checked);
 
-  const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { checked } = event.target;
-
-    setFilteredData((list) => list.map((item) => ({ ...item, checked })));
-  };
+  const handleSelectAll =
+    (type: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { checked } = event.target;
+      setDataGroups((list) =>
+        list.map((item) => (item.type === type ? { ...item, checked } : item))
+      );
+    };
 
   return (
     <table className="search-table">
