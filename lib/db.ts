@@ -19,10 +19,7 @@ export function getKeywordSets() {
   return data;
 }
 
-export async function getProducts(
-  search: string,
-  offset: number
-): Promise<{
+export async function getProducts(offset: number): Promise<{
   products: AnnouncementContext[];
   newOffset: number | null;
   totalProducts: number;

@@ -17,7 +17,7 @@ import { useRouter } from "next/compat/router";
 import { Input } from "@/components/ui/input";
 
 export default function BidFavorites(props: {
-  searchParams: Promise<{ q: string; offset: string }>;
+  searchParams: Promise<{ offset: string }>;
 }) {
   const [data, setData] = useState<{
     products: AnnouncementContext[];
@@ -31,9 +31,8 @@ export default function BidFavorites(props: {
 
   const fetchData = async () => {
     const searchParams = await props.searchParams;
-    const search = searchParams.q ?? "";
     const offset = searchParams.offset ?? 0;
-    setData(await getProducts(search, Number(offset)));
+    setData(await getProducts(Number(offset)));
   };
 
   const [isVisibleMemoContext, setIsVisibleMemoContext] = useState(false);
