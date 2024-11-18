@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { getProducts, MY_FAVORITES, AnnouncementContext } from "@/lib";
 import { ProductsTable } from ".";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export default function BidFavorites(props: {
   searchParams: Promise<{ q: string; offset: string }>;
@@ -24,6 +26,8 @@ export default function BidFavorites(props: {
     setData(await getProducts(search, Number(offset)));
   };
 
+  const [isVisibleMemo, setIsVisibleMemo] = useState(false);
+
   if (!data) {
     return "Loading...";
   }
@@ -35,11 +39,28 @@ export default function BidFavorites(props: {
   );
 
   return (
-    <ProductsTable
-      products={favoriteProducts}
-      offset={newOffset ?? 0}
-      totalProducts={favoriteProducts.length}
-      setData={setData}
-    />
+    <>
+      <Card className="rounded-[2px] p-[10px]">
+        <div className="flex items-center gap-2">
+          필터 기능은 미구현
+          <Button>태그 필터</Button>
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={isVisibleMemo}
+              onChange={() => setIsVisibleMemo(!isVisibleMemo)}
+            />
+            메모표시
+          </label>
+        </div>
+      </Card>
+
+      <ProductsTable
+        products={favoriteProducts}
+        offset={newOffset ?? 0}
+        totalProducts={favoriteProducts.length}
+        setData={setData}
+      />
+    </>
   );
 }
