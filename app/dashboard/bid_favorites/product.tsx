@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { AnnouncementContext, suggestedStates, toReadableDate } from "@/lib";
-import { Pencil } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -63,13 +63,17 @@ export function Product({
     <tbody>
       <tr className="cursor-pointer" onClick={() => handleRowClick(product)}>
         <td>입찰 공고</td>
-        <td>{id}</td>
+        <td>{type}</td>
         <td style={{ textAlign: "left" }}>{name}</td>
         <td>{price}</td>
-        <td>{type}</td>
         <td>{source}</td>
         <td>{toReadableDate(createdAt)}</td>
         <td>{toReadableDate(endedAt)}</td>
+        <td>
+          <button className="p-[10px]">
+            <Trash2 size={20} />
+          </button>
+        </td>
       </tr>
       {isVisibleMemoContext && (
         <tr>

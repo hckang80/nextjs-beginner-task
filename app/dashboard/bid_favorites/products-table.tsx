@@ -90,8 +90,8 @@ export function ProductsTable({
         </colgroup>
         <thead>
           <tr>
-            <th>관심공고</th>
-            <th>#</th>
+            <th>공고 단계</th>
+            <th>구분</th>
             <th>공고명</th>
             <th>
               <button
@@ -102,7 +102,6 @@ export function ProductsTable({
                 <ArrowUpDown size={16} />
               </button>
             </th>
-            <th>구분</th>
             <th>공고기관</th>
             <th>
               <button
@@ -122,6 +121,7 @@ export function ProductsTable({
                 <ArrowUpDown size={16} />
               </button>
             </th>
+            <th>삭제</th>
           </tr>
         </thead>
         {products.slice(offset, offset + PRODUCTS_PER_PAGE).map((product) => (
