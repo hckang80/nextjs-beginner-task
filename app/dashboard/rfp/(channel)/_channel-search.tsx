@@ -38,18 +38,22 @@ export function ChannelSearch() {
   };
 
   const handleItemCheckboxChange = (id: number) => {
-    setDataGroups((list) =>
+    const result = (list: ChannelItem[]) =>
       list.map((item) => {
         return item.id === id ? { ...item, checked: !item.checked } : item;
-      })
-    );
+      });
+
+    setDataGroups(result);
   };
 
   const isAllSelected = dataGroups.every((item) => item.checked);
 
   const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = event.target;
-    setDataGroups((list) => list.map((item) => ({ ...item, checked })));
+    const result = (list: ChannelItem[]) =>
+      list.map((item) => ({ ...item, checked }));
+
+    setDataGroups(result);
   };
 
   const isGroupSelected = (type: string) =>
@@ -60,9 +64,10 @@ export function ChannelSearch() {
   const handleSelectGroup =
     (type: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
       const { checked } = event.target;
-      setDataGroups((list) =>
-        list.map((item) => (item.type === type ? { ...item, checked } : item))
-      );
+      const result = (list: ChannelItem[]) =>
+        list.map((item) => (item.type === type ? { ...item, checked } : item));
+
+      setDataGroups(result);
     };
 
   const handleSubmit = () => {
