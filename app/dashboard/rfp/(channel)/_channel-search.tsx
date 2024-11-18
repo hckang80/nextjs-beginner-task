@@ -42,7 +42,7 @@ export function ChannelSearch() {
   };
 
   const isAllSelectedGroup = (type: string) =>
-    filteredData
+    dataGroups
       .filter((item) => item.type === type)
       .every((item) => item.checked);
 
