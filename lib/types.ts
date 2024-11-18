@@ -37,3 +37,9 @@ export interface DetailedSearchForm {
     [key: string]: boolean;
   };
 }
+
+export interface ChannelItem {
+  id: number;
+  name: string;
+  checked: boolean;
+}
