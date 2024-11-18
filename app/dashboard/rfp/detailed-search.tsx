@@ -269,7 +269,7 @@ export function AnnouncementDate({
       ...formModel,
       announcementDateFrom: isFreeInput(value)
         ? ""
-        : new Intl.DateTimeFormat("en-CA").format(date),
+        : new Intl.DateTimeFormat("en-CA").format(),
       announcementDateTo: isFreeInput(value)
         ? ""
         : new Intl.DateTimeFormat("en-CA").format(),
