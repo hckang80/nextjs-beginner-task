@@ -13,8 +13,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Pencil, Trash2 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Link from "next/link";
 
 export function Product({
   isVisibleMemoContext,
@@ -28,12 +28,6 @@ export function Product({
   ) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }) {
   const { id, name, price, type, source, createdAt, endedAt } = product;
-
-  const router = useRouter();
-
-  const handleRowClick = (row: AnnouncementContext) => {
-    router.push(`/dashboard/rfp/${row.id}`);
-  };
 
   const saveSuggestedState =
     (id: number) => (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -75,10 +69,12 @@ export function Product({
 
   return (
     <tbody>
-      <tr className="cursor-pointer" onClick={() => handleRowClick(product)}>
+      <tr>
         <td>입찰 공고</td>
         <td>{type}</td>
-        <td style={{ textAlign: "left" }}>{name}</td>
+        <td style={{ textAlign: "left" }}>
+          <Link href={`/dashboard/rfp/${id}`}>{name}</Link>
+        </td>
         <td>{price}</td>
         <td>{source}</td>
         <td>{toReadableDate(createdAt)}</td>
