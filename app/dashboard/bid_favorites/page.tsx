@@ -28,7 +28,7 @@ export default function BidFavorites(props: {
     return "Loading...";
   }
 
-  const { products, newOffset, totalProducts } = data;
+  const { products, newOffset } = data;
 
   const favoriteProducts = products.filter(({ id }) =>
     JSON.parse(localStorage.getItem("myFavorites") || "[]").includes(id)
