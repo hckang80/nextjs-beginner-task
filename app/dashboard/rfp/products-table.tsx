@@ -89,7 +89,11 @@ export function ProductsTable({
           ))}
         </tbody>
       </table>
-      <ProductPagination />
+      <ProductPagination
+        productsPerPage={productsPerPage}
+        offset={offset}
+        totalProducts={totalProducts}
+      />
     </>
   );
 }
