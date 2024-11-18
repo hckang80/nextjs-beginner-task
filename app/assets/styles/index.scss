@@ -50,3 +50,27 @@ table.search-table {
     white-space: nowrap;
   }
 }
+
+table.data-table {
+  th,
+  td {
+    padding: 8px 5px;
+    text-align: center;
+  }
+
+  th {
+    background: hsl(var(--muted-foreground));
+    color: #fff;
+  }
+
+  td {
+    border-bottom: 1px solid hsl(var(--border));
+    background: #fff;
+  }
+
+  tr:hover {
+    td {
+      background: hsl(var(--muted));
+    }
+  }
+}
