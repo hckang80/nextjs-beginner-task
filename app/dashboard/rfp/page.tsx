@@ -51,13 +51,17 @@ export default function Rfp(props: {
       </div>
 
       <div className="grid gap-[15px]">
-        <Card className="p-6">
-          <DetailedSearch />
-        </Card>
+        <details open className="contents">
+          <summary>검색 숨기기</summary>
 
-        <Card className="p-6">
-          <ChannelSearch />
-        </Card>
+          <Card className="p-6">
+            <DetailedSearch />
+          </Card>
+
+          <Card className="p-6">
+            <ChannelSearch />
+          </Card>
+        </details>
 
         <div>
           <ProductsTable
