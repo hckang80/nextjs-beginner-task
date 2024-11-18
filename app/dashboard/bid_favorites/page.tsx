@@ -56,6 +56,7 @@ export default function BidFavorites(props: {
       </Card>
 
       <ProductsTable
+        isVisibleMemo={isVisibleMemo}
         products={favoriteProducts}
         offset={newOffset ?? 0}
         totalProducts={favoriteProducts.length}

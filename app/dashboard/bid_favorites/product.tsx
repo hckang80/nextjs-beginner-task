@@ -6,7 +6,13 @@ import { Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export function Product({ product }: { product: AnnouncementContext }) {
+export function Product({
+  isVisibleMemo,
+  product,
+}: {
+  isVisibleMemo: boolean;
+  product: AnnouncementContext;
+}) {
   const { id, name, price, type, source, createAt, endAt } = product;
 
   const router = useRouter();
@@ -65,44 +71,46 @@ export function Product({ product }: { product: AnnouncementContext }) {
         <td>{toReadableDate(createAt)}</td>
         <td>{toReadableDate(endAt)}</td>
       </tr>
-      <tr>
-        <td colSpan={8}>
-          <div className="flex justify-between gap-2">
-            <button>
-              <Pencil size={16} />
-            </button>
-            <dl>
-              <div>
-                <dt>담당</dt>
-                <dd>과제클라이원트</dd>
-              </div>
-              <div>
-                <dt>제안상태</dt>
-                <dd>
-                  <select onChange={saveSuggestedState(id)}>
-                    {suggestedStates.map(({ label, value }) => (
-                      <option key={value} value={value}>
-                        {label}
-                      </option>
-                    ))}
-                  </select>
-                </dd>
-              </div>
-              <div>
-                <dt>비고</dt>
-                <dd>
-                  <Textarea
-                    placeholder="Type your message here."
-                    className="bg-white"
-                    onChange={handleMemo(id)}
-                  />
-                  <Button onClick={() => saveMemo(id)}>수정</Button>
-                </dd>
-              </div>
-            </dl>
-          </div>
-        </td>
-      </tr>
+      {isVisibleMemo && (
+        <tr>
+          <td colSpan={8}>
+            <div className="flex justify-between gap-2 px-[20px]">
+              <button>
+                <Pencil size={16} />
+              </button>
+              <dl className="flex items-center gap-6">
+                <div className="flex items-center gap-2">
+                  <dt className="shrink-0 font-bold">담당</dt>
+                  <dd>과제클라이원트</dd>
+                </div>
+                <div className="flex items-center gap-2">
+                  <dt className="shrink-0 font-bold">제안상태</dt>
+                  <dd>
+                    <select onChange={saveSuggestedState(id)}>
+                      {suggestedStates.map(({ label, value }) => (
+                        <option key={value} value={value}>
+                          {label}
+                        </option>
+                      ))}
+                    </select>
+                  </dd>
+                </div>
+                <div className="flex items-center gap-2">
+                  <dt className="shrink-0 font-bold">비고</dt>
+                  <dd className="contents">
+                    <Textarea
+                      placeholder="Type your message here."
+                      className="bg-white"
+                      onChange={handleMemo(id)}
+                    />
+                    <Button onClick={() => saveMemo(id)}>수정</Button>
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </td>
+        </tr>
+      )}
     </tbody>
   );
 }
