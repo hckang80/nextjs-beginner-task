@@ -3,7 +3,7 @@
 import { SelectProduct } from "@/lib";
 import { ArrowUpDown } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
-import { Product } from ".";
+import { Product, ProductPagination } from ".";
 
 interface SortConfig {
   key: keyof SelectProduct | null;
@@ -59,34 +59,37 @@ export function ProductsTable({
   };
 
   return (
-    <table className="data-table">
-      <thead>
-        <tr>
-          <th>관심공고</th>
-          <th>
-            #
-            <button onClick={() => handleSort("id")}>
-              <ArrowUpDown />
-            </button>
-          </th>
-          <th>
-            공고명
-            <button onClick={() => handleSort("name")}>
-              <ArrowUpDown />
-            </button>
-          </th>
-          <th>금액(원)</th>
-          <th>구분</th>
-          <th>공고기관</th>
-          <th>게시일</th>
-          <th>마김일</th>
-        </tr>
-      </thead>
-      <tbody>
-        {products.slice(offset, offset + productsPerPage).map((product) => (
-          <Product key={product.id} product={product} />
-        ))}
-      </tbody>
-    </table>
+    <>
+      <table className="data-table">
+        <thead>
+          <tr>
+            <th>관심공고</th>
+            <th>
+              #
+              <button onClick={() => handleSort("id")}>
+                <ArrowUpDown />
+              </button>
+            </th>
+            <th>
+              공고명
+              <button onClick={() => handleSort("name")}>
+                <ArrowUpDown />
+              </button>
+            </th>
+            <th>금액(원)</th>
+            <th>구분</th>
+            <th>공고기관</th>
+            <th>게시일</th>
+            <th>마김일</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.slice(offset, offset + productsPerPage).map((product) => (
+            <Product key={product.id} product={product} />
+          ))}
+        </tbody>
+      </table>
+      <ProductPagination />
+    </>
   );
 }
