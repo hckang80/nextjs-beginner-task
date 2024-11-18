@@ -3,7 +3,7 @@ import { ChannelSearchHead } from "./channel-search-head";
 import { ChannelSearchList } from "./channel-search-list";
 import { channelContext, ChannelItem } from "@/lib";
 
-const sampleData: ChannelItem[] = [
+const data: ChannelItem[] = [
   { id: 1, name: "BioIN", type: "agency" },
   { id: 2, name: "IBK 시스템", type: "agency" },
   { id: 3, name: "IBK 저축은행", type: "agency" },
@@ -22,7 +22,7 @@ const sampleData: ChannelItem[] = [
 
 export function ChannelSearch() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [dataGroups, setDataGroups] = useState(sampleData);
+  const [dataGroups, setDataGroups] = useState(data);
 
   const filteredData = dataGroups.filter((item) =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -41,7 +41,7 @@ export function ChannelSearch() {
     );
   };
 
-  const isAllSelected = (type: string) =>
+  const isAllSelectedGroup = (type: string) =>
     filteredData
       .filter((item) => item.type === type)
       .every((item) => item.checked);
@@ -67,7 +67,7 @@ export function ChannelSearch() {
             key={label}
             label={label}
             type={type}
-            isAllSelected={isAllSelected}
+            isAllSelectedGroup={isAllSelectedGroup}
             handleSelectAll={handleSelectAll}
             filteredData={filteredData}
             handleItemCheckboxChange={handleItemCheckboxChange}

@@ -3,14 +3,14 @@ import { ChannelItem } from "@/lib";
 export function ChannelSearchList({
   label,
   type,
-  isAllSelected,
+  isAllSelectedGroup,
   handleSelectAll,
   filteredData,
   handleItemCheckboxChange,
 }: {
   label: string;
   type: string;
-  isAllSelected: (type: string) => boolean;
+  isAllSelectedGroup: (type: string) => boolean;
   handleSelectAll: (
     type: string
   ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -24,7 +24,7 @@ export function ChannelSearchList({
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
-            checked={isAllSelected(type)}
+            checked={isAllSelectedGroup(type)}
             onChange={handleSelectAll(type)}
           />
           {`${label} 전부 보기`}
