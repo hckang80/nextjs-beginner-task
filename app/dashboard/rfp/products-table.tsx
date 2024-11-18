@@ -59,7 +59,7 @@ export function ProductsTable({
             <th>구분</th>
             <th>공고기관</th>
             <th>게시일</th>
-            <th>마김일</th>
+            <th>마감일</th>
           </tr>
         </thead>
         <tbody>
