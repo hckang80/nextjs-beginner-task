@@ -49,6 +49,10 @@ export default function BidFavorites(props: {
 
   return (
     <>
+      <header className="mb-[15px]">
+        <h2 className="text-[18px] font-bold text-indigo-600">관심 공고</h2>
+      </header>
+
       <Card className="rounded-[2px] p-[10px]">
         <div className="flex justify-between gap-2">
           <div className="flex flex-wrap items-center gap-2">

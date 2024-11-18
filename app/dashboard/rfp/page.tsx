@@ -32,15 +32,8 @@ export default function Rfp(props: {
 
   return (
     <div>
-      <div>
-        <nav>
-          <ul>
-            <li>입찰 공고</li>
-            <li>사전 규격</li>
-            <li>발주 계획</li>
-            <li>유찰 공고</li>
-          </ul>
-        </nav>
+      <header className="mb-[15px]">
+        <h2 className="text-[18px] font-bold text-indigo-600">입찰 공고</h2>
         <a
           href="https://www.youtube.com/watch?v=S1XSQbnWTFU"
           rel="noopener noreferrer"
@@ -48,7 +41,7 @@ export default function Rfp(props: {
         >
           입찰 공고 사용 Tip
         </a>
-      </div>
+      </header>
 
       <div className="grid gap-[15px]">
         <details open className="contents">
