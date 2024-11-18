@@ -24,5 +24,11 @@ export default function RfpDetail() {
     return "Loading...";
   }
 
-  return <div>{JSON.stringify(data, null, 2)}</div>;
+  return (
+    <div>
+      <header>
+        <h2>{data.name}</h2>
+      </header>
+    </div>
+  );
 }
