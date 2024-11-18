@@ -37,6 +37,7 @@ export function ChannelSearchHead({
               type="checkbox"
               checked={isAllSelected}
               onChange={handleSelectAll}
+              onClick={() => setIsOpen(true)}
             />
             채널 전부 보기
           </label>
