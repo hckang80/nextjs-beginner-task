@@ -84,7 +84,7 @@ export function Product({
       {isVisibleMemoContext && (
         <tr>
           <td colSpan={8}>
-            <div className="flex justify-between gap-2 px-[20px]">
+            <div className="flex justify-between items-center gap-2 px-[20px]">
               <div className="shrink-0">
                 <button>
                   <Pencil size={16} />

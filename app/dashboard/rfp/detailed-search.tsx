@@ -309,7 +309,7 @@ export function AnnouncementDate({
             />
           </div>
 
-          <label className="flex items-center gap-2">
+          <label className="flex items-center gap-2 text-[14px]">
             <input type="checkbox" />
             마감일 지난 공고 포함
           </label>
@@ -643,7 +643,7 @@ export function DetailedSearch() {
                   />
                 </div>
 
-                <label className="flex items-center gap-2">
+                <label className="flex items-center gap-2 text-[14px]">
                   <input
                     type="checkbox"
                     checked={isPriceLimit}

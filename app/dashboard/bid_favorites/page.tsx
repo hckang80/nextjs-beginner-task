@@ -89,7 +89,7 @@ export default function BidFavorites(props: {
 
             <Button>태그 필터</Button>
 
-            <label className="flex items-center gap-2">
+            <label className="flex items-center gap-2 text-[14px]">
               <input
                 type="checkbox"
                 checked={isVisibleMemoContext}
