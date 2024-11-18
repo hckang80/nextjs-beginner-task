@@ -17,7 +17,14 @@ export default function DashboardLayout({
   return (
     <div className="wrap">
       <header className="global-header">
-        <h1>cliwant</h1>
+        <h1>
+          <img
+            src="https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F542682c8b17017789cc2e977902e8281.cdn.bubble.io%2Ff1730178584582x927983228158931600%2FOG_Dark.png?w=150&h=84&auto=compress&dpr=1&fit=max"
+            alt="cliwant"
+            width="150"
+            height="84"
+          />
+        </h1>
       </header>
       <div className="global-inner">
         <aside className="global-aside">
