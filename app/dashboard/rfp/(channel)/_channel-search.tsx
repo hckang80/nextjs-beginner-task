@@ -53,6 +53,7 @@ export function ChannelSearch() {
         />
 
         <ChannelSearchList
+          label="입찰 기관"
           isAllSelected={isAllSelected}
           handleSelectAll={handleSelectAll}
           filteredData={filteredData}

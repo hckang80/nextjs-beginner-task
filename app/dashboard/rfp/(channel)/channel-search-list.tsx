@@ -1,11 +1,13 @@
 import { ChannelItem } from "@/lib";
 
 export function ChannelSearchList({
+  label,
   isAllSelected,
   handleSelectAll,
   filteredData,
   handleItemCheckboxChange,
 }: {
+  label: string;
   isAllSelected: boolean;
   handleSelectAll: (event: React.ChangeEvent<HTMLInputElement>) => void;
   filteredData: ChannelItem[];
@@ -13,7 +15,7 @@ export function ChannelSearchList({
 }) {
   return (
     <tr>
-      <th>입찰 기관</th>
+      <th>{label}</th>
       <td>
         <label className="flex items-center gap-2">
           <input
