@@ -49,6 +49,18 @@ export default function DashboardLayout({
               </ul>
             </details>
           </nav>
+
+          <address className="global-address">
+            <strong>법인명</strong> 주식회사 클라이원트
+            <br />
+            <strong>사업자 등록번호</strong> 169-87-03030
+            <br />
+            <strong>대표</strong> 조준호
+            <br />
+            <strong>연락처</strong> 010-6351-4802
+            <br />
+            <strong>주소</strong> 백범로31길 21, 서울창업허브 별관 108호
+          </address>
         </aside>
         <main className="global-main">{children}</main>
       </div>
