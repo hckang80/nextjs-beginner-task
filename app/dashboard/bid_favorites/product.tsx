@@ -15,6 +15,19 @@ export function Product({ product }: { product: AnnouncementContext }) {
     router.push(`/dashboard/rfp/${row.id}`);
   };
 
+  const saveSuggestedState =
+    (id: number) => (event: React.ChangeEvent<HTMLSelectElement>) => {
+      const { value } = event.currentTarget;
+      toast({
+        title: "You submitted the following values:",
+        description: (
+          <pre>
+            <code>{JSON.stringify({ id, value }, null, 2)}</code>
+          </pre>
+        ),
+      });
+    };
+
   const [memo, setMemo] = useState<Record<string, string>>({});
 
   const handleMemo =
@@ -34,7 +47,7 @@ export function Product({ product }: { product: AnnouncementContext }) {
       title: "You submitted the following values:",
       description: (
         <pre>
-          <code>{JSON.stringify({ id, text: memo[id] }, null, 2)}</code>
+          <code>{JSON.stringify({ id, value: memo[id] }, null, 2)}</code>
         </pre>
       ),
     });
@@ -66,7 +79,7 @@ export function Product({ product }: { product: AnnouncementContext }) {
               <div>
                 <dt>제안상태</dt>
                 <dd>
-                  <select>
+                  <select onChange={saveSuggestedState(id)}>
                     {suggestedStates.map(({ label, value }) => (
                       <option key={value} value={value}>
                         {label}
