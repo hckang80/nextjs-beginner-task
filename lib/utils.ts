@@ -12,3 +12,5 @@ export function getMaxNumber(array: number[]) {
 export function toReadableDate(date = new Date()) {
   return new Intl.DateTimeFormat("en-CA").format(date);
 }
+
+export const MY_FAVORITES = "myFavorites";

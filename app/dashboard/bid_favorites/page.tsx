@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getProducts, SelectProduct } from "@/lib";
+import { getProducts, MY_FAVORITES, SelectProduct } from "@/lib";
 import { ProductsTable } from ".";
 
 export default function BidFavorites(props: {
@@ -31,7 +31,7 @@ export default function BidFavorites(props: {
   const { products, newOffset } = data;
 
   const favoriteProducts = products.filter(({ id }) =>
-    JSON.parse(localStorage.getItem("myFavorites") || "[]").includes(id)
+    JSON.parse(localStorage.getItem(MY_FAVORITES) || "[]").includes(id)
   );
 
   return (

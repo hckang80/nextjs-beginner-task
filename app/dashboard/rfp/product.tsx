@@ -1,5 +1,5 @@
 import { useToast } from "@/hooks/use-toast";
-import { SelectProduct, toReadableDate } from "@/lib";
+import { MY_FAVORITES, SelectProduct, toReadableDate } from "@/lib";
 import { Star } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -8,7 +8,7 @@ export function Product({ product }: { product: SelectProduct }) {
 
   const { toast } = useToast();
 
-  const storageKey = "myFavorites";
+  const storageKey = MY_FAVORITES;
   const currentFavorites: number[] = JSON.parse(
     localStorage.getItem(storageKey) || "[]"
   );
