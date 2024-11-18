@@ -7,7 +7,6 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -118,7 +117,7 @@ export function Product({
                   <dt className="shrink-0 font-bold">비고</dt>
                   <dd className="contents">
                     <Textarea
-                      placeholder="Type your message here."
+                      placeholder="필요한 메모를 하세요.."
                       className="bg-white"
                       onChange={handleMemo(id)}
                     />
@@ -155,18 +154,16 @@ export function DeleteButton({
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </AlertDialogDescription>
+          <AlertDialogTitle>
+            선택된 프로젝트를 관심 목록에서 삭제하시겠습니까?
+          </AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={(event) => event.stopPropagation()}>
-            Cancel
+            아니오
           </AlertDialogCancel>
           <AlertDialogAction onClick={deleteFavorite(id)}>
-            Continue
+            삭제하기
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
