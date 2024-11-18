@@ -1,3 +1,5 @@
+import { Toast } from "@/components/ui/toast";
+import { useToast } from "@/hooks/use-toast";
 import { SelectProduct } from "@/lib";
 import { Star } from "lucide-react";
 
@@ -6,6 +8,8 @@ export function Product({
 }: {
   product: SelectProduct;
 }) {
+  const { toast } = useToast();
+
   const storageKey = "myFavorites";
   const currentFavorites: number[] = JSON.parse(
     localStorage.getItem(storageKey) || "[]"
@@ -22,7 +26,17 @@ export function Product({
         : [...currentFavorites, id];
 
       localStorage.setItem(storageKey, JSON.stringify(result));
+
+      toast({
+        title: getToastTitle(id),
+        variant: "destructive",
+      });
     };
+
+  const getToastTitle = (id: number) =>
+    hasFavorite(id)
+      ? "프로젝트(My Projects)에서 삭제되었습니다."
+      : "관심 공고에 추가되었습니다.";
 
   const getStateColor = (id: number) =>
     hasFavorite(id) ? "hsl(var(--chart-4))" : "hsl(var(--input))";
