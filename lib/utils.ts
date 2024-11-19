@@ -18,3 +18,5 @@ export function toReadableDate(date: Date | string | undefined = new Date()) {
 }
 
 export const MY_FAVORITES = 'myFavorites';
+
+export const fetcher = (url: string) => fetch(url).then((res) => res.json());

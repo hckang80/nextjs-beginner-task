@@ -1,13 +1,11 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
-import { KeywordSet, BidAnnouncementContext } from '@/lib';
+import { KeywordSet, BidAnnouncementContext, fetcher } from '@/lib';
 import { ProductsTable, DetailedSearch, ChannelSearch } from '.';
 import { Card } from '@/components/ui/card';
 import { useBidAnnouncement } from './context/BidAnnouncementContext';
 import useSWR from 'swr';
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Rfp() {
   const searchParams = useMemo(() => new URLSearchParams(window.location.search), []);

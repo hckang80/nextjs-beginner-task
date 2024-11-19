@@ -9,7 +9,8 @@ import {
   Tag,
   AppliedTag,
   BidAnnouncementContext,
-  MY_FAVORITES
+  MY_FAVORITES,
+  fetcher
 } from '@/lib';
 import { ProductsTable } from '.';
 import { Card } from '@/components/ui/card';
@@ -19,8 +20,6 @@ import { Input } from '@/components/ui/input';
 import useSWR from 'swr';
 import { useFavoriteList } from './context/UseFavoriteListContext';
 import { useToast } from '@/hooks/use-toast';
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function BidFavorites() {
   const searchParams = useMemo(() => new URLSearchParams(window.location.search), []);
