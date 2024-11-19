@@ -377,7 +377,7 @@ export function DetailedSearch() {
       },
     },
     priceFrom: 0,
-    priceTo: 5_000_000,
+    priceTo: 500_000_000,
     announcementDateFrom: "",
     announcementDateTo: "",
     businessType: "",
@@ -457,14 +457,31 @@ export function DetailedSearch() {
     });
   };
 
+  const [numberFormattedForm, setNumberFormattedForm] = useState({
+    priceFrom: "0",
+    priceTo: "500,000,000",
+  });
+
+  const setReadableFormat = (key: string, value: string) => {
+    setNumberFormattedForm({
+      ...numberFormattedForm,
+      [key]: Number(value).toLocaleString("en-US"),
+    });
+  };
+
   const handleChange = (
-    event: React.FormEvent<HTMLInputElement | HTMLSelectElement> // TODO: 동적 타입(Generic?)으로 적용되게 개선 필요
+    // TODO: 동적 타입(Generic?)으로 적용되게 개선 필요
+    event: React.FormEvent<HTMLInputElement | HTMLSelectElement>,
+    numberFormatter?: string
   ) => {
     const { name, value } = event.currentTarget;
 
+    numberFormatter &&
+      setReadableFormat(numberFormatter, value.replace(/[^0-9]/g, ""));
+
     setFormModel({
       ...formModel,
-      [name]: value,
+      [name]: numberFormatter ? value.replace(/[^0-9]/g, "") : value,
     });
   };
 
@@ -622,20 +639,20 @@ export function DetailedSearch() {
                 <div className="flex items-center gap-2">
                   <Input
                     className="w-[140px]"
-                    type="number"
+                    type="text"
                     inputMode="numeric"
                     name="priceFrom"
-                    value={formModel.priceFrom}
-                    onChange={handleChange}
+                    value={numberFormattedForm.priceFrom}
+                    onChange={(event) => handleChange(event, "priceFrom")}
                   />
                   ~
                   <Input
                     className={cn("w-[140px]", isPriceLimit ? "invisible" : "")}
-                    type="number"
+                    type="text"
                     inputMode="numeric"
                     name="priceTo"
-                    value={formModel.priceTo}
-                    onChange={handleChange}
+                    value={numberFormattedForm.priceTo}
+                    onChange={(event) => handleChange(event, "priceTo")}
                   />
                 </div>
 
