@@ -182,9 +182,10 @@ export function AllTags() {
     inputTag("");
   };
 
+  const [isOpenEditor, setIsOpenEditor] = useState(false);
   const editTag = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation();
-    alert("태그 편집");
+    setIsOpenEditor(!isOpenEditor);
   };
 
   return (
@@ -204,17 +205,21 @@ export function AllTags() {
         </form>
       </header>
 
-      <div className="flex justify-between items-align gap-2 mt-[15px]">
-        <div className="flex items-align gap-[4px]">
-          <Input />
-          <Input type="color" className="w-[40px] p-0" />
+      {isOpenEditor && (
+        <div className="flex justify-between items-align gap-2 mt-[15px]">
+          <div className="flex items-align gap-[4px]">
+            <Input />
+            <Input type="color" className="w-[40px] p-0" />
+          </div>
+          <div className="flex items-align gap-[4px]">
+            <Button>태그 수정</Button>
+            <Button variant="destructive">태그 삭제</Button>
+            <Button variant="outline" onClick={() => setIsOpenEditor(false)}>
+              수정 완료
+            </Button>
+          </div>
         </div>
-        <div className="flex items-align gap-[4px]">
-          <Button>태그 수정</Button>
-          <Button variant="destructive">태그 삭제</Button>
-          <Button variant="outline">수정 완료</Button>
-        </div>
-      </div>
+      )}
 
       <ul className="flex flex-wrap gap-[4px] mt-[20px]">
         {tags.map(({ id, text, bgColor }) => (
