@@ -195,3 +195,130 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.wrap {
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
+  height: 100dvh;
+}
+
+.global-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  z-index: 2;
+  inset: auto 0;
+  height: var(--header-height);
+  padding: 10px 40px;
+  border-bottom: 1px solid hsl(var(--input));
+  background: #fff;
+}
+
+.global-inner {
+  display: flex;
+  flex: 1 1 100%;
+}
+
+.global-aside {
+  display: flex;
+  flex-flow: column;
+  overflow: auto;
+  max-height: calc(100vh - var(--header-height));
+  max-height: calc(100dvh - var(--header-height));
+  margin: var(--header-height) 0 0;
+  padding: 30px;
+  flex: 0 0 240px;
+  border-right: 1px solid hsl(var(--input));
+}
+
+.global-nav {
+  margin: 0 20px 0 0;
+  font-size: 17px;
+}
+
+.global-main-item {
+  display: block;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+summary.global-main-item {
+  font-weight: bold;
+  background: rgb(21, 22, 99);
+  color: #fff;
+}
+
+.global-sub-menu {
+  margin: 5px 0 0 20px;
+
+  a {
+    display: block;
+    padding: 10px;
+    border-radius: 4px;
+
+    &.is-active {
+      font-weight: bold;
+      background: rgb(21, 22, 99);
+      color: #fff;
+    }
+  }
+}
+
+.global-address {
+  margin: auto 0 0;
+  font-size: 12px;
+}
+
+.global-main {
+  overflow: auto;
+  margin: var(--header-height) 0 0;
+  flex: 1 1 100%;
+  max-height: calc(100vh - var(--header-height));
+  max-height: calc(100dvh - var(--header-height));
+  padding: 40px;
+  background: hsl(var(--muted));
+}
+
+table.search-table {
+  table-layout: auto;
+
+  th,
+  td {
+    padding: 8px 5px;
+  }
+
+  th {
+    width: 80px;
+    text-align: left;
+    white-space: nowrap;
+  }
+}
+
+table.data-table {
+  th,
+  td {
+    padding: 8px 5px;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  th {
+    background: rgb(79 70 229 / var(--tw-text-opacity, 1));
+    color: #fff;
+  }
+
+  td {
+    height: 50px;
+    border-bottom: 1px solid hsl(var(--border));
+    background: #fff;
+  }
+
+  tr:hover {
+    td {
+      background: hsl(var(--muted));
+    }
+  }
+}
