@@ -28,7 +28,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Plus, Trash2 } from "lucide-react";
 import React, { useState } from "react";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
@@ -184,16 +184,18 @@ export function AllTags() {
 
   return (
     <div>
-      <header>
+      <header className="flex justify-between gap-2">
         <h3>전체태그</h3>
-        <form onSubmit={addTag}>
+        <form onSubmit={addTag} className="flex gap-[4px]">
           <Input
             value={tag}
             placeholder="태그 추가"
             onChange={(event) => inputTag(event.target.value)}
             maxLength={10}
           />
-          <Button>태그 초기화</Button>
+          <Button>
+            <Plus />
+          </Button>
         </form>
       </header>
       <ul className="flex flex-wrap gap-[4px]">
