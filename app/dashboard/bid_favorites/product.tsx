@@ -157,13 +157,13 @@ export function TagEditButton({ name }: { name: string }) {
           <DialogTitle>{name}</DialogTitle>
         </DialogHeader>
         <DialogDescription />
-        <AllTags />
+        <TagEditor />
       </DialogContent>
     </Dialog>
   );
 }
 
-export function AllTags() {
+export function TagEditor() {
   const { toast } = useToast();
   const [tag, inputTag] = useState("");
   const { tags, setTags } = useTag();
@@ -182,6 +182,10 @@ export function AllTags() {
 
     setTags(result);
     inputTag("");
+  };
+
+  const applyTag = (id: number) => {
+    console.log(tags.find((item) => item.id === id));
   };
 
   const [isOpenEditor, setIsOpenEditor] = useState(false);
@@ -292,6 +296,7 @@ export function AllTags() {
               key={id}
               style={{ background: bgColor }}
               className="flex justify-between items-center basis-[150px] rounded-[4px] px-[10px] h-[30px] text-white text-[12px] cursor-pointer"
+              onClick={() => applyTag(id)}
             >
               {text}
               <button className="p-[5px]" onClick={openTagEditor(id)}>
