@@ -10,7 +10,19 @@ export function getKeywordSets() {
     },
     {
       id: 2,
+      name: '나의 다이어리',
+      isPined: false,
+      isPrivate: false
+    },
+    {
+      id: 3,
       name: '신규_그룹_개인_2024_11_15',
+      isPined: false,
+      isPrivate: true
+    },
+    {
+      id: 4,
+      name: '신규_그룹_개인_2024_11_16',
       isPined: false,
       isPrivate: true
     }
@@ -31,82 +43,82 @@ export async function getProducts(offset: number): Promise<{
   const items: AnnouncementContext[] = [
     {
       id: 1,
-      name: '가칭 인공지능 직업교육센터 신축공사 폐기물 처리용역',
-      price: '0.3억',
-      type: '용역',
-      source: '충청남도교육청',
-      createdAt: new Date(2024, 0, 15),
-      endedAt: new Date(2025, 5, 15)
+      name: '궤도다짐장비(MTT) 구매(재공고)',
+      price: '301.7억',
+      type: '물품',
+      source: '국가철도공단',
+      createdAt: new Date(2024, 10, 13),
+      endedAt: new Date(2024, 11, 5)
     },
     {
       id: 2,
-      name: '[재공고] 양양양수발전소 Main Air Compressor 설치조건부 구매(S등급/제작)',
-      price: '342.0억',
+      name: 'EBS 방송 및 교육 인터넷서비스 통합 운영 사업',
+      price: '469.9억',
       type: '용역',
-      source: '충청남도교육청',
+      source: '한국교육방송공사',
       createdAt: new Date(2024, 2, 15),
       endedAt: new Date(2025, 5, 15)
     },
     {
       id: 3,
-      name: '글로벌 도시 서울로 도약을 위한 도시 마케팅 전략 연구',
-      price: 'TBC',
+      name: '주택건설공사 감리자(전기) 모집공고(서초신동아)',
+      price: '공고문 참조',
       type: '용역',
-      source: '충청남도교육청',
+      source: '서울특별시 서초구',
       createdAt: new Date(2024, 4, 15),
       endedAt: new Date(2025, 5, 15)
     },
     {
       id: 4,
-      name: '가칭 인공지능 직업교육센터 신축공사 폐기물 처리용역',
-      price: '469.9억',
-      type: '용역',
-      source: '충청남도교육청',
+      name: 'GIS(362KV,6300A,63KA) 23식 - 신포항 S/S (신설)',
+      price: '401.6억',
+      type: '물품',
+      source: '상생조달처',
       createdAt: new Date(2024, 1, 15),
       endedAt: new Date(2025, 8, 15)
     },
     {
       id: 5,
-      name: '서울 직업교육센터 신축공사 폐기물 처리용역',
-      price: '52.0억',
-      type: '용역',
-      source: '충청남도교육청',
+      name: '호남고속철도 광주송정역사 증축공사(재공고)',
+      price: '367.6억',
+      type: '공사',
+      source: '국가철도공단',
       createdAt: new Date(2024, 9, 15),
       endedAt: new Date(2025, 6, 15)
     },
     {
       id: 6,
-      name: '대전 직업교육센터 신축공사 폐기물 처리용역',
-      price: '0.3억',
+      name: '전남대 캠퍼스혁신파크 산학연 혁신허브 건설공사',
+      price: '346.0억',
       type: '용역',
-      source: '충청남도교육청',
+      source: '한국토지주택공사',
       createdAt: new Date(2024, 2, 18),
       endedAt: new Date(2027, 11, 15)
     },
     {
       id: 7,
-      name: '대구 직업교육센터 신축공사 폐기물 처리용역',
-      price: '120.5억',
+      name: '다산 자연재해위험개선지구 정비사업 토목건축기계공사',
+      price: '342.0억',
       type: '용역',
-      source: '충청남도교육청',
+      source: '한국농어촌공사 경북지역본부 고령지사',
       createdAt: new Date(2024, 4, 15),
       endedAt: new Date(2026, 4, 15)
     },
     {
       id: 8,
-      name: '부산 직업교육센터 신축공사 폐기물 처리용역',
-      price: '300.0억',
-      type: '용역',
-      source: '충청남도교육청',
+      name: '궤도다짐장비(MTT) 구매(재공고)',
+      price: '331.9억',
+      type: '물품',
+      source: '국가철도공단',
       createdAt: new Date(2024, 3, 30),
       endedAt: new Date(2025, 2, 15)
     },
     {
       id: 9,
-      name: '광주 직업교육센터 신축공사 폐기물 처리용역',
+      name: '국립공원 다목적 헬리콥터 제작 및 구매',
       price: 'TBC',
-      type: '용역',
-      source: '충청남도교육청',
+      type: '물품',
+      source: '국립공원공단',
       createdAt: new Date(2024, 2, 25),
       endedAt: new Date(2025, 5, 15)
     },
@@ -121,10 +133,10 @@ export async function getProducts(offset: number): Promise<{
     },
     {
       id: 11,
-      name: '히든 사업공고',
+      name: '거창 첨단일반산업단지 조성',
       price: '0.3억',
       type: '용역',
-      source: '충청남도교육청',
+      source: '경상남도 거창군',
       createdAt: new Date(2024, 1, 15),
       endedAt: new Date(2025, 5, 15)
     }
