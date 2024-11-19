@@ -34,6 +34,7 @@ import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { useTag } from "./context/MyTagContext";
 import { AlertDialogDescription } from "@radix-ui/react-alert-dialog";
+import { Badge } from "@/components/ui/badge";
 
 export function Product({
   isVisibleMemoContext,
@@ -110,14 +111,18 @@ export function Product({
         <tr>
           <td colSpan={8}>
             <div className="flex justify-between items-center gap-2 px-[20px]">
-              <div className="shrink-0">
-                <ul>
+              <div className="flex items-center gap-[4px]">
+                <div className="flex flex-wrap items-center gap-[4px]">
                   {generatedTags.map(({ id, text, bgColor }) => (
-                    <li key={id} style={{ background: bgColor }}>
+                    <Badge
+                      key={id}
+                      style={{ background: bgColor }}
+                      className="shrink-0"
+                    >
                       {text}
-                    </li>
+                    </Badge>
                   ))}
-                </ul>
+                </div>
                 <TagEditButton name={name} />
               </div>
               <dl className="flex items-center gap-6">
@@ -161,7 +166,7 @@ export function TagEditButton({ name }: { name: string }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="p-[12px]">
+        <button className="p-[12px] shrink-0">
           <Pencil size={16} />
         </button>
       </DialogTrigger>
