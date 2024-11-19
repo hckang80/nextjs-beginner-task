@@ -169,16 +169,16 @@ export function AllTags() {
   const addTag = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setTags([
-      ...new Set([
-        ...tags,
-        {
-          id: generatedId(tags),
-          text: tag,
-          bgColor: "rgb(166, 161, 219)",
-        },
-      ]),
-    ]);
+    const result = [
+      ...tags,
+      {
+        id: generatedId(tags),
+        text: tag,
+        bgColor: "rgb(166, 161, 219)",
+      },
+    ];
+
+    setTags(result);
     inputTag("");
   };
 
