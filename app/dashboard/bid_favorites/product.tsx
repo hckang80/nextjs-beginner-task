@@ -22,8 +22,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Pencil, Trash2 } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
+import { Input } from "@/components/ui/input";
 
 export function Product({
   isVisibleMemoContext,
@@ -146,12 +147,42 @@ export function TagEditButton({ name }: { name: string }) {
         <DialogHeader>
           <DialogTitle>{name}</DialogTitle>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4"></div>
-          <div className="grid grid-cols-4 items-center gap-4"></div>
-        </div>
+        <AllTags />
       </DialogContent>
     </Dialog>
+  );
+}
+
+export function AllTags() {
+  const [tag, inputTag] = useState("");
+  const [tags, setTags] = useState<string[]>([]);
+
+  const addTag = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    setTags([...new Set([...tags, tag])]);
+    inputTag("");
+  };
+
+  return (
+    <div>
+      <header>
+        <h3>전체태그</h3>
+        <form onSubmit={addTag}>
+          <Input
+            value={tag}
+            placeholder="태그 추가"
+            onChange={(event) => inputTag(event.target.value)}
+          />
+          <Button>태그 초기화</Button>
+        </form>
+      </header>
+      <ul>
+        {tags.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
