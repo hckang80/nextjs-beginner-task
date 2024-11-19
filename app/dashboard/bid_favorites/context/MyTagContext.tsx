@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { AppliedTag, Tag } from "@/lib";
-import { createContext, useContext, ReactNode, useState } from "react";
+import { AppliedTag, Tag } from '@/lib';
+import { createContext, useContext, ReactNode, useState } from 'react';
 
 type MyTagContextState = {
   tags: Tag[];
@@ -17,9 +17,7 @@ export const MyTagProvider = ({ children }: { children: ReactNode }) => {
   const [appliedTags, setAppliedTags] = useState<AppliedTag[]>([]);
 
   return (
-    <MyTagContext.Provider
-      value={{ tags, setTags, appliedTags, setAppliedTags }}
-    >
+    <MyTagContext.Provider value={{ tags, setTags, appliedTags, setAppliedTags }}>
       {children}
     </MyTagContext.Provider>
   );
@@ -28,7 +26,7 @@ export const MyTagProvider = ({ children }: { children: ReactNode }) => {
 export const useTag = (): MyTagContextState => {
   const context = useContext(MyTagContext);
   if (!context) {
-    throw new Error("useTag must be used within a MyTagProvider");
+    throw new Error('useTag must be used within a MyTagProvider');
   }
   return context;
 };

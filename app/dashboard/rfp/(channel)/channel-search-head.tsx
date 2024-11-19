@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Dispatch, SetStateAction } from "react";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Dispatch, SetStateAction } from 'react';
 
 export function ChannelSearchHead({
   isAllSelected,
@@ -8,7 +8,7 @@ export function ChannelSearchHead({
   searchQuery,
   handleSearch,
   isOpen,
-  setIsOpen,
+  setIsOpen
 }: {
   isAllSelected: boolean;
   handleSelectAll: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -48,7 +48,7 @@ export function ChannelSearchHead({
             className="ml-auto"
             onClick={() => setIsOpen(!isOpen)}
           >
-            채널 목록 {!isOpen ? "열기" : "접기"}
+            채널 목록 {!isOpen ? '열기' : '접기'}
           </Button>
         </div>
       </td>

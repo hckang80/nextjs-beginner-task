@@ -1,7 +1,7 @@
-import { MyTagProvider } from "./context/MyTagContext";
+import { MyTagProvider } from './context/MyTagContext';
 
 export default function BidFavoriteLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {

@@ -1,5 +1,5 @@
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -14,7 +14,7 @@ export const generatedId = (array: { id: number; [key: string]: any }[]) => {
 };
 
 export function toReadableDate(date = new Date()) {
-  return new Intl.DateTimeFormat("en-CA").format(date);
+  return new Intl.DateTimeFormat('en-CA').format(date);
 }
 
-export const MY_FAVORITES = "myFavorites";
+export const MY_FAVORITES = 'myFavorites';

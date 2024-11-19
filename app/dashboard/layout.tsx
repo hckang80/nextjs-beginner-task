@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { usePathname } from "next/navigation";
-import Link from "next/link";
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 export default function DashboardLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
@@ -38,7 +38,7 @@ export default function DashboardLayout({
                 <li className="global-sub-menu__item">
                   <Link
                     href="/dashboard/rfp"
-                    className={isActive("/dashboard/rfp") ? "is-active" : ""}
+                    className={isActive('/dashboard/rfp') ? 'is-active' : ''}
                   >
                     국내입찰
                   </Link>
@@ -46,9 +46,7 @@ export default function DashboardLayout({
                 <li>
                   <Link
                     href="/dashboard/bid_favorites"
-                    className={
-                      isActive("/dashboard/bid_favorites") ? "is-active" : ""
-                    }
+                    className={isActive('/dashboard/bid_favorites') ? 'is-active' : ''}
                   >
                     관심공고
                   </Link>

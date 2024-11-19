@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { AnnouncementContext, MY_FAVORITES } from "@/lib";
-import { ArrowUpDown } from "lucide-react";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import { Product } from ".";
-import { ProductPagination } from "../product-pagination";
+import { AnnouncementContext, MY_FAVORITES } from '@/lib';
+import { ArrowUpDown } from 'lucide-react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Product } from '.';
+import { ProductPagination } from '../product-pagination';
 
 interface SortConfig {
   key: keyof AnnouncementContext | null;
-  direction: "ascending" | "descending" | null;
+  direction: 'ascending' | 'descending' | null;
 }
 
 export function ProductsTable({
@@ -16,7 +16,7 @@ export function ProductsTable({
   products,
   offset,
   totalProducts,
-  setData,
+  setData
 }: {
   isVisibleMemoContext: boolean;
   products: AnnouncementContext[];
@@ -34,21 +34,19 @@ export function ProductsTable({
 
   const [sortConfig, setSortConfig] = useState<SortConfig>({
     key: null,
-    direction: null,
+    direction: null
   });
 
   const handleSort = (key: keyof AnnouncementContext) => {
     const direction =
-      sortConfig.key === key && sortConfig.direction === "ascending"
-        ? "descending"
-        : "ascending";
+      sortConfig.key === key && sortConfig.direction === 'ascending' ? 'descending' : 'ascending';
 
     const sortedData = [...products].sort((a, b) => {
       if (a[key] < b[key]) {
-        return direction === "ascending" ? -1 : 1;
+        return direction === 'ascending' ? -1 : 1;
       }
       if (a[key] > b[key]) {
-        return direction === "ascending" ? 1 : -1;
+        return direction === 'ascending' ? 1 : -1;
       }
       return 0;
     });
@@ -56,7 +54,7 @@ export function ProductsTable({
     setData({
       newOffset: offset,
       totalProducts,
-      products: sortedData,
+      products: sortedData
     });
     setSortConfig({ key, direction });
   };
@@ -68,24 +66,20 @@ export function ProductsTable({
   };
 
   useEffect(() => {
-    const isPaginationTouch = new URLSearchParams(location.search).has(
-      "offset"
-    );
+    const isPaginationTouch = new URLSearchParams(location.search).has('offset');
     if (!isPaginationTouch) return;
     focusDataTable();
   }, [offset]);
 
   const deleteFavorite = (id: number) => {
-    const currentFavorites: number[] = JSON.parse(
-      localStorage.getItem(MY_FAVORITES) || "[]"
-    );
+    const currentFavorites: number[] = JSON.parse(localStorage.getItem(MY_FAVORITES) || '[]');
     const result = currentFavorites.filter((uid) => uid !== id);
     localStorage.setItem(MY_FAVORITES, JSON.stringify(result));
 
     setData({
       newOffset: offset,
       totalProducts,
-      products: products.filter((item) => item.id !== id),
+      products: products.filter((item) => item.id !== id)
     });
   };
 
@@ -110,7 +104,7 @@ export function ProductsTable({
             <th>
               <button
                 className="inline-flex items-center gap-[4px]"
-                onClick={() => handleSort("price")}
+                onClick={() => handleSort('price')}
               >
                 금액(원)
                 <ArrowUpDown size={16} />
@@ -120,7 +114,7 @@ export function ProductsTable({
             <th>
               <button
                 className="inline-flex items-center gap-[4px]"
-                onClick={() => handleSort("createdAt")}
+                onClick={() => handleSort('createdAt')}
               >
                 게시일
                 <ArrowUpDown size={16} />
@@ -129,7 +123,7 @@ export function ProductsTable({
             <th>
               <button
                 className="inline-flex items-center gap-[4px]"
-                onClick={() => handleSort("endedAt")}
+                onClick={() => handleSort('endedAt')}
               >
                 마감일
                 <ArrowUpDown size={16} />

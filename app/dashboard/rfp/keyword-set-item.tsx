@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import type { KeywordSet } from "@/lib";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { CircleMinus, Pin } from "lucide-react";
+import type { KeywordSet } from '@/lib';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { CircleMinus, Pin } from 'lucide-react';
 
 export function KeywordSetItem({
   item: { id, name, isPined },
   pinItem,
   deleteItem,
-  handler,
+  handler
 }: {
   item: KeywordSet;
   pinItem: (id: number) => void;
@@ -20,17 +20,17 @@ export function KeywordSetItem({
     <li className="flex items-center gap-2">
       <div>
         <Button variant="ghost" onClick={() => pinItem(id)}>
-          <Pin {...(isPined ? {} : { color: "hsl(var(--border))" })} />
+          <Pin {...(isPined ? {} : { color: 'hsl(var(--border))' })} />
         </Button>
       </div>
       <div className="grow">
         <Input
           value={name}
           onChange={handler(id)}
-          className={isPined ? "bg-violet-400 text-white" : ""}
+          className={isPined ? 'bg-violet-400 text-white' : ''}
         />
       </div>
-      <div className={isPined ? "invisible" : ""}>
+      <div className={isPined ? 'invisible' : ''}>
         <Button variant="ghost" onClick={() => deleteItem(id)}>
           <CircleMinus color="#f00" />
         </Button>

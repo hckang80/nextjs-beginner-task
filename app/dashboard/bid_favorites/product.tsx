@@ -1,15 +1,9 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
-import {
-  AnnouncementContext,
-  generatedId,
-  suggestedStates,
-  Tag,
-  toReadableDate,
-} from "@/lib";
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
+import { AnnouncementContext, generatedId, suggestedStates, Tag, toReadableDate } from '@/lib';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,28 +12,28 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+  AlertDialogTrigger
+} from '@/components/ui/alert-dialog';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogDescription,
   DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Pencil, Plus, Trash2, X } from "lucide-react";
-import React, { ReactNode, useState } from "react";
-import Link from "next/link";
-import { Input } from "@/components/ui/input";
-import { useTag } from "./context/MyTagContext";
-import { AlertDialogDescription } from "@radix-ui/react-alert-dialog";
-import { Badge } from "@/components/ui/badge";
+  DialogTrigger
+} from '@/components/ui/dialog';
+import { Pencil, Plus, Trash2, X } from 'lucide-react';
+import React, { ReactNode, useState } from 'react';
+import Link from 'next/link';
+import { Input } from '@/components/ui/input';
+import { useTag } from './context/MyTagContext';
+import { AlertDialogDescription } from '@radix-ui/react-alert-dialog';
+import { Badge } from '@/components/ui/badge';
 
 export function Product({
   isVisibleMemoContext,
   product,
-  deleteFavorite,
+  deleteFavorite
 }: {
   isVisibleMemoContext: boolean;
   product: AnnouncementContext;
@@ -47,56 +41,52 @@ export function Product({
 }) {
   const { id, name, price, type, source, createdAt, endedAt } = product;
 
-  const saveSuggestedState =
-    (id: number) => (event: React.ChangeEvent<HTMLSelectElement>) => {
-      const { value } = event.currentTarget;
-      toast({
-        title: "You submitted the following values:",
-        description: (
-          <pre>
-            <code>{JSON.stringify({ id, value }, null, 2)}</code>
-          </pre>
-        ),
-      });
-    };
+  const saveSuggestedState = (id: number) => (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = event.currentTarget;
+    toast({
+      title: 'You submitted the following values:',
+      description: (
+        <pre>
+          <code>{JSON.stringify({ id, value }, null, 2)}</code>
+        </pre>
+      )
+    });
+  };
 
   const [memo, setMemo] = useState<Record<string, string>>({});
 
-  const handleMemo =
-    (id: number) => (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      const { value } = event.currentTarget;
+  const handleMemo = (id: number) => (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = event.currentTarget;
 
-      setMemo({
-        ...memo,
-        [id]: value,
-      });
-    };
+    setMemo({
+      ...memo,
+      [id]: value
+    });
+  };
 
   const { toast } = useToast();
 
   const saveMemo = (id: number) => {
     toast({
-      title: "You submitted the following values:",
+      title: 'You submitted the following values:',
       description: (
         <pre>
           <code>{JSON.stringify({ id, value: memo[id] }, null, 2)}</code>
         </pre>
-      ),
+      )
     });
   };
 
   const { tags, appliedTags } = useTag();
   const tagsByBId = appliedTags.find((item) => item.id === id);
-  const generatedTags = tags.filter((item) =>
-    tagsByBId?.tags.includes(item.id)
-  );
+  const generatedTags = tags.filter((item) => tagsByBId?.tags.includes(item.id));
 
   return (
     <tbody>
       <tr>
         <td>입찰 공고</td>
         <td>{type}</td>
-        <td style={{ textAlign: "left" }}>
+        <td style={{ textAlign: 'left' }}>
           <Link href={`/dashboard/rfp/${id}`}>{name}</Link>
         </td>
         <td>{price}</td>
@@ -114,20 +104,12 @@ export function Product({
               <div className="flex items-center gap-[4px]">
                 <div className="flex flex-wrap items-center gap-[4px]">
                   {generatedTags.map(({ id, text, bgColor }) => (
-                    <Badge
-                      key={id}
-                      style={{ background: bgColor }}
-                      className="shrink-0"
-                    >
+                    <Badge key={id} style={{ background: bgColor }} className="shrink-0">
                       {text}
                     </Badge>
                   ))}
                 </div>
-                <TagEditButton
-                  bid={id}
-                  name={name}
-                  generatedTags={generatedTags}
-                />
+                <TagEditButton bid={id} name={name} generatedTags={generatedTags} />
               </div>
               <dl className="flex flex-wrap items-center gap-6">
                 <div className="flex items-center gap-2">
@@ -169,7 +151,7 @@ export function Product({
 export function TagEditButton({
   bid,
   name,
-  generatedTags,
+  generatedTags
 }: {
   bid: number;
   name: string;
@@ -193,15 +175,9 @@ export function TagEditButton({
   );
 }
 
-export function TagEditor({
-  bid,
-  generatedTags,
-}: {
-  bid: number;
-  generatedTags: Tag[];
-}) {
+export function TagEditor({ bid, generatedTags }: { bid: number; generatedTags: Tag[] }) {
   const { toast } = useToast();
-  const [tag, inputTag] = useState("");
+  const [tag, inputTag] = useState('');
   const { tags, setTags, appliedTags, setAppliedTags } = useTag();
 
   const resetTags = (bid: number) => {
@@ -216,12 +192,12 @@ export function TagEditor({
       {
         id: generatedId(tags),
         text: tag,
-        bgColor: "rgb(166, 161, 219)",
-      },
+        bgColor: 'rgb(166, 161, 219)'
+      }
     ];
 
     setTags(result);
-    inputTag("");
+    inputTag('');
   };
 
   const applyTag = (bid: number, id: number) => {
@@ -234,12 +210,11 @@ export function TagEditor({
   const [isOpenEditor, setIsOpenEditor] = useState(false);
   const [selectedTag, setSelectedTag] = useState<Tag>({
     id: 0,
-    text: "",
-    bgColor: "",
+    text: '',
+    bgColor: ''
   });
   const openTagEditor =
-    (id: number) =>
-    (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    (id: number) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       event.stopPropagation();
 
       setIsOpenEditor(!isOpenEditor);
@@ -250,14 +225,14 @@ export function TagEditor({
   const changeTagName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedTag({
       ...selectedTag,
-      text: event.currentTarget.value,
+      text: event.currentTarget.value
     });
   };
 
   const saveTagColor = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedTag({
       ...selectedTag,
-      bgColor: event.currentTarget.value,
+      bgColor: event.currentTarget.value
     });
 
     const result = tags.map((tag) => {
@@ -275,7 +250,7 @@ export function TagEditor({
     setTags(result);
 
     toast({
-      title: "태그 이름이 수정되었습니다.",
+      title: '태그 이름이 수정되었습니다.'
     });
   };
 
@@ -284,7 +259,7 @@ export function TagEditor({
     setTags(result);
     setIsOpenEditor(false);
     toast({
-      title: "태그가 삭제되었습니다.",
+      title: '태그가 삭제되었습니다.'
     });
   };
 
@@ -336,11 +311,7 @@ export function TagEditor({
           <div className="flex justify-between items-align gap-2 mt-[15px]">
             <div className="flex items-align gap-[4px]">
               <Input value={selectedTag.text} onChange={changeTagName} />
-              <Input
-                type="color"
-                className="w-[40px] p-0"
-                onChange={saveTagColor}
-              />
+              <Input type="color" className="w-[40px] p-0" onChange={saveTagColor} />
             </div>
             <div className="flex items-align gap-[4px]">
               <Button onClick={() => saveTagName()}>태그 수정</Button>
@@ -374,7 +345,7 @@ export function TagEditor({
 
 export function TagDeleteButton({
   children,
-  deleteTag,
+  deleteTag
 }: {
   children?: ReactNode;
   deleteTag: () => void;
@@ -386,9 +357,7 @@ export function TagDeleteButton({
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            삭제된 태그는 복구할 수 없어요! 정말 삭제하시겠어요?
-          </AlertDialogTitle>
+          <AlertDialogTitle>삭제된 태그는 복구할 수 없어요! 정말 삭제하시겠어요?</AlertDialogTitle>
           <AlertDialogDescription />
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -402,7 +371,7 @@ export function TagDeleteButton({
 
 export function DeleteButton({
   id,
-  deleteFavorite, // TODO: Prop Drilling이 심함. 개선 필요
+  deleteFavorite // TODO: Prop Drilling이 심함. 개선 필요
 }: {
   id: number;
   deleteFavorite: (id: number) => void;
@@ -416,16 +385,12 @@ export function DeleteButton({
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            선택된 프로젝트를 관심 목록에서 삭제하시겠습니까?
-          </AlertDialogTitle>
+          <AlertDialogTitle>선택된 프로젝트를 관심 목록에서 삭제하시겠습니까?</AlertDialogTitle>
           <AlertDialogDescription />
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>아니오</AlertDialogCancel>
-          <AlertDialogAction onClick={() => deleteFavorite(id)}>
-            삭제하기
-          </AlertDialogAction>
+          <AlertDialogAction onClick={() => deleteFavorite(id)}>삭제하기</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

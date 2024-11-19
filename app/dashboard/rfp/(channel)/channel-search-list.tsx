@@ -1,4 +1,4 @@
-import { ChannelItem, cn } from "@/lib";
+import { ChannelItem, cn } from '@/lib';
 
 export function ChannelSearchList({
   label,
@@ -6,20 +6,18 @@ export function ChannelSearchList({
   isGroupSelected,
   handleSelectGroup,
   filteredData,
-  handleItemCheckboxChange,
+  handleItemCheckboxChange
 }: {
   label: string;
   type: string;
   isGroupSelected: (type: string) => boolean;
-  handleSelectGroup: (
-    type: string
-  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSelectGroup: (type: string) => (event: React.ChangeEvent<HTMLInputElement>) => void;
   filteredData: ChannelItem[];
   handleItemCheckboxChange: (id: number) => void;
 }) {
   const bgColor: Record<string, string> = {
-    agency: "bg-violet-400",
-    university: "bg-red-300",
+    agency: 'bg-violet-400',
+    university: 'bg-red-300'
   };
 
   return (
@@ -46,10 +44,8 @@ export function ChannelSearchList({
                 <li key={item.id} className="contents">
                   <label
                     className={cn(
-                      "flex items-center gap-2 rounded-[8px] text-center h-[35px] px-[10px] text-[14px] leading-[1.2]",
-                      item.checked
-                        ? `${bgColor[type]} text-white`
-                        : "bg-gray-200"
+                      'flex items-center gap-2 rounded-[8px] text-center h-[35px] px-[10px] text-[14px] leading-[1.2]',
+                      item.checked ? `${bgColor[type]} text-white` : 'bg-gray-200'
                     )}
                   >
                     <input

@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   getProducts,
   MY_FAVORITES,
@@ -10,21 +10,19 @@ import {
   announcementPrices,
   announcementTypes,
   Tag,
-  AppliedTag,
-} from "@/lib";
-import { ProductsTable } from ".";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/compat/router";
-import { Input } from "@/components/ui/input";
-import useSWR from "swr";
-import { useTag } from "./context/MyTagContext";
+  AppliedTag
+} from '@/lib';
+import { ProductsTable } from '.';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/compat/router';
+import { Input } from '@/components/ui/input';
+import useSWR from 'swr';
+import { useTag } from './context/MyTagContext';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export default function BidFavorites(props: {
-  searchParams: Promise<{ offset: string }>;
-}) {
+export default function BidFavorites(props: { searchParams: Promise<{ offset: string }> }) {
   const [data, setData] = useState<{
     products: AnnouncementContext[];
     newOffset: number | null;
@@ -46,11 +44,7 @@ export default function BidFavorites(props: {
 
   const { setTags, setAppliedTags } = useTag();
 
-  const {
-    data: myTags,
-    error,
-    isLoading,
-  } = useSWR<Tag[]>("/tags.json", fetcher);
+  const { data: myTags, error, isLoading } = useSWR<Tag[]>('/tags.json', fetcher);
 
   useEffect(() => {
     if (myTags) {
@@ -58,10 +52,7 @@ export default function BidFavorites(props: {
     }
   }, [myTags, setTags]);
 
-  const { data: appliedTags } = useSWR<AppliedTag[]>(
-    "/appliedTags.json",
-    fetcher
-  );
+  const { data: appliedTags } = useSWR<AppliedTag[]>('/appliedTags.json', fetcher);
 
   useEffect(() => {
     if (appliedTags) {
@@ -76,7 +67,7 @@ export default function BidFavorites(props: {
   const { products, newOffset } = data;
 
   const favoriteProducts = products.filter(({ id }) =>
-    JSON.parse(localStorage.getItem(MY_FAVORITES) || "[]").includes(id)
+    JSON.parse(localStorage.getItem(MY_FAVORITES) || '[]').includes(id)
   );
 
   return (

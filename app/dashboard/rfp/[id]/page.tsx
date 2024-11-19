@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
-import { AnnouncementContext, getProducts, MY_FAVORITES } from "@/lib";
-import { Star } from "lucide-react";
-import { useParams } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
+import { AnnouncementContext, getProducts, MY_FAVORITES } from '@/lib';
+import { Star } from 'lucide-react';
+import { useParams } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
 
 export default function RfpDetail() {
   const { id } = useParams<{ id: string }>();
@@ -28,14 +28,12 @@ export default function RfpDetail() {
   };
 
   if (!data) {
-    return "Loading...";
+    return 'Loading...';
   }
 
   // TODO: 아래의 관심공고 등록관련 함수들이 중복이라서 공통 유틸로 분리해보니 반응형으로 동작하지 않음
   const storageKey = MY_FAVORITES;
-  const currentFavorites: number[] = JSON.parse(
-    localStorage.getItem(storageKey) || "[]"
-  );
+  const currentFavorites: number[] = JSON.parse(localStorage.getItem(storageKey) || '[]');
   const hasFavorite = (id: number) => currentFavorites.includes(id);
 
   const saveFavorite = (id: number) => {
@@ -43,34 +41,27 @@ export default function RfpDetail() {
 
     toast({
       title: getToastTitle(id),
-      variant: "destructive",
+      variant: 'destructive'
     });
   };
 
   const getSaveResult = (id: number) =>
-    hasFavorite(id)
-      ? currentFavorites.filter((uid) => uid !== id)
-      : [...currentFavorites, id];
+    hasFavorite(id) ? currentFavorites.filter((uid) => uid !== id) : [...currentFavorites, id];
 
   const getToastTitle = (id: number) =>
-    hasFavorite(id)
-      ? "관심 공고에서 삭제되었습니다."
-      : "관심 공고에 추가되었습니다.";
+    hasFavorite(id) ? '관심 공고에서 삭제되었습니다.' : '관심 공고에 추가되었습니다.';
 
   const getStateColor = (id: number) =>
-    hasFavorite(id) ? "hsl(var(--chart-4))" : "hsl(var(--border))";
+    hasFavorite(id) ? 'hsl(var(--chart-4))' : 'hsl(var(--border))';
 
   return (
     <div>
       <header className="flex items-center gap-[8px] mb-[15px]">
         <h2 className="font-bold text-[18px]">{data.name}</h2>
-        <Button
-          onClick={() => saveFavorite(+id)}
-          className="flex items-center gap-[4px] p-[10px]"
-        >
+        <Button onClick={() => saveFavorite(+id)} className="flex items-center gap-[4px] p-[10px]">
           <Star fill={getStateColor(+id)} strokeWidth={0} />
           <span style={{ color: getStateColor(+id) }}>
-            {hasFavorite(+id) ? "보관중" : "관심 공고 추가"}
+            {hasFavorite(+id) ? '보관중' : '관심 공고 추가'}
           </span>
         </Button>
       </header>
@@ -133,15 +124,15 @@ export default function RfpDetail() {
 }
 
 export function NoteTextarea() {
-  const [noteValue, setNoteValue] = useState("");
+  const [noteValue, setNoteValue] = useState('');
   const { toast } = useToast();
 
   const saveNoteValue = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     toast({
-      title: "You submitted the following values:",
-      description: noteValue,
+      title: 'You submitted the following values:',
+      description: noteValue
     });
   };
 

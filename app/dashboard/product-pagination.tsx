@@ -4,13 +4,13 @@ import {
   PaginationItem,
   PaginationLink,
   PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+  PaginationPrevious
+} from '@/components/ui/pagination';
 
 export function ProductPagination({
   productsPerPage,
   offset,
-  totalProducts,
+  totalProducts
 }: {
   productsPerPage: number;
   offset: number;
@@ -21,7 +21,7 @@ export function ProductPagination({
   return (
     <Pagination className="mt-[15px]">
       <PaginationContent>
-        <PaginationItem className={offset ? "" : "invisible"}>
+        <PaginationItem className={offset ? '' : 'invisible'}>
           <PaginationPrevious
             href={`${location.pathname}?offset=${
               (~~(offset / productsPerPage) - 1) * productsPerPage
@@ -38,11 +38,7 @@ export function ProductPagination({
             </PaginationLink>
           </PaginationItem>
         ))}
-        <PaginationItem
-          className={
-            totalProducts > offset + productsPerPage ? "" : "invisible"
-          }
-        >
+        <PaginationItem className={totalProducts > offset + productsPerPage ? '' : 'invisible'}>
           <PaginationNext
             href={`${location.pathname}?offset=${
               (~~(offset / productsPerPage) + 1) * productsPerPage

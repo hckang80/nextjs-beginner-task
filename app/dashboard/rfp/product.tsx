@@ -1,7 +1,7 @@
-import { useToast } from "@/hooks/use-toast";
-import { MY_FAVORITES, AnnouncementContext, toReadableDate } from "@/lib";
-import { Star } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useToast } from '@/hooks/use-toast';
+import { MY_FAVORITES, AnnouncementContext, toReadableDate } from '@/lib';
+import { Star } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export function Product({ product }: { product: AnnouncementContext }) {
   const { id, name, price, type, source, createdAt, endedAt } = product;
@@ -9,36 +9,28 @@ export function Product({ product }: { product: AnnouncementContext }) {
   const { toast } = useToast();
 
   const storageKey = MY_FAVORITES;
-  const currentFavorites: number[] = JSON.parse(
-    localStorage.getItem(storageKey) || "[]"
-  );
+  const currentFavorites: number[] = JSON.parse(localStorage.getItem(storageKey) || '[]');
   const hasFavorite = (id: number) => currentFavorites.includes(id);
 
-  const saveFavorite =
-    (id: number) =>
-    (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      event.stopPropagation();
+  const saveFavorite = (id: number) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation();
 
-      localStorage.setItem(storageKey, JSON.stringify(getSaveResult(id)));
+    localStorage.setItem(storageKey, JSON.stringify(getSaveResult(id)));
 
-      toast({
-        title: getToastTitle(id),
-        variant: "destructive",
-      });
-    };
+    toast({
+      title: getToastTitle(id),
+      variant: 'destructive'
+    });
+  };
 
   const getSaveResult = (id: number) =>
-    hasFavorite(id)
-      ? currentFavorites.filter((uid) => uid !== id)
-      : [...currentFavorites, id];
+    hasFavorite(id) ? currentFavorites.filter((uid) => uid !== id) : [...currentFavorites, id];
 
   const getToastTitle = (id: number) =>
-    hasFavorite(id)
-      ? "관심 공고에서 삭제되었습니다."
-      : "관심 공고에 추가되었습니다.";
+    hasFavorite(id) ? '관심 공고에서 삭제되었습니다.' : '관심 공고에 추가되었습니다.';
 
   const getStateColor = (id: number) =>
-    hasFavorite(id) ? "hsl(var(--chart-4))" : "hsl(var(--input))";
+    hasFavorite(id) ? 'hsl(var(--chart-4))' : 'hsl(var(--input))';
 
   const router = useRouter();
 
@@ -54,7 +46,7 @@ export function Product({ product }: { product: AnnouncementContext }) {
         </button>
       </td>
       <td>{id}</td>
-      <td style={{ textAlign: "left" }}>{name}</td>
+      <td style={{ textAlign: 'left' }}>{name}</td>
       <td>{price}</td>
       <td>{type}</td>
       <td>{source}</td>

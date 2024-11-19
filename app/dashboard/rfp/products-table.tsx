@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { AnnouncementContext } from "@/lib";
-import { useEffect, useRef } from "react";
-import { Product } from ".";
-import { ProductPagination } from "../product-pagination";
+import { AnnouncementContext } from '@/lib';
+import { useEffect, useRef } from 'react';
+import { Product } from '.';
+import { ProductPagination } from '../product-pagination';
 
 export function ProductsTable({
   products,
   offset,
-  totalProducts,
+  totalProducts
 }: {
   products: AnnouncementContext[];
   offset: number;
@@ -23,9 +23,7 @@ export function ProductsTable({
   };
 
   useEffect(() => {
-    const isPaginationTouch = new URLSearchParams(location.search).has(
-      "offset"
-    );
+    const isPaginationTouch = new URLSearchParams(location.search).has('offset');
     if (!isPaginationTouch) return;
     focusDataTable();
   }, [offset]);
