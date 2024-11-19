@@ -33,6 +33,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { useTag } from "./context/MyTagContext";
+import { AlertDialogDescription } from "@radix-ui/react-alert-dialog";
 
 export function Product({
   isVisibleMemoContext,
@@ -243,7 +244,7 @@ export function AllTags() {
   return (
     <div>
       <header className="flex justify-between gap-2">
-        <h3>전체태그</h3>
+        <h3 className="font-bold">전체 태그</h3>
         <form onSubmit={addTag} className="flex gap-[4px]">
           <Input
             value={tag}
@@ -306,6 +307,7 @@ export function TagDeleteButton({ deleteTag }: { deleteTag: () => void }) {
           <AlertDialogTitle>
             삭제된 태그는 복구할 수 없어요! 정말 삭제하시겠어요?
           </AlertDialogTitle>
+          <AlertDialogDescription />
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogAction onClick={() => deleteTag()}>예</AlertDialogAction>
@@ -335,6 +337,7 @@ export function DeleteButton({
           <AlertDialogTitle>
             선택된 프로젝트를 관심 목록에서 삭제하시겠습니까?
           </AlertDialogTitle>
+          <AlertDialogDescription />
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>아니오</AlertDialogCancel>
