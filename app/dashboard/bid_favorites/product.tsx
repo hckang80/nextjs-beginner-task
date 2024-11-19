@@ -188,13 +188,18 @@ export function AllTags() {
             value={tag}
             placeholder="태그 추가"
             onChange={(event) => inputTag(event.target.value)}
+            maxLength={10}
           />
           <Button>태그 초기화</Button>
         </form>
       </header>
-      <ul>
+      <ul className="flex flex-wrap gap-[4px]">
         {tags.map(({ id, text, bgColor }) => (
-          <li key={id} style={{ background: bgColor }}>
+          <li
+            key={id}
+            style={{ background: bgColor }}
+            className="flex items-center basis-[150px] rounded-[4px] px-[10px] h-[30px] text-white text-[12px]"
+          >
             {id}
             {text}
           </li>
