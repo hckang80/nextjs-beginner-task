@@ -198,10 +198,12 @@ export function AllTags() {
           <li
             key={id}
             style={{ background: bgColor }}
-            className="flex items-center basis-[150px] rounded-[4px] px-[10px] h-[30px] text-white text-[12px]"
+            className="flex justify-between items-center basis-[150px] rounded-[4px] px-[10px] h-[30px] text-white text-[12px]"
           >
-            {id}
             {text}
+            <button className="p-[5px]">
+              <Pencil size={10} color="#ffffff" strokeWidth={1.25} />
+            </button>
           </li>
         ))}
       </ul>
