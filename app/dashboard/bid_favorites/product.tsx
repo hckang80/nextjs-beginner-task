@@ -182,6 +182,11 @@ export function AllTags() {
     inputTag("");
   };
 
+  const editTag = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation();
+    alert("태그 편집");
+  };
+
   return (
     <div>
       <header className="flex justify-between gap-2">
@@ -198,15 +203,28 @@ export function AllTags() {
           </Button>
         </form>
       </header>
-      <ul className="flex flex-wrap gap-[4px]">
+
+      <div className="flex justify-between items-align gap-2 mt-[15px]">
+        <div className="flex items-align gap-[4px]">
+          <Input />
+          <Input type="color" className="w-[40px] p-0" />
+        </div>
+        <div className="flex items-align gap-[4px]">
+          <Button>태그 수정</Button>
+          <Button variant="destructive">태그 삭제</Button>
+          <Button variant="outline">수정 완료</Button>
+        </div>
+      </div>
+
+      <ul className="flex flex-wrap gap-[4px] mt-[20px]">
         {tags.map(({ id, text, bgColor }) => (
           <li
             key={id}
             style={{ background: bgColor }}
-            className="flex justify-between items-center basis-[150px] rounded-[4px] px-[10px] h-[30px] text-white text-[12px]"
+            className="flex justify-between items-center basis-[150px] rounded-[4px] px-[10px] h-[30px] text-white text-[12px] cursor-pointer"
           >
             {text}
-            <button className="p-[5px]">
+            <button className="p-[5px]" onClick={editTag}>
               <Pencil size={10} color="#ffffff" strokeWidth={1.25} />
             </button>
           </li>
