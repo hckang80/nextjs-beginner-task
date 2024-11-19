@@ -1,6 +1,6 @@
 'use client';
 
-import { AppliedTag, Tag } from '@/lib';
+import { AppliedTag, BidAnnouncementContext, Tag } from '@/lib';
 import { createContext, useContext, ReactNode, useState } from 'react';
 
 type MyTagContextState = {
@@ -8,6 +8,8 @@ type MyTagContextState = {
   setTags: React.Dispatch<React.SetStateAction<Tag[]>>;
   appliedTags: AppliedTag[];
   setAppliedTags: React.Dispatch<AppliedTag[]>;
+  bidAnnouncementsContext: BidAnnouncementContext | null;
+  setBidAnnouncementsContext: React.Dispatch<React.SetStateAction<BidAnnouncementContext | null>>;
 };
 
 const MyTagContext = createContext<MyTagContextState | undefined>(undefined);
@@ -15,9 +17,20 @@ const MyTagContext = createContext<MyTagContextState | undefined>(undefined);
 export const MyTagProvider = ({ children }: { children: ReactNode }) => {
   const [tags, setTags] = useState<Tag[]>([]);
   const [appliedTags, setAppliedTags] = useState<AppliedTag[]>([]);
+  const [bidAnnouncementsContext, setBidAnnouncementsContext] =
+    useState<BidAnnouncementContext | null>(null);
 
   return (
-    <MyTagContext.Provider value={{ tags, setTags, appliedTags, setAppliedTags }}>
+    <MyTagContext.Provider
+      value={{
+        tags,
+        setTags,
+        appliedTags,
+        setAppliedTags,
+        bidAnnouncementsContext,
+        setBidAnnouncementsContext
+      }}
+    >
       {children}
     </MyTagContext.Provider>
   );

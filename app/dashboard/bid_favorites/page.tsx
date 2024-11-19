@@ -1,16 +1,15 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
-  getProducts,
-  MY_FAVORITES,
-  AnnouncementContext,
   announcementSteps,
   suggestedStates,
   announcementPrices,
   announcementTypes,
   Tag,
-  AppliedTag
+  AppliedTag,
+  BidAnnouncementContext,
+  MY_FAVORITES
 } from '@/lib';
 import { ProductsTable } from '.';
 import { Card } from '@/components/ui/card';
@@ -23,55 +22,45 @@ import { useToast } from '@/hooks/use-toast';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export default function BidFavorites(props: { searchParams: Promise<{ offset: string }> }) {
-  const [data, setData] = useState<{
-    products: AnnouncementContext[];
-    newOffset: number | null;
-    totalProducts: number;
-  } | null>(null);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+export default function BidFavorites() {
+  const searchParams = useMemo(() => new URLSearchParams(window.location.search), []);
+  const offset = Number(searchParams.get('offset') ?? 0);
 
   const { toast } = useToast();
 
-  const fetchData = async () => {
-    // TODO: React Query 또는 SWR로 개선하여 재패치가 유리하도록 바꿔보기
-    const searchParams = await props.searchParams;
-    const offset = searchParams.offset ?? 0;
-    setData(await getProducts(Number(offset)));
-  };
-
   const [isVisibleMemoContext, setIsVisibleMemoContext] = useState(false);
 
-  const { setTags, setAppliedTags } = useTag();
+  const { setTags, setAppliedTags, setBidAnnouncementsContext } = useTag();
 
-  const { data: myTags, error, isLoading } = useSWR<Tag[]>('/tags.json', fetcher);
+  const { data, error } = useSWR<[BidAnnouncementContext, Tag[], AppliedTag[]], unknown, string[]>(
+    ['/bidAnnouncementContext.json', '/tags.json', '/appliedTags.json'],
+    ([url1, url2, url3]) => Promise.all([fetcher(url1), fetcher(url2), fetcher(url3)])
+  );
 
   useEffect(() => {
-    if (myTags) {
+    if (data) {
+      const [bidAnnouncementsContext, myTags, appliedTags] = data;
+      const favoriteProducts = bidAnnouncementsContext.products.filter(({ id }) =>
+        JSON.parse(localStorage.getItem(MY_FAVORITES) || '[]').includes(id)
+      );
+
+      setBidAnnouncementsContext({
+        products: favoriteProducts,
+        newOffset: offset,
+        totalProducts: favoriteProducts.length
+      });
       setTags(myTags);
-    }
-  }, [myTags, setTags]);
-
-  const { data: appliedTags } = useSWR<AppliedTag[]>('/appliedTags.json', fetcher);
-
-  useEffect(() => {
-    if (appliedTags) {
       setAppliedTags(appliedTags);
     }
-  }, [appliedTags, setAppliedTags]);
+  }, [data, setBidAnnouncementsContext, setTags, setAppliedTags, offset]);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-  if (!data || !myTags?.length) return;
+  if (error) {
+    return <div>Error loading data</div>;
+  }
 
-  const { products, newOffset } = data;
-
-  const favoriteProducts = products.filter(({ id }) =>
-    JSON.parse(localStorage.getItem(MY_FAVORITES) || '[]').includes(id)
-  );
+  if (!data) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -144,10 +133,7 @@ export default function BidFavorites(props: { searchParams: Promise<{ offset: st
 
       <ProductsTable
         isVisibleMemoContext={isVisibleMemoContext}
-        products={favoriteProducts}
-        offset={newOffset ?? 0}
-        totalProducts={favoriteProducts.length}
-        setData={setData}
+        setData={setBidAnnouncementsContext}
       />
     </>
   );

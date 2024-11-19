@@ -1,10 +1,11 @@
 'use client';
 
-import { AnnouncementContext, MY_FAVORITES } from '@/lib';
+import { AnnouncementContext, BidAnnouncementContext, MY_FAVORITES } from '@/lib';
 import { ArrowUpDown } from 'lucide-react';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Product } from '.';
 import { ProductPagination } from '../product-pagination';
+import { useTag } from './context/MyTagContext';
 
 interface SortConfig {
   key: keyof AnnouncementContext | null;
@@ -13,23 +14,19 @@ interface SortConfig {
 
 export function ProductsTable({
   isVisibleMemoContext,
-  products,
-  offset,
-  totalProducts,
   setData
 }: {
   isVisibleMemoContext: boolean;
-  products: AnnouncementContext[];
-  offset: number;
-  totalProducts: number;
-  setData: Dispatch<
-    SetStateAction<{
-      products: AnnouncementContext[];
-      newOffset: number | null;
-      totalProducts: number;
-    } | null>
-  >;
+  setData: Dispatch<SetStateAction<BidAnnouncementContext | null>>;
 }) {
+  const { bidAnnouncementsContext } = useTag();
+
+  const {
+    products,
+    newOffset: offset,
+    totalProducts
+  } = bidAnnouncementsContext || { products: [], newOffset: 0, totalProducts: 0 };
+
   const PRODUCTS_PER_PAGE = 10;
 
   const [sortConfig, setSortConfig] = useState<SortConfig>({
