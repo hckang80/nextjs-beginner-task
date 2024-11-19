@@ -123,7 +123,11 @@ export function Product({
                     </Badge>
                   ))}
                 </div>
-                <TagEditButton name={name} generatedTags={generatedTags} />
+                <TagEditButton
+                  bid={id}
+                  name={name}
+                  generatedTags={generatedTags}
+                />
               </div>
               <dl className="flex items-center gap-6">
                 <div className="flex items-center gap-2">
@@ -163,9 +167,11 @@ export function Product({
 }
 
 export function TagEditButton({
+  bid,
   name,
   generatedTags,
 }: {
+  bid: number;
   name: string;
   generatedTags: Tag[];
 }) {
@@ -181,16 +187,26 @@ export function TagEditButton({
           <DialogTitle>{name}</DialogTitle>
         </DialogHeader>
         <DialogDescription />
-        <TagEditor generatedTags={generatedTags} />
+        <TagEditor bid={bid} generatedTags={generatedTags} />
       </DialogContent>
     </Dialog>
   );
 }
 
-export function TagEditor({ generatedTags }: { generatedTags: Tag[] }) {
+export function TagEditor({
+  bid,
+  generatedTags,
+}: {
+  bid: number;
+  generatedTags: Tag[];
+}) {
   const { toast } = useToast();
   const [tag, inputTag] = useState("");
-  const { tags, setTags } = useTag();
+  const { tags, setTags, appliedTags, setAppliedTags } = useTag();
+
+  const resetTags = (bid: number) => {
+    setAppliedTags(appliedTags.filter((item) => item.id !== bid));
+  };
 
   const addTag = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -274,7 +290,9 @@ export function TagEditor({ generatedTags }: { generatedTags: Tag[] }) {
       <div className="min-h-[200px]">
         <header className="flex justify-between gap-2">
           <h3 className="font-bold">적용 태그</h3>
-          <Button>태그 초기화</Button>
+          <TagDeleteButton deleteTag={() => resetTags(bid)}>
+            <Button>태그 초기화</Button>
+          </TagDeleteButton>
         </header>
 
         <ul className="flex flex-wrap gap-[4px] mt-[20px]">
