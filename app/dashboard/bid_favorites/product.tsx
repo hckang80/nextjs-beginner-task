@@ -163,6 +163,7 @@ export function TagEditButton({ name }: { name: string }) {
 }
 
 export function AllTags() {
+  const { toast } = useToast();
   const [tag, inputTag] = useState("");
   const { tags, setTags } = useTag();
 
@@ -205,6 +206,17 @@ export function AllTags() {
     });
   };
 
+  const saveTagName = () => {
+    const result = tags.map((tag) => {
+      return tag.id === selectedTag.id ? selectedTag : tag;
+    });
+    setTags(result);
+
+    toast({
+      title: "태그 이름이 수정되었습니다.",
+    });
+  };
+
   return (
     <div>
       <header className="flex justify-between gap-2">
@@ -229,7 +241,7 @@ export function AllTags() {
             <Input type="color" className="w-[40px] p-0" />
           </div>
           <div className="flex items-align gap-[4px]">
-            <Button>태그 수정</Button>
+            <Button onClick={() => saveTagName()}>태그 수정</Button>
             <Button variant="destructive">태그 삭제</Button>
             <Button variant="outline" onClick={() => setIsOpenEditor(false)}>
               수정 완료
