@@ -9,12 +9,14 @@ import {
   suggestedStates,
   announcementPrices,
   announcementTypes,
+  Tag,
 } from "@/lib";
 import { ProductsTable } from ".";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/compat/router";
 import { Input } from "@/components/ui/input";
+import useSWR from "swr";
 
 export default function BidFavorites(props: {
   searchParams: Promise<{ offset: string }>;
@@ -38,9 +40,18 @@ export default function BidFavorites(props: {
 
   const [isVisibleMemoContext, setIsVisibleMemoContext] = useState(false);
 
-  if (!data) {
-    return "Loading...";
-  }
+  const fetcher = (url: string) =>
+    fetch(url).then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      return response.json();
+    });
+
+  const { data: tags, error, isLoading } = useSWR<Tag[]>("/tags.json", fetcher);
+
+  if (!data || isLoading) return "<p>Loading...</p>";
+  if (error) return <p>Error: {error.message}</p>;
 
   const { products, newOffset } = data;
 
