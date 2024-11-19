@@ -9,7 +9,7 @@ export function getMaxNumber(array: number[]) {
   return !array.length ? 0 : Math.max(...array);
 }
 
-export const generatedId = (array: { id: number; [key: string]: any }[]) => {
+export const generatedId = (array: { id: number }[]) => {
   return getMaxNumber(array.map(({ id }) => id)) + 1;
 };
 
