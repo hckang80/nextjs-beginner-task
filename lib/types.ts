@@ -103,3 +103,8 @@ export interface Tag {
   text: string;
   bgColor: string;
 }
+
+export interface AppliedTag {
+  id: number;
+  tags: number[];
+}

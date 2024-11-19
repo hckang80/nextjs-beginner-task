@@ -84,6 +84,12 @@ export function Product({
     });
   };
 
+  const { tags, appliedTags } = useTag();
+  const tagsByBId = appliedTags.find((item) => item.id === id);
+  const generatedTags = tags.filter((item) =>
+    tagsByBId?.tags.includes(item.id)
+  );
+
   return (
     <tbody>
       <tr>
@@ -105,6 +111,13 @@ export function Product({
           <td colSpan={8}>
             <div className="flex justify-between items-center gap-2 px-[20px]">
               <div className="shrink-0">
+                <ul>
+                  {generatedTags.map(({ id, text, bgColor }) => (
+                    <li key={id} style={{ background: bgColor }}>
+                      {text}
+                    </li>
+                  ))}
+                </ul>
                 <TagEditButton name={name} />
               </div>
               <dl className="flex items-center gap-6">

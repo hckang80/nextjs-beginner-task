@@ -10,6 +10,7 @@ import {
   announcementPrices,
   announcementTypes,
   Tag,
+  AppliedTag,
 } from "@/lib";
 import { ProductsTable } from ".";
 import { Card } from "@/components/ui/card";
@@ -43,7 +44,7 @@ export default function BidFavorites(props: {
 
   const [isVisibleMemoContext, setIsVisibleMemoContext] = useState(true);
 
-  const { tags, setTags } = useTag();
+  const { setTags, setAppliedTags } = useTag();
 
   const {
     data: myTags,
@@ -56,6 +57,17 @@ export default function BidFavorites(props: {
       setTags(myTags);
     }
   }, [myTags, setTags]);
+
+  const { data: appliedTags } = useSWR<AppliedTag[]>(
+    "/appliedTags.json",
+    fetcher
+  );
+
+  useEffect(() => {
+    if (appliedTags) {
+      setAppliedTags(appliedTags);
+    }
+  }, [appliedTags, setAppliedTags]);
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;

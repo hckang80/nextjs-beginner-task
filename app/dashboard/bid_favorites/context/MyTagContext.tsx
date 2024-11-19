@@ -1,20 +1,25 @@
 "use client";
 
-import { Tag } from "@/lib";
+import { AppliedTag, Tag } from "@/lib";
 import { createContext, useContext, ReactNode, useState } from "react";
 
 type MyTagContextState = {
-  tags: Tag[] | [];
-  setTags: React.Dispatch<React.SetStateAction<Tag[] | []>>;
+  tags: Tag[];
+  setTags: React.Dispatch<React.SetStateAction<Tag[]>>;
+  appliedTags: AppliedTag[];
+  setAppliedTags: React.Dispatch<AppliedTag[]>;
 };
 
 const MyTagContext = createContext<MyTagContextState | undefined>(undefined);
 
 export const MyTagProvider = ({ children }: { children: ReactNode }) => {
-  const [tags, setTags] = useState<Tag[] | []>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
+  const [appliedTags, setAppliedTags] = useState<AppliedTag[]>([]);
 
   return (
-    <MyTagContext.Provider value={{ tags, setTags }}>
+    <MyTagContext.Provider
+      value={{ tags, setTags, appliedTags, setAppliedTags }}
+    >
       {children}
     </MyTagContext.Provider>
   );
