@@ -37,14 +37,35 @@
 }
 
 .global-nav {
+  margin: 0 20px 0 0;
   font-size: 17px;
 }
 
-.global-sub-menu {
-  margin: 0 0 0 20px;
+.global-main-item {
+  display: block;
+  padding: 10px;
+  border-radius: 4px;
+}
 
-  .is-active {
-    font-weight: bold;
+summary.global-main-item {
+  font-weight: bold;
+  background: rgb(21, 22, 99);
+  color: #fff;
+}
+
+.global-sub-menu {
+  margin: 5px 0 0 20px;
+
+  a {
+    display: block;
+    padding: 10px;
+    border-radius: 4px;
+
+    &.is-active {
+      font-weight: bold;
+      background: rgb(21, 22, 99);
+      color: #fff;
+    }
   }
 }
 
