@@ -6,7 +6,7 @@ import { ProductPagination } from '../product-pagination';
 import { useBidAnnouncement } from './context/BidAnnouncementContext';
 
 export function ProductsTable() {
-  const PRODUCTS_PER_PAGE = 5;
+  const LIST_PER_PAGE = 5;
 
   const tableRef = useRef<HTMLTableElement | null>(null);
 
@@ -55,15 +55,15 @@ export function ProductsTable() {
           </tr>
         </thead>
         <tbody>
-          {products.slice(offset, offset + PRODUCTS_PER_PAGE).map((product) => (
+          {products.slice(offset, offset + LIST_PER_PAGE).map((product) => (
             <Product key={product.id} product={product} />
           ))}
         </tbody>
       </table>
 
-      {PRODUCTS_PER_PAGE < totalProducts && (
+      {LIST_PER_PAGE < totalProducts && (
         <ProductPagination
-          productsPerPage={PRODUCTS_PER_PAGE}
+          productsPerPage={LIST_PER_PAGE}
           offset={offset}
           totalProducts={totalProducts}
         />

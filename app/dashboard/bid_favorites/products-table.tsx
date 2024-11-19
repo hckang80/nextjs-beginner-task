@@ -27,7 +27,7 @@ export function ProductsTable({
     totalProducts
   } = bidAnnouncementsContext || { products: [], newOffset: 0, totalProducts: 0 };
 
-  const PRODUCTS_PER_PAGE = 10;
+  const LIST_PER_PAGE = 10;
 
   const [sortConfig, setSortConfig] = useState<SortConfig>({
     key: null,
@@ -129,7 +129,7 @@ export function ProductsTable({
             <th>삭제</th>
           </tr>
         </thead>
-        {products.slice(offset, offset + PRODUCTS_PER_PAGE).map((product) => (
+        {products.slice(offset, offset + LIST_PER_PAGE).map((product) => (
           <Product
             key={product.id}
             isVisibleMemoContext={isVisibleMemoContext}
@@ -139,9 +139,9 @@ export function ProductsTable({
         ))}
       </table>
 
-      {PRODUCTS_PER_PAGE < totalProducts && (
+      {LIST_PER_PAGE < totalProducts && (
         <ProductPagination
-          productsPerPage={PRODUCTS_PER_PAGE}
+          productsPerPage={LIST_PER_PAGE}
           offset={offset}
           totalProducts={totalProducts}
         />
