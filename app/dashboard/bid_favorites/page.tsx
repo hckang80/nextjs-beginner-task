@@ -50,8 +50,9 @@ export default function BidFavorites(props: {
 
   const { data: tags, error, isLoading } = useSWR<Tag[]>("/tags.json", fetcher);
 
-  if (!data || isLoading) return "<p>Loading...</p>";
+  if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
+  if (!data || !tags) return;
 
   const { products, newOffset } = data;
 
