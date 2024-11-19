@@ -41,7 +41,7 @@ export default function BidFavorites(props: {
     setData(await getProducts(Number(offset)));
   };
 
-  const [isVisibleMemoContext, setIsVisibleMemoContext] = useState(false);
+  const [isVisibleMemoContext, setIsVisibleMemoContext] = useState(true);
 
   const { tags, setTags } = useTag();
 
