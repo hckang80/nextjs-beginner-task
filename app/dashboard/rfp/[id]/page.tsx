@@ -1,12 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { AnnouncementContext, getProducts, MY_FAVORITES } from "@/lib";
 import { Star } from "lucide-react";
 import { useParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function RfpDetail() {
   const { id } = useParams<{ id: string }>();
@@ -80,6 +81,9 @@ export default function RfpDetail() {
             <CardHeader>
               <CardTitle>자격 분석 노트</CardTitle>
             </CardHeader>
+            <CardContent>
+              <NoteTextarea />
+            </CardContent>
           </Card>
           <Card className="grow basis-full">
             <CardHeader>
@@ -125,5 +129,31 @@ export default function RfpDetail() {
         </Card>
       </div>
     </div>
+  );
+}
+
+export function NoteTextarea() {
+  const [noteValue, setNoteValue] = useState("");
+  const { toast } = useToast();
+
+  const saveNoteValue = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    toast({
+      title: "You submitted the following values:",
+      description: noteValue,
+    });
+  };
+
+  return (
+    <form onSubmit={saveNoteValue}>
+      <Textarea
+        placeholder="필요한 메모를 하세요.."
+        rows={10}
+        value={noteValue}
+        onChange={(event) => setNoteValue(event.currentTarget.value)}
+      />
+      <Button className="w-full mt-[10px]">저장</Button>
+    </form>
   );
 }
