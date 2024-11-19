@@ -243,55 +243,64 @@ export function AllTags() {
 
   return (
     <div>
-      <header className="flex justify-between gap-2">
-        <h3 className="font-bold">전체 태그</h3>
-        <form onSubmit={addTag} className="flex gap-[4px]">
-          <Input
-            value={tag}
-            placeholder="태그 추가"
-            onChange={(event) => inputTag(event.target.value)}
-            maxLength={10}
-          />
-          <Button>
-            <Plus />
-          </Button>
-        </form>
-      </header>
+      <div className="min-h-[200px]">
+        <header className="flex justify-between gap-2">
+          <h3 className="font-bold">적용 태그</h3>
+          <Button>태그 초기화</Button>
+        </header>
+      </div>
 
-      {isOpenEditor && (
-        <div className="flex justify-between items-align gap-2 mt-[15px]">
-          <div className="flex items-align gap-[4px]">
-            <Input value={selectedTag.text} onChange={changeTagName} />
+      <div className="min-h-[200px]">
+        <header className="flex justify-between gap-2">
+          <h3 className="font-bold">전체 태그</h3>
+          <form onSubmit={addTag} className="flex gap-[4px]">
             <Input
-              type="color"
-              className="w-[40px] p-0"
-              onChange={saveTagColor}
+              value={tag}
+              placeholder="태그 추가"
+              onChange={(event) => inputTag(event.target.value)}
+              maxLength={10}
             />
-          </div>
-          <div className="flex items-align gap-[4px]">
-            <Button onClick={() => saveTagName()}>태그 수정</Button>
-            <TagDeleteButton deleteTag={deleteTag} />
-            <Button variant="outline" onClick={() => setIsOpenEditor(false)}>
-              수정 완료
+            <Button>
+              <Plus />
             </Button>
-          </div>
-        </div>
-      )}
+          </form>
+        </header>
 
-      <ul className="flex flex-wrap gap-[4px] mt-[20px]">
-        {tags.map(({ id, text, bgColor }) => (
-          <li
-            key={id}
-            style={{ background: bgColor }}
-            className="flex justify-between items-center basis-[150px] rounded-[4px] px-[10px] h-[30px] text-white text-[12px] cursor-pointer"
-          >
-            {text}
-            <button className="p-[5px]" onClick={openTagEditor(id)}>
-              <Pencil size={10} color="#ffffff" strokeWidth={1.25} />
-            </button>
-          </li>
-        ))}
-      </ul>
+        {isOpenEditor && (
+          <div className="flex justify-between items-align gap-2 mt-[15px]">
+            <div className="flex items-align gap-[4px]">
+              <Input value={selectedTag.text} onChange={changeTagName} />
+              <Input
+                type="color"
+                className="w-[40px] p-0"
+                onChange={saveTagColor}
+              />
+            </div>
+            <div className="flex items-align gap-[4px]">
+              <Button onClick={() => saveTagName()}>태그 수정</Button>
+              <TagDeleteButton deleteTag={deleteTag} />
+              <Button variant="outline" onClick={() => setIsOpenEditor(false)}>
+                수정 완료
+              </Button>
+            </div>
+          </div>
+        )}
+
+        <ul className="flex flex-wrap gap-[4px] mt-[20px]">
+          {tags.map(({ id, text, bgColor }) => (
+            <li
+              key={id}
+              style={{ background: bgColor }}
+              className="flex justify-between items-center basis-[150px] rounded-[4px] px-[10px] h-[30px] text-white text-[12px] cursor-pointer"
+            >
+              {text}
+              <button className="p-[5px]" onClick={openTagEditor(id)}>
+                <Pencil size={10} color="#ffffff" strokeWidth={1.25} />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
