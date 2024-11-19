@@ -1,35 +1,4 @@
-import type { KeywordSet, AnnouncementContext } from './types';
-
-export function getKeywordSets() {
-  const data: KeywordSet[] = [
-    {
-      id: 1,
-      name: '신규_그룹_공용_2024_11_15',
-      isPined: true,
-      isPrivate: false
-    },
-    {
-      id: 2,
-      name: '나의 다이어리',
-      isPined: false,
-      isPrivate: false
-    },
-    {
-      id: 3,
-      name: '신규_그룹_개인_2024_11_15',
-      isPined: false,
-      isPrivate: true
-    },
-    {
-      id: 4,
-      name: '신규_그룹_개인_2024_11_16',
-      isPined: false,
-      isPrivate: true
-    }
-  ];
-
-  return data;
-}
+import type { AnnouncementContext } from './types';
 
 export async function getProducts(offset: number): Promise<{
   products: AnnouncementContext[];
