@@ -23,6 +23,7 @@ export function ProductsTable() {
   } = bidAnnouncementsContext || { products: [], newOffset: 0, totalProducts: 0 };
 
   useEffect(() => {
+    // TODO: offset 0일때만 다르게 동작함
     const isPaginationTouch = new URLSearchParams(location.search).has('offset');
     if (!isPaginationTouch) return;
     focusDataTable();
