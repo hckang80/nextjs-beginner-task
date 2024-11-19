@@ -149,7 +149,6 @@ export function RefreshPage() {
   const router = useRouter();
 
   const handleRefresh = () => {
-    // TODO: API 호출이 없어서 동작 여부는 확인 못함
     router?.replace(router.asPath);
   };
 

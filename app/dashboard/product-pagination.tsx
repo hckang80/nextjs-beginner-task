@@ -31,7 +31,7 @@ export function ProductPagination({
         {Array.from({ length: pageSize }, (_, i) => (
           <PaginationItem key={i}>
             <PaginationLink
-              href={`${location.pathname}?offset=${i * productsPerPage}`} // TODO: 객체 형태로 query 전달이 안됨. Link와 다르게 동작함
+              href={`${location.pathname}?offset=${i * productsPerPage}`} // TODO: 객체 형태로 query 전달이 안됨. 즉, Link와 다르게 동작함
               isActive={i === ~~(offset / productsPerPage)}
             >
               {i + 1}
