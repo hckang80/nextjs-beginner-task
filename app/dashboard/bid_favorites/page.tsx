@@ -17,6 +17,9 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/compat/router";
 import { Input } from "@/components/ui/input";
 import useSWR from "swr";
+import { useTag } from "./context/MyTagContext";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function BidFavorites(props: {
   searchParams: Promise<{ offset: string }>;
@@ -40,19 +43,23 @@ export default function BidFavorites(props: {
 
   const [isVisibleMemoContext, setIsVisibleMemoContext] = useState(false);
 
-  const fetcher = (url: string) =>
-    fetch(url).then((response) => {
-      if (!response.ok) {
-        throw new Error("Failed to fetch data");
-      }
-      return response.json();
-    });
+  const { tags, setTags } = useTag();
 
-  const { data: tags, error, isLoading } = useSWR<Tag[]>("/tags.json", fetcher);
+  const {
+    data: myTags,
+    error,
+    isLoading,
+  } = useSWR<Tag[]>("/tags.json", fetcher);
+
+  useEffect(() => {
+    if (myTags) {
+      setTags(myTags);
+    }
+  }, [myTags, setTags]);
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
-  if (!data || !tags) return;
+  if (!data || !myTags?.length) return;
 
   const { products, newOffset } = data;
 

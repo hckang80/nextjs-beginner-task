@@ -24,6 +24,7 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
+  DialogDescription,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -31,6 +32,7 @@ import { Pencil, Trash2 } from "lucide-react";
 import React, { useState } from "react";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
+import { useTag } from "./context/MyTagContext";
 
 export function Product({
   isVisibleMemoContext,
@@ -153,6 +155,7 @@ export function TagEditButton({ name }: { name: string }) {
         <DialogHeader>
           <DialogTitle>{name}</DialogTitle>
         </DialogHeader>
+        <DialogDescription />
         <AllTags />
       </DialogContent>
     </Dialog>
@@ -161,7 +164,7 @@ export function TagEditButton({ name }: { name: string }) {
 
 export function AllTags() {
   const [tag, inputTag] = useState("");
-  const [tags, setTags] = useState<Tag[]>([]);
+  const { tags, setTags } = useTag();
 
   const addTag = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
