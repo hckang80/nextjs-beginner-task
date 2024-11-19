@@ -15,29 +15,24 @@ export default function Rfp() {
 
   const { setBidAnnouncementsContext, setKeywordSetsContext } = useBidAnnouncement();
 
-  const { data: bidAnnouncementsContext } = useSWR<BidAnnouncementContext>(
-    '/bidAnnouncementContext.json',
-    fetcher
+  const { data, error } = useSWR<[BidAnnouncementContext, KeywordSet[]], unknown, string[]>(
+    ['/bidAnnouncementContext.json', '/keywordSets.json'],
+    ([url1, url2]) => Promise.all([fetcher(url1), fetcher(url2)])
   );
 
-  const { data: keywordSetsContext } = useSWR<KeywordSet[]>('/keywordSets.json', fetcher);
-
   useEffect(() => {
-    if (bidAnnouncementsContext) {
-      setBidAnnouncementsContext({
-        ...bidAnnouncementsContext,
-        newOffset: offset
-      });
-    }
-  }, [bidAnnouncementsContext, setBidAnnouncementsContext, offset]);
-
-  useEffect(() => {
-    if (keywordSetsContext) {
+    if (data) {
+      const [bidAnnouncementsContext, keywordSetsContext] = data;
+      setBidAnnouncementsContext({ ...bidAnnouncementsContext, newOffset: offset });
       setKeywordSetsContext(keywordSetsContext);
     }
-  }, [keywordSetsContext, setKeywordSetsContext]);
+  }, [data, setBidAnnouncementsContext, setKeywordSetsContext, offset]);
 
-  if (!bidAnnouncementsContext || !keywordSetsContext) {
+  if (error) {
+    return <div>Error loading data</div>;
+  }
+
+  if (!data) {
     return <div>Loading...</div>;
   }
 
