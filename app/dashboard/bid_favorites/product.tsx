@@ -206,6 +206,20 @@ export function AllTags() {
     });
   };
 
+  const saveTagColor = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedTag({
+      ...selectedTag,
+      bgColor: event.currentTarget.value,
+    });
+
+    const result = tags.map((tag) => {
+      return tag.id === selectedTag.id
+        ? { ...selectedTag, bgColor: event.currentTarget.value }
+        : tag;
+    });
+    setTags(result);
+  };
+
   const saveTagName = () => {
     const result = tags.map((tag) => {
       return tag.id === selectedTag.id ? selectedTag : tag;
@@ -247,7 +261,11 @@ export function AllTags() {
         <div className="flex justify-between items-align gap-2 mt-[15px]">
           <div className="flex items-align gap-[4px]">
             <Input value={selectedTag.text} onChange={changeTagName} />
-            <Input type="color" className="w-[40px] p-0" />
+            <Input
+              type="color"
+              className="w-[40px] p-0"
+              onChange={saveTagColor}
+            />
           </div>
           <div className="flex items-align gap-[4px]">
             <Button onClick={() => saveTagName()}>태그 수정</Button>
