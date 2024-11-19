@@ -13,8 +13,8 @@ export const generatedId = (array: { id: number }[]) => {
   return getMaxNumber(array.map(({ id }) => id)) + 1;
 };
 
-export function toReadableDate(date = new Date()) {
-  return new Intl.DateTimeFormat('en-CA').format(date);
+export function toReadableDate(date: Date | string | undefined = new Date()) {
+  return new Intl.DateTimeFormat('en-CA').format(new Date(date));
 }
 
 export const MY_FAVORITES = 'myFavorites';

@@ -1,19 +1,11 @@
 'use client';
 
-import { AnnouncementContext } from '@/lib';
 import { useEffect, useRef } from 'react';
 import { Product } from '.';
 import { ProductPagination } from '../product-pagination';
+import { useBidAnnouncement } from './context/BidAnnouncementContext';
 
-export function ProductsTable({
-  products,
-  offset,
-  totalProducts
-}: {
-  products: AnnouncementContext[];
-  offset: number;
-  totalProducts: number;
-}) {
+export function ProductsTable() {
   const PRODUCTS_PER_PAGE = 5;
 
   const tableRef = useRef<HTMLTableElement | null>(null);
@@ -21,6 +13,14 @@ export function ProductsTable({
   const focusDataTable = () => {
     tableRef?.current?.scrollIntoView();
   };
+
+  const { bidAnnouncementsContext } = useBidAnnouncement();
+
+  const {
+    products,
+    newOffset: offset,
+    totalProducts
+  } = bidAnnouncementsContext || { products: [], newOffset: 0, totalProducts: 0 };
 
   useEffect(() => {
     const isPaginationTouch = new URLSearchParams(location.search).has('offset');

@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { getProducts, AnnouncementContext, KeywordSet } from '@/lib';
+import { useEffect, useMemo } from 'react';
+import { KeywordSet, BidAnnouncementContext } from '@/lib';
 import { ProductsTable, DetailedSearch, ChannelSearch } from '.';
 import { Card } from '@/components/ui/card';
 import { useBidAnnouncement } from './context/BidAnnouncementContext';
@@ -9,20 +9,27 @@ import useSWR from 'swr';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export default function Rfp(props: { searchParams: Promise<{ offset: string }> }) {
-  const [data, setData] = useState<{
-    products: AnnouncementContext[];
-    newOffset: number | null;
-    totalProducts: number;
-  } | null>(null);
+export default function Rfp() {
+  const searchParams = useMemo(() => new URLSearchParams(window.location.search), []);
+  const offset = Number(searchParams.get('offset') ?? 0);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { setBidAnnouncementsContext, setKeywordSetsContext } = useBidAnnouncement();
 
-  const { setKeywordSetsContext } = useBidAnnouncement();
+  const { data: bidAnnouncementsContext } = useSWR<BidAnnouncementContext>(
+    '/bidAnnouncementContext.json',
+    fetcher
+  );
 
   const { data: keywordSetsContext } = useSWR<KeywordSet[]>('/keywordSets.json', fetcher);
+
+  useEffect(() => {
+    if (bidAnnouncementsContext) {
+      setBidAnnouncementsContext({
+        ...bidAnnouncementsContext,
+        newOffset: offset
+      });
+    }
+  }, [bidAnnouncementsContext, setBidAnnouncementsContext, offset]);
 
   useEffect(() => {
     if (keywordSetsContext) {
@@ -30,17 +37,9 @@ export default function Rfp(props: { searchParams: Promise<{ offset: string }> }
     }
   }, [keywordSetsContext, setKeywordSetsContext]);
 
-  const fetchData = async () => {
-    const searchParams = await props.searchParams;
-    const offset = searchParams.offset ?? 0;
-    setData(await getProducts(Number(offset)));
-  };
-
-  if (!data) {
-    return 'Loading...'; // TODO: 새로고침시에도 로딩이 안나오고 데이터를 좀 더 빠르게 가져올 수 없을까? getServerSideProps를 이용해보자
+  if (!bidAnnouncementsContext || !keywordSetsContext) {
+    return <div>Loading...</div>;
   }
-
-  const { products, newOffset, totalProducts } = data;
 
   return (
     <div>
@@ -70,11 +69,7 @@ export default function Rfp(props: { searchParams: Promise<{ offset: string }> }
         </details>
 
         <div>
-          <ProductsTable
-            products={products}
-            offset={newOffset ?? 0}
-            totalProducts={totalProducts}
-          />
+          <ProductsTable />
         </div>
       </div>
     </div>
