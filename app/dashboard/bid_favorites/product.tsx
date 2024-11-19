@@ -219,7 +219,7 @@ export function TagEditor({ bid, generatedTags }: { bid: number; generatedTags: 
 
       setIsOpenEditor(!isOpenEditor);
       const currentItem = tags.find((item) => item.id === id);
-      currentItem && setSelectedTag(currentItem);
+      if (currentItem) setSelectedTag(currentItem);
     };
 
   const changeTagName = (event: React.ChangeEvent<HTMLInputElement>) => {
