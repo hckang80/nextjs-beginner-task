@@ -123,7 +123,7 @@ export function Product({
                     </Badge>
                   ))}
                 </div>
-                <TagEditButton name={name} />
+                <TagEditButton name={name} generatedTags={generatedTags} />
               </div>
               <dl className="flex items-center gap-6">
                 <div className="flex items-center gap-2">
@@ -162,7 +162,13 @@ export function Product({
   );
 }
 
-export function TagEditButton({ name }: { name: string }) {
+export function TagEditButton({
+  name,
+  generatedTags,
+}: {
+  name: string;
+  generatedTags: Tag[];
+}) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -175,13 +181,13 @@ export function TagEditButton({ name }: { name: string }) {
           <DialogTitle>{name}</DialogTitle>
         </DialogHeader>
         <DialogDescription />
-        <TagEditor />
+        <TagEditor generatedTags={generatedTags} />
       </DialogContent>
     </Dialog>
   );
 }
 
-export function TagEditor() {
+export function TagEditor({ generatedTags }: { generatedTags: Tag[] }) {
   const { toast } = useToast();
   const [tag, inputTag] = useState("");
   const { tags, setTags } = useTag();
@@ -270,6 +276,21 @@ export function TagEditor() {
           <h3 className="font-bold">적용 태그</h3>
           <Button>태그 초기화</Button>
         </header>
+
+        <ul className="flex flex-wrap gap-[4px] mt-[20px]">
+          {generatedTags.map(({ id, text, bgColor }) => (
+            <li
+              key={id}
+              style={{ background: bgColor }}
+              className="flex justify-between items-center basis-[150px] rounded-[4px] px-[10px] h-[30px] text-white text-[12px] cursor-pointer"
+            >
+              {text}
+              <button className="p-[5px]" onClick={openTagEditor(id)}>
+                <Pencil size={10} color="#ffffff" strokeWidth={1.25} />
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <div className="min-h-[200px]">
