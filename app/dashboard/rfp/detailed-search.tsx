@@ -271,7 +271,7 @@ export function AnnouncementDate({
 
     setFormModel({
       ...formModel,
-      announcementDateFrom: isFreeInput(value) ? "" : toReadableDate(),
+      announcementDateFrom: isFreeInput(value) ? "" : toReadableDate(date),
       announcementDateTo: isFreeInput(value) ? "" : toReadableDate(),
     });
   };
