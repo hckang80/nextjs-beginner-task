@@ -224,8 +224,11 @@ export function TagEditor({
     inputTag("");
   };
 
-  const applyTag = (id: number) => {
-    console.log(tags.find((item) => item.id === id));
+  const applyTag = (bid: number, id: number) => {
+    const result = appliedTags.map((item) =>
+      item.id === bid ? { ...item, tags: [...item.tags, id] } : item
+    );
+    setAppliedTags(result);
   };
 
   const [isOpenEditor, setIsOpenEditor] = useState(false);
@@ -355,7 +358,7 @@ export function TagEditor({
               key={id}
               style={{ background: bgColor }}
               className="flex justify-between items-center basis-[150px] rounded-[4px] px-[10px] h-[30px] text-white text-[12px] cursor-pointer"
-              onClick={() => applyTag(id)}
+              onClick={() => applyTag(bid, id)}
             >
               {text}
               <button className="p-[5px]" onClick={openTagEditor(id)}>
