@@ -251,9 +251,7 @@ export function AllTags() {
           </div>
           <div className="flex items-align gap-[4px]">
             <Button onClick={() => saveTagName()}>태그 수정</Button>
-            <Button variant="destructive" onClick={() => deleteTag()}>
-              태그 삭제
-            </Button>
+            <TagDeleteButton deleteTag={deleteTag} />
             <Button variant="outline" onClick={() => setIsOpenEditor(false)}>
               수정 완료
             </Button>
@@ -276,6 +274,27 @@ export function AllTags() {
         ))}
       </ul>
     </div>
+  );
+}
+
+export function TagDeleteButton({ deleteTag }: { deleteTag: () => void }) {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="destructive">태그 삭제</Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            삭제된 태그는 복구할 수 없어요! 정말 삭제하시겠어요?
+          </AlertDialogTitle>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogAction onClick={() => deleteTag()}>예</AlertDialogAction>
+          <AlertDialogCancel>아니오</AlertDialogCancel>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
 
