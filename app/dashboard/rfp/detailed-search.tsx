@@ -14,52 +14,46 @@ import {
 } from '@/components/ui/dialog';
 import { Dispatch, FormEvent, SetStateAction, useEffect, useState } from 'react';
 import { toast, useToast } from '@/hooks/use-toast';
-import {
-  cn,
-  DetailedSearchForm,
-  generatedId,
-  getKeywordSets,
-  toReadableDate,
-  type KeywordSet
-} from '@/lib';
+import { cn, DetailedSearchForm, generatedId, toReadableDate } from '@/lib';
 import { KeywordSetItem, ToggleController } from '.';
+import { useBidAnnouncement } from './context/BidAnnouncementContext';
 
 const DEFAULT_ANNOUNCEMENT_DEADLINE = 500_000_000;
 
 export function SettingButton({
   data: isPrivate,
-  handler,
-  keywordSet,
-  setKeywordSet
+  handler
 }: {
   data: boolean;
   handler: Dispatch<SetStateAction<boolean>>;
-  keywordSet: KeywordSet[] | null;
-  setKeywordSet: Dispatch<SetStateAction<KeywordSet[] | null>>;
 }) {
-  const pinKeywordSetItem = (id: number) => {
-    if (!keywordSet) return;
+  const { keywordSetsContext, setKeywordSetsContext } = useBidAnnouncement();
 
-    setKeywordSet(
-      keywordSet.map((item) => (item.id === id ? { ...item, isPined: !item.isPined } : item))
+  const pinKeywordSetItem = (id: number) => {
+    if (!keywordSetsContext) return;
+
+    setKeywordSetsContext(
+      keywordSetsContext.map((item) =>
+        item.id === id ? { ...item, isPined: !item.isPined } : item
+      )
     );
   };
 
   const deleteKeywordSetItem = (id: number) => {
-    if (!keywordSet) return;
+    if (!keywordSetsContext) return;
 
-    setKeywordSet(keywordSet.filter((item) => item.id !== id));
+    setKeywordSetsContext(keywordSetsContext.filter((item) => item.id !== id));
     toast({
       title: '그룹이 삭제되었습니다.'
     });
-    // console.log(keywordSet); // TODO: 화면 출력은 올바르게 되지만 콘솔은 setKeywordSet 실행 직전의 값으로 찍힘. 원래 이런건가 ?_?
+    // console.log(keywordSetsContext); // TODO: 화면 출력은 올바르게 되지만 콘솔은 setKeywordSetsContext 실행 직전의 값으로 찍힘. 원래 이런건가 ?_?
   };
 
   const changeKeywordSetName = (id: number) => (event: React.FormEvent<HTMLInputElement>) => {
-    if (!keywordSet) return;
+    if (!keywordSetsContext) return;
 
-    setKeywordSet(
-      keywordSet.map((item) =>
+    setKeywordSetsContext(
+      keywordSetsContext.map((item) =>
         item.id === id ? { ...item, name: event.currentTarget.value } : item
       )
     );
@@ -78,12 +72,12 @@ export function SettingButton({
   };
 
   const addKeywordSet = () => {
-    if (!keywordSet) return;
+    if (!keywordSetsContext) return;
 
-    setKeywordSet([
-      ...keywordSet,
+    setKeywordSetsContext([
+      ...keywordSetsContext,
       {
-        id: generatedId(keywordSet),
+        id: generatedId(keywordSetsContext),
         name: getKeywordSetName(),
         isPined: false,
         isPrivate
@@ -96,7 +90,7 @@ export function SettingButton({
       title: '검색 그룹이 설정되었습니다.',
       description: (
         <pre>
-          <code>{JSON.stringify(keywordSet, null, 2)}</code>
+          <code>{JSON.stringify(keywordSetsContext, null, 2)}</code>
         </pre>
       )
     });
@@ -120,7 +114,7 @@ export function SettingButton({
             선택하신 상단의 그룹이 기본 검색 조건으로 설정됩니다
           </div>
           <ul className="flex flex-col gap-2 mb-4">
-            {keywordSet
+            {keywordSetsContext
               ?.filter((item) => item.isPrivate === isPrivate)
               .map((item) => (
                 <KeywordSetItem
@@ -495,13 +489,7 @@ export function DetailedSearch() {
     });
   };
 
-  const [keywordSet, setKeywordSet] = useState<KeywordSet[] | null>(null);
-
-  useEffect(() => {
-    if (keywordSet?.length) return; // TODO: 이 부분 제거하면 useEffect 무한루프 발생. useCallback으로 개선 필요
-
-    setKeywordSet(getKeywordSets());
-  }, [keywordSet]);
+  const { keywordSetsContext } = useBidAnnouncement();
 
   const DEFAULT_KEYWORD_SET_SIZE = 2;
   const [keywordSetSize, setKeywordSetSize] = useState(DEFAULT_KEYWORD_SET_SIZE);
@@ -525,7 +513,7 @@ export function DetailedSearch() {
               <div className="flex items-center gap-2">
                 <select className="w-[160px]">
                   <option value="">그룹을 선택하세요</option>
-                  {keywordSet
+                  {keywordSetsContext
                     ?.filter((item) => item.isPrivate === isPrivate)
                     .map((item) => (
                       <option key={item.id} value={item.id}>
@@ -534,12 +522,7 @@ export function DetailedSearch() {
                     ))}
                 </select>
                 <Button type="button">현재 세트 저장</Button>
-                <SettingButton
-                  data={isPrivate}
-                  handler={setIsPublic}
-                  keywordSet={keywordSet}
-                  setKeywordSet={setKeywordSet}
-                />
+                <SettingButton data={isPrivate} handler={setIsPublic} />
                 <ToggleController className="ml-auto" data={isPrivate} handler={setIsPublic} />
               </div>
             </td>

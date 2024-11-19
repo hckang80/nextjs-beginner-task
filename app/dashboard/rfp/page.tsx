@@ -1,9 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getProducts, AnnouncementContext } from '@/lib';
+import { getProducts, AnnouncementContext, KeywordSet } from '@/lib';
 import { ProductsTable, DetailedSearch, ChannelSearch } from '.';
 import { Card } from '@/components/ui/card';
+import { useBidAnnouncement } from './context/BidAnnouncementContext';
+import useSWR from 'swr';
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Rfp(props: { searchParams: Promise<{ offset: string }> }) {
   const [data, setData] = useState<{
@@ -15,6 +19,16 @@ export default function Rfp(props: { searchParams: Promise<{ offset: string }> }
   useEffect(() => {
     fetchData();
   }, []);
+
+  const { setKeywordSetsContext } = useBidAnnouncement();
+
+  const { data: keywordSetsContext } = useSWR<KeywordSet[]>('/keywordSets.json', fetcher);
+
+  useEffect(() => {
+    if (keywordSetsContext) {
+      setKeywordSetsContext(keywordSetsContext);
+    }
+  }, [keywordSetsContext, setKeywordSetsContext]);
 
   const fetchData = async () => {
     const searchParams = await props.searchParams;
