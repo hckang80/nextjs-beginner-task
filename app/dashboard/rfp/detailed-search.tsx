@@ -30,6 +30,8 @@ import {
 } from "@/lib";
 import { KeywordSetItem, ToggleController } from ".";
 
+const DEFAULT_ANNOUNCEMENT_DEADLINE = 500_000_000;
+
 export function SettingButton({
   data: isPrivate,
   handler,
@@ -377,7 +379,7 @@ export function DetailedSearch() {
       },
     },
     priceFrom: 0,
-    priceTo: 500_000_000,
+    priceTo: DEFAULT_ANNOUNCEMENT_DEADLINE,
     announcementDateFrom: "",
     announcementDateTo: "",
     businessType: "",
@@ -459,7 +461,7 @@ export function DetailedSearch() {
 
   const [numberFormattedForm, setNumberFormattedForm] = useState({
     priceFrom: "0",
-    priceTo: "500,000,000",
+    priceTo: Number(DEFAULT_ANNOUNCEMENT_DEADLINE).toLocaleString("en-US"),
   });
 
   const setReadableFormat = (key: string, value: string) => {
@@ -467,6 +469,10 @@ export function DetailedSearch() {
       ...numberFormattedForm,
       [key]: Number(value).toLocaleString("en-US"),
     });
+  };
+
+  const omitExcludingNumbers = (value: string) => {
+    return value.replace(/[^0-9]/g, "");
   };
 
   const handleChange = (
@@ -477,11 +483,11 @@ export function DetailedSearch() {
     const { name, value } = event.currentTarget;
 
     numberFormatter &&
-      setReadableFormat(numberFormatter, value.replace(/[^0-9]/g, ""));
+      setReadableFormat(numberFormatter, omitExcludingNumbers(value));
 
     setFormModel({
       ...formModel,
-      [name]: numberFormatter ? value.replace(/[^0-9]/g, "") : value,
+      [name]: numberFormatter ? omitExcludingNumbers(value) : value,
     });
   };
 
