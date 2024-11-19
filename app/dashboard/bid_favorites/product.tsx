@@ -218,7 +218,7 @@ export function AllTags() {
 
 export function DeleteButton({
   id,
-  deleteFavorite, // TODO: Props Drilling이 심함. 개선 필요
+  deleteFavorite, // TODO: Prop Drilling이 심함. 개선 필요
 }: {
   id: number;
   deleteFavorite: (id: number) => void;
