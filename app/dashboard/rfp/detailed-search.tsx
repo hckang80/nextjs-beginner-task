@@ -460,7 +460,7 @@ export function DetailedSearch() {
   ) => {
     const { name, value } = event.currentTarget;
 
-    numberFormatter && setReadableFormat(numberFormatter, omitExcludingNumbers(value));
+    if (numberFormatter) setReadableFormat(numberFormatter, omitExcludingNumbers(value));
 
     setFormModel({
       ...formModel,
