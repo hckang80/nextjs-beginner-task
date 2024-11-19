@@ -28,8 +28,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Pencil, Plus, Trash2 } from "lucide-react";
-import React, { useState } from "react";
+import { Pencil, Plus, Trash2, X } from "lucide-react";
+import React, { ReactNode, useState } from "react";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { useTag } from "./context/MyTagContext";
@@ -260,8 +260,8 @@ export function TagEditor({ generatedTags }: { generatedTags: Tag[] }) {
     });
   };
 
-  const deleteTag = () => {
-    const result = tags.filter((tag) => tag.id !== selectedTag.id);
+  const deleteTag = (id: number) => {
+    const result = tags.filter((tag) => tag.id !== id);
     setTags(result);
     setIsOpenEditor(false);
     toast({
@@ -285,9 +285,11 @@ export function TagEditor({ generatedTags }: { generatedTags: Tag[] }) {
               className="flex justify-between items-center basis-[150px] rounded-[4px] px-[10px] h-[30px] text-white text-[12px] cursor-pointer"
             >
               {text}
-              <button className="p-[5px]" onClick={openTagEditor(id)}>
-                <Pencil size={10} color="#ffffff" strokeWidth={1.25} />
-              </button>
+              <TagDeleteButton deleteTag={() => deleteTag(id)}>
+                <button className="p-[5px]">
+                  <X size={10} color="#ffffff" strokeWidth={1.25} />
+                </button>
+              </TagDeleteButton>
             </li>
           ))}
         </ul>
@@ -321,7 +323,7 @@ export function TagEditor({ generatedTags }: { generatedTags: Tag[] }) {
             </div>
             <div className="flex items-align gap-[4px]">
               <Button onClick={() => saveTagName()}>태그 수정</Button>
-              <TagDeleteButton deleteTag={deleteTag} />
+              <TagDeleteButton deleteTag={() => deleteTag(selectedTag.id)} />
               <Button variant="outline" onClick={() => setIsOpenEditor(false)}>
                 수정 완료
               </Button>
@@ -349,11 +351,17 @@ export function TagEditor({ generatedTags }: { generatedTags: Tag[] }) {
   );
 }
 
-export function TagDeleteButton({ deleteTag }: { deleteTag: () => void }) {
+export function TagDeleteButton({
+  children,
+  deleteTag,
+}: {
+  children?: ReactNode;
+  deleteTag: () => void;
+}) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive">태그 삭제</Button>
+        {children || <Button variant="destructive">태그 삭제</Button>}
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
