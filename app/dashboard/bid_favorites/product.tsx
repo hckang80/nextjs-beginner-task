@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import {
   AnnouncementContext,
-  getMaxNumber,
+  generatedId,
   suggestedStates,
   Tag,
   toReadableDate,
@@ -177,10 +177,6 @@ export function AllTags() {
       ]),
     ]);
     inputTag("");
-  };
-
-  const generatedId = (array: Tag[]) => {
-    return getMaxNumber(array.map(({ id }) => id)) + 1;
   };
 
   return (

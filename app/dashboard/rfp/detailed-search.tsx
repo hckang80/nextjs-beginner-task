@@ -23,12 +23,12 @@ import { toast, useToast } from "@/hooks/use-toast";
 import {
   cn,
   DetailedSearchForm,
+  generatedId,
   getKeywordSets,
   toReadableDate,
   type KeywordSet,
 } from "@/lib";
 import { KeywordSetItem, ToggleController } from ".";
-import { getMaxNumber } from "@/lib";
 
 export function SettingButton({
   data: isPrivate,
@@ -73,10 +73,6 @@ export function SettingButton({
     };
 
   const { toast } = useToast();
-
-  const generatedId = (array: KeywordSet[]) => {
-    return getMaxNumber(array.map(({ id }) => id)) + 1;
-  };
 
   const getKeywordSetName = () => {
     const today = new Date();
