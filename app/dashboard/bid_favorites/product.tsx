@@ -3,7 +3,13 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { AnnouncementContext, suggestedStates, toReadableDate } from "@/lib";
+import {
+  AnnouncementContext,
+  getMaxNumber,
+  suggestedStates,
+  Tag,
+  toReadableDate,
+} from "@/lib";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -155,13 +161,26 @@ export function TagEditButton({ name }: { name: string }) {
 
 export function AllTags() {
   const [tag, inputTag] = useState("");
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
 
   const addTag = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setTags([...new Set([...tags, tag])]);
+    setTags([
+      ...new Set([
+        ...tags,
+        {
+          id: generatedId(tags),
+          text: tag,
+          bgColor: "rgb(166, 161, 219)",
+        },
+      ]),
+    ]);
     inputTag("");
+  };
+
+  const generatedId = (array: Tag[]) => {
+    return getMaxNumber(array.map(({ id }) => id)) + 1;
   };
 
   return (
@@ -178,8 +197,11 @@ export function AllTags() {
         </form>
       </header>
       <ul>
-        {tags.map((item) => (
-          <li key={item}>{item}</li>
+        {tags.map(({ id, text, bgColor }) => (
+          <li key={id} style={{ background: bgColor }}>
+            {id}
+            {text}
+          </li>
         ))}
       </ul>
     </div>

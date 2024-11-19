@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getMaxNumber(array: number[]) {
-  return Math.max(...array);
+  return !array.length ? 0 : Math.max(...array);
 }
 
 export function toReadableDate(date = new Date()) {

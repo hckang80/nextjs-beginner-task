@@ -97,3 +97,9 @@ export interface ChannelItem {
   type: string;
   checked: boolean;
 }
+
+export interface Tag {
+  id: number;
+  text: string;
+  bgColor: string;
+}
