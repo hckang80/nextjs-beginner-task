@@ -19,6 +19,7 @@ import { useRouter } from 'next/compat/router';
 import { Input } from '@/components/ui/input';
 import useSWR from 'swr';
 import { useTag } from './context/MyTagContext';
+import { useToast } from '@/hooks/use-toast';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -32,6 +33,8 @@ export default function BidFavorites(props: { searchParams: Promise<{ offset: st
   useEffect(() => {
     fetchData();
   }, []);
+
+  const { toast } = useToast();
 
   const fetchData = async () => {
     // TODO: React Query 또는 SWR로 개선하여 재패치가 유리하도록 바꿔보기
@@ -114,7 +117,17 @@ export default function BidFavorites(props: { searchParams: Promise<{ offset: st
               ))}
             </select>
 
-            <Button>태그 필터</Button>
+            <Button
+              onClick={() => {
+                toast({
+                  description:
+                    '필터 기능이라서 구현 생략. 메모셀에는 태그추가 기능이 구현되어 있음',
+                  variant: 'destructive'
+                });
+              }}
+            >
+              태그 필터
+            </Button>
 
             <label className="flex items-center gap-2 text-[14px]">
               <input
