@@ -217,6 +217,15 @@ export function AllTags() {
     });
   };
 
+  const deleteTag = () => {
+    const result = tags.filter((tag) => tag.id !== selectedTag.id);
+    setTags(result);
+    setIsOpenEditor(false);
+    toast({
+      title: "태그가 삭제되었습니다.",
+    });
+  };
+
   return (
     <div>
       <header className="flex justify-between gap-2">
@@ -242,7 +251,9 @@ export function AllTags() {
           </div>
           <div className="flex items-align gap-[4px]">
             <Button onClick={() => saveTagName()}>태그 수정</Button>
-            <Button variant="destructive">태그 삭제</Button>
+            <Button variant="destructive" onClick={() => deleteTag()}>
+              태그 삭제
+            </Button>
             <Button variant="outline" onClick={() => setIsOpenEditor(false)}>
               수정 완료
             </Button>
