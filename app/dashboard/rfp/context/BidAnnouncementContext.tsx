@@ -1,20 +1,31 @@
 'use client';
 
-import { KeywordSet } from '@/lib';
+import { BidAnnouncementContext, KeywordSet } from '@/lib';
 import { createContext, useContext, ReactNode, useState } from 'react';
 
 type BidAnnouncement = {
   keywordSetsContext: KeywordSet[];
   setKeywordSetsContext: React.Dispatch<React.SetStateAction<KeywordSet[]>>;
+  bidAnnouncementsContext: BidAnnouncementContext | null;
+  setBidAnnouncementsContext: React.Dispatch<React.SetStateAction<BidAnnouncementContext | null>>;
 };
 
-const MyTagContext = createContext<BidAnnouncement | undefined>(undefined);
+const MyTagContext = createContext<BidAnnouncement | null>(null);
 
 export const BidAnnouncementProvider = ({ children }: { children: ReactNode }) => {
   const [keywordSetsContext, setKeywordSetsContext] = useState<KeywordSet[]>([]);
+  const [bidAnnouncementsContext, setBidAnnouncementsContext] =
+    useState<BidAnnouncementContext | null>(null);
 
   return (
-    <MyTagContext.Provider value={{ keywordSetsContext, setKeywordSetsContext }}>
+    <MyTagContext.Provider
+      value={{
+        keywordSetsContext,
+        setKeywordSetsContext,
+        bidAnnouncementsContext,
+        setBidAnnouncementsContext
+      }}
+    >
       {children}
     </MyTagContext.Provider>
   );

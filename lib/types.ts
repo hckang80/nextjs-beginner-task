@@ -57,6 +57,12 @@ export interface AnnouncementContext {
   endedAt: Date;
 }
 
+export interface BidAnnouncementContext {
+  products: AnnouncementContext[];
+  newOffset: number;
+  totalProducts: number;
+}
+
 export interface DetailedSearchForm {
   keywordSets: Record<
     string,
