@@ -183,9 +183,26 @@ export function AllTags() {
   };
 
   const [isOpenEditor, setIsOpenEditor] = useState(false);
-  const editTag = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    event.stopPropagation();
-    setIsOpenEditor(!isOpenEditor);
+  const [selectedTag, setSelectedTag] = useState<Tag>({
+    id: 0,
+    text: "",
+    bgColor: "",
+  });
+  const openTagEditor =
+    (id: number) =>
+    (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      event.stopPropagation();
+
+      setIsOpenEditor(!isOpenEditor);
+      const currentItem = tags.find((item) => item.id === id);
+      currentItem && setSelectedTag(currentItem);
+    };
+
+  const changeTagName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedTag({
+      ...selectedTag,
+      text: event.currentTarget.value,
+    });
   };
 
   return (
@@ -208,7 +225,7 @@ export function AllTags() {
       {isOpenEditor && (
         <div className="flex justify-between items-align gap-2 mt-[15px]">
           <div className="flex items-align gap-[4px]">
-            <Input />
+            <Input value={selectedTag.text} onChange={changeTagName} />
             <Input type="color" className="w-[40px] p-0" />
           </div>
           <div className="flex items-align gap-[4px]">
@@ -229,7 +246,7 @@ export function AllTags() {
             className="flex justify-between items-center basis-[150px] rounded-[4px] px-[10px] h-[30px] text-white text-[12px] cursor-pointer"
           >
             {text}
-            <button className="p-[5px]" onClick={editTag}>
+            <button className="p-[5px]" onClick={openTagEditor(id)}>
               <Pencil size={10} color="#ffffff" strokeWidth={1.25} />
             </button>
           </li>
