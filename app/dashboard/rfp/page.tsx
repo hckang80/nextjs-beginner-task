@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { KeywordSet, BidAnnouncementContext, fetcher } from '@/lib';
 import { ProductsTable, DetailedSearch, ChannelSearch } from '.';
 import { Card } from '@/components/ui/card';
@@ -8,8 +8,15 @@ import { useBidAnnouncement } from './context/BidAnnouncementContext';
 import useSWR from 'swr';
 
 export default function Rfp() {
-  const searchParams = useMemo(() => new URLSearchParams(window.location.search), []);
-  const offset = Number(searchParams.get('offset') ?? 0);
+  const [searchParams, setSearchParams] = useState<URLSearchParams | null>(null);
+  const offset = Number(searchParams?.get('offset'));
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      setSearchParams(params);
+    }
+  }, []);
 
   const { setBidAnnouncementsContext, setKeywordSetsContext } = useBidAnnouncement();
 

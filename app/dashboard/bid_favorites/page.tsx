@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   announcementSteps,
   suggestedStates,
@@ -22,8 +22,15 @@ import { useFavoriteList } from './context/UseFavoriteListContext';
 import { useToast } from '@/hooks/use-toast';
 
 export default function BidFavorites() {
-  const searchParams = useMemo(() => new URLSearchParams(window.location.search), []);
-  const offset = Number(searchParams.get('offset') ?? 0);
+  const [searchParams, setSearchParams] = useState<URLSearchParams | null>(null);
+  const offset = Number(searchParams?.get('offset'));
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      setSearchParams(params);
+    }
+  }, []);
 
   const { toast } = useToast();
 
