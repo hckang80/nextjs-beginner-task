@@ -32,9 +32,10 @@ export default function Rfp(props: {
 
   return (
     <div>
-      <header className="mb-[15px]">
+      <header className="flex items-center justify-between mb-[15px]">
         <h2 className="text-[18px] font-bold text-indigo-600">입찰 공고</h2>
         <a
+          className="underline"
           href="https://www.youtube.com/watch?v=S1XSQbnWTFU"
           rel="noopener noreferrer"
           target="_blank"
