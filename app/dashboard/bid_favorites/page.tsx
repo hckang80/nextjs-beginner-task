@@ -30,6 +30,7 @@ export default function BidFavorites(props: {
   }, []);
 
   const fetchData = async () => {
+    // TODO: React Query 또는 SWR로 개선하여 재패치가 유리하도록 바꿔보기
     const searchParams = await props.searchParams;
     const offset = searchParams.offset ?? 0;
     setData(await getProducts(Number(offset)));
