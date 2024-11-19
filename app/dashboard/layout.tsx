@@ -9,7 +9,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
-  console.log({ pathname });
+
   const isActive = (path: string) => {
     return pathname === path;
   };
