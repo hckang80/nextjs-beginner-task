@@ -3,7 +3,7 @@
 import { AppliedTag, BidAnnouncementContext, Tag } from '@/lib';
 import { createContext, useContext, ReactNode, useState } from 'react';
 
-type MyTagContextState = {
+type UseFavoriteListContextState = {
   tags: Tag[];
   setTags: React.Dispatch<React.SetStateAction<Tag[]>>;
   appliedTags: AppliedTag[];
@@ -12,16 +12,16 @@ type MyTagContextState = {
   setBidAnnouncementsContext: React.Dispatch<React.SetStateAction<BidAnnouncementContext | null>>;
 };
 
-const MyTagContext = createContext<MyTagContextState | undefined>(undefined);
+const UseFavoriteListContext = createContext<UseFavoriteListContextState | undefined>(undefined);
 
-export const MyTagProvider = ({ children }: { children: ReactNode }) => {
+export const FavoriteListProvider = ({ children }: { children: ReactNode }) => {
   const [tags, setTags] = useState<Tag[]>([]);
   const [appliedTags, setAppliedTags] = useState<AppliedTag[]>([]);
   const [bidAnnouncementsContext, setBidAnnouncementsContext] =
     useState<BidAnnouncementContext | null>(null);
 
   return (
-    <MyTagContext.Provider
+    <UseFavoriteListContext.Provider
       value={{
         tags,
         setTags,
@@ -32,14 +32,14 @@ export const MyTagProvider = ({ children }: { children: ReactNode }) => {
       }}
     >
       {children}
-    </MyTagContext.Provider>
+    </UseFavoriteListContext.Provider>
   );
 };
 
-export const useTag = (): MyTagContextState => {
-  const context = useContext(MyTagContext);
+export const useFavoriteList = (): UseFavoriteListContextState => {
+  const context = useContext(UseFavoriteListContext);
   if (!context) {
-    throw new Error('useTag must be used within a MyTagProvider');
+    throw new Error('useFavoriteList must be used within a FavoriteListProvider');
   }
   return context;
 };

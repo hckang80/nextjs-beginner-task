@@ -17,7 +17,7 @@ import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/compat/router';
 import { Input } from '@/components/ui/input';
 import useSWR from 'swr';
-import { useTag } from './context/MyTagContext';
+import { useFavoriteList } from './context/UseFavoriteListContext';
 import { useToast } from '@/hooks/use-toast';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -30,7 +30,7 @@ export default function BidFavorites() {
 
   const [isVisibleMemoContext, setIsVisibleMemoContext] = useState(false);
 
-  const { setTags, setAppliedTags, setBidAnnouncementsContext } = useTag();
+  const { setTags, setAppliedTags, setBidAnnouncementsContext } = useFavoriteList();
 
   const { data, error } = useSWR<[BidAnnouncementContext, Tag[], AppliedTag[]], unknown, string[]>(
     ['/bidAnnouncementContext.json', '/tags.json', '/appliedTags.json'],

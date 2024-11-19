@@ -10,7 +10,7 @@ type BidAnnouncement = {
   setBidAnnouncementsContext: React.Dispatch<React.SetStateAction<BidAnnouncementContext | null>>;
 };
 
-const MyTagContext = createContext<BidAnnouncement | null>(null);
+const UseFavoriteListContext = createContext<BidAnnouncement | null>(null);
 
 export const BidAnnouncementProvider = ({ children }: { children: ReactNode }) => {
   const [keywordSetsContext, setKeywordSetsContext] = useState<KeywordSet[]>([]);
@@ -18,7 +18,7 @@ export const BidAnnouncementProvider = ({ children }: { children: ReactNode }) =
     useState<BidAnnouncementContext | null>(null);
 
   return (
-    <MyTagContext.Provider
+    <UseFavoriteListContext.Provider
       value={{
         keywordSetsContext,
         setKeywordSetsContext,
@@ -27,12 +27,12 @@ export const BidAnnouncementProvider = ({ children }: { children: ReactNode }) =
       }}
     >
       {children}
-    </MyTagContext.Provider>
+    </UseFavoriteListContext.Provider>
   );
 };
 
 export const useBidAnnouncement = (): BidAnnouncement => {
-  const context = useContext(MyTagContext);
+  const context = useContext(UseFavoriteListContext);
   if (!context) {
     throw new Error('useBidAnnouncement must be used within a BidAnnouncementProvider');
   }

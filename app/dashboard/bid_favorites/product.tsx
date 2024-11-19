@@ -26,7 +26,7 @@ import { Pencil, Plus, Trash2, X } from 'lucide-react';
 import React, { ReactNode, useState } from 'react';
 import Link from 'next/link';
 import { Input } from '@/components/ui/input';
-import { useTag } from './context/MyTagContext';
+import { useFavoriteList } from './context/UseFavoriteListContext';
 import { AlertDialogDescription } from '@radix-ui/react-alert-dialog';
 import { Badge } from '@/components/ui/badge';
 
@@ -77,7 +77,7 @@ export function Product({
     });
   };
 
-  const { tags, appliedTags } = useTag();
+  const { tags, appliedTags } = useFavoriteList();
   const tagsByBId = appliedTags.find((item) => item.id === id);
   const generatedTags = tags.filter((item) => tagsByBId?.tags.includes(item.id));
 
@@ -178,7 +178,7 @@ export function TagEditButton({
 export function TagEditor({ bid, generatedTags }: { bid: number; generatedTags: Tag[] }) {
   const { toast } = useToast();
   const [tag, inputTag] = useState('');
-  const { tags, setTags, appliedTags, setAppliedTags } = useTag();
+  const { tags, setTags, appliedTags, setAppliedTags } = useFavoriteList();
 
   const resetTags = (bid: number) => {
     setAppliedTags(appliedTags.filter((item) => item.id !== bid));

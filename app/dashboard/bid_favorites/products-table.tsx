@@ -5,7 +5,7 @@ import { ArrowUpDown } from 'lucide-react';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Product } from '.';
 import { ProductPagination } from '../product-pagination';
-import { useTag } from './context/MyTagContext';
+import { useFavoriteList } from './context/UseFavoriteListContext';
 
 interface SortConfig {
   key: keyof AnnouncementContext | null;
@@ -19,7 +19,7 @@ export function ProductsTable({
   isVisibleMemoContext: boolean;
   setData: Dispatch<SetStateAction<BidAnnouncementContext | null>>;
 }) {
-  const { bidAnnouncementsContext } = useTag();
+  const { bidAnnouncementsContext } = useFavoriteList();
 
   const {
     products,
