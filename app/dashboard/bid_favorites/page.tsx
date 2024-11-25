@@ -14,8 +14,6 @@ import {
 } from '@/lib';
 import { ProductsTable } from '.';
 import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { useRouter } from 'next/compat/router';
 import { Input } from '@/components/ui/input';
 import useSWR from 'swr';
 import { useFavoriteList } from './context/UseFavoriteListContext';
