@@ -45,14 +45,6 @@ export default function Rfp() {
     <div>
       <header className="flex items-center justify-between mb-[15px]">
         <h2 className="text-[18px] font-bold text-indigo-600">입찰 공고</h2>
-        <a
-          className="underline"
-          href="https://www.youtube.com/watch?v=S1XSQbnWTFU"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          입찰 공고 사용 Tip
-        </a>
       </header>
 
       <div className="grid gap-[15px]">
