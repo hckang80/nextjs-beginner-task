@@ -267,11 +267,6 @@ summary.global-main-item {
   }
 }
 
-.global-address {
-  margin: auto 0 0;
-  font-size: 12px;
-}
-
 .global-main {
   overflow: auto;
   margin: var(--header-height) 0 0;

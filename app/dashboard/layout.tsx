@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function DashboardLayout({
   children
@@ -18,11 +19,13 @@ export default function DashboardLayout({
     <div className="wrap">
       <header className="global-header">
         <h1>
-          <img
-            src="https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F542682c8b17017789cc2e977902e8281.cdn.bubble.io%2Ff1730178584582x927983228158931600%2FOG_Dark.png?w=150&h=84&auto=compress&dpr=1&fit=max"
-            alt="cliwant"
-            width="150"
-            height="84"
+          <Image
+            className="dark:invert"
+            src="/next.svg"
+            alt="Next.js"
+            width={150}
+            height={30}
+            priority
           />
         </h1>
       </header>
@@ -54,18 +57,6 @@ export default function DashboardLayout({
               </ul>
             </details>
           </nav>
-
-          <address className="global-address">
-            <strong>법인명</strong> 주식회사 클라이원트
-            <br />
-            <strong>사업자 등록번호</strong> 169-87-03030
-            <br />
-            <strong>대표</strong> 조준호
-            <br />
-            <strong>연락처</strong> 010-6351-4802
-            <br />
-            <strong>주소</strong> 백범로31길 21, 서울창업허브 별관 108호
-          </address>
         </aside>
         <main className="global-main">{children}</main>
       </div>

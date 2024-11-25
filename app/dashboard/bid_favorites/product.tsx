@@ -114,7 +114,7 @@ export function Product({
               <dl className="flex flex-wrap items-center gap-6">
                 <div className="flex items-center gap-2">
                   <dt className="shrink-0 font-bold">담당</dt>
-                  <dd>과제클라이원트</dd>
+                  <dd>Next.js</dd>
                 </div>
                 <div className="flex items-center gap-2">
                   <dt className="shrink-0 font-bold">제안상태</dt>
