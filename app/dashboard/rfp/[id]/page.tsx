@@ -2,12 +2,12 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { AnnouncementContext, getProducts, MY_FAVORITES } from '@/lib';
 import { Star } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
+import { NoteTextarea } from './note-textarea';
 
 export default function RfpDetail() {
   const { id } = useParams<{ id: string }>();
@@ -120,31 +120,5 @@ export default function RfpDetail() {
         </Card>
       </div>
     </div>
-  );
-}
-
-export function NoteTextarea() {
-  const [noteValue, setNoteValue] = useState('');
-  const { toast } = useToast();
-
-  const saveNoteValue = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    toast({
-      title: 'You submitted the following values:',
-      description: noteValue
-    });
-  };
-
-  return (
-    <form onSubmit={saveNoteValue}>
-      <Textarea
-        placeholder="필요한 메모를 하세요.."
-        rows={10}
-        value={noteValue}
-        onChange={(event) => setNoteValue(event.currentTarget.value)}
-      />
-      <Button className="w-full mt-[10px]">저장</Button>
-    </form>
   );
 }
