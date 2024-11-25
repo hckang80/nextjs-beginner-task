@@ -32,9 +32,6 @@ export default function DashboardLayout({
       <div className="global-inner">
         <aside className="global-aside">
           <nav className="global-nav">
-            <Link href="/dashboard" className="global-main-item">
-              대시보드
-            </Link>
             <details open>
               <summary className="global-main-item">입찰검색</summary>
               <ul className="global-sub-menu">

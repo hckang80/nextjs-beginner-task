@@ -19,7 +19,6 @@ import { useRouter } from 'next/compat/router';
 import { Input } from '@/components/ui/input';
 import useSWR from 'swr';
 import { useFavoriteList } from './context/UseFavoriteListContext';
-import { useToast } from '@/hooks/use-toast';
 
 export default function BidFavorites() {
   const [searchParams, setSearchParams] = useState<URLSearchParams | null>(null);
@@ -31,8 +30,6 @@ export default function BidFavorites() {
       setSearchParams(params);
     }
   }, []);
-
-  const { toast } = useToast();
 
   const [isVisibleMemoContext, setIsVisibleMemoContext] = useState(false);
 
@@ -111,18 +108,6 @@ export default function BidFavorites() {
                 </option>
               ))}
             </select>
-
-            <Button
-              onClick={() => {
-                toast({
-                  description:
-                    '필터 기능이라서 구현 생략. 메모셀에는 태그추가 기능이 구현되어 있음',
-                  variant: 'destructive'
-                });
-              }}
-            >
-              태그 필터
-            </Button>
 
             <label className="flex items-center gap-2 text-[14px]">
               <input
