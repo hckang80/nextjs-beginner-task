@@ -118,7 +118,6 @@ export default function BidFavorites() {
               메모표시
             </label>
           </div>
-          <RefreshPage />
         </div>
       </Card>
 
@@ -128,14 +127,4 @@ export default function BidFavorites() {
       />
     </>
   );
-}
-
-export function RefreshPage() {
-  const router = useRouter();
-
-  const handleRefresh = () => {
-    router?.replace(router.asPath);
-  };
-
-  return <Button onClick={handleRefresh}>새로고침</Button>;
 }
