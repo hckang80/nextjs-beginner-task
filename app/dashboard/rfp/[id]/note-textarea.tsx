@@ -12,17 +12,19 @@ const formSchema = z.object({
   note: z.string().min(1, '작성된 내용이 없습니다.')
 });
 
+type FormSchema = z.infer<typeof formSchema>;
+
 export function NoteTextarea({ id }: { id: number }) {
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       note: ''
     }
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: FormSchema) => {
     toast({
       title: 'You submitted the following values:',
       description: (
