@@ -692,7 +692,6 @@ export function DetailedSearch() {
                   render={({ field }) => (
                     <FormItem>
                       <select className="w-[140px]" value={field.value} onChange={field.onChange}>
-                        <option value="">전체 보기</option>
                         <option value="">정확도</option>
                         <option value="게시일 내림차순">게시일 내림차순</option>
                         <option value="게시일 오름차순">게시일 오름차순</option>
