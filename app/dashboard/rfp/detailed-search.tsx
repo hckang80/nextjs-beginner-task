@@ -472,25 +472,15 @@ export function DetailedSearch() {
       if (key !== 'Enter') return;
 
       event.preventDefault();
-      // addTag(path, value);
-      form.setValue(`${path}.tags`, [...new Set([...form.getValues(`${path}.tags`), value])]);
-      form.resetField(`${path}.text`);
+
+      addTag(path, value);
     };
 
-  const addTag = (path: string, tag: string) => {
-    if (!tag) return;
+  const addTag = (path: `keywordSets.${string}`, value: string) => {
+    if (!value) return;
 
-    setFormModel({
-      ...formModel,
-      keywordSets: {
-        ...formModel.keywordSets,
-        [path]: {
-          ...formModel.keywordSets[path],
-          text: '',
-          tags: [...new Set([...formModel.keywordSets[path].tags, tag])]
-        }
-      }
-    });
+    form.setValue(`${path}.tags`, [...new Set([...form.getValues(`${path}.tags`), value])]);
+    form.resetField(`${path}.text`);
   };
 
   const deleteTag = (path: string, tag: string) => {
@@ -635,7 +625,15 @@ export function DetailedSearch() {
                               </FormItem>
                             )}
                           />
-                          <Button type="button" onClick={() => addTag(key, context.text)}>
+                          <Button
+                            type="button"
+                            onClick={() =>
+                              addTag(
+                                `keywordSets.${key}`,
+                                form.getValues(`keywordSets.${key}.text`)
+                              )
+                            }
+                          >
                             <Plus />
                           </Button>
                           <ul className="flex flex-wrap items-center gap-2">
