@@ -29,7 +29,7 @@ export default function BidFavorites() {
     }
   }, []);
 
-  const [isVisibleMemoContext, setIsVisibleMemoContext] = useState(false);
+  const [isVisibleMemoContext, setIsVisibleMemoContext] = useState(true);
 
   const { setTags, setAppliedTags, setBidAnnouncementsContext } = useFavoriteList();
 
