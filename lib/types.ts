@@ -83,7 +83,8 @@ export const detailedSearchFormSchema = z.object({
   businessType: z.string(),
   ignoreType: z.string(),
   sortType: z.string(),
-  condition: z.record(z.boolean())
+  condition: z.record(z.boolean()),
+  conditions: z.string().array()
 });
 export type DetailedSearchForm = z.infer<typeof detailedSearchFormSchema>;
 

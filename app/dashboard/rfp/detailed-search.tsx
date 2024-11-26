@@ -2,7 +2,14 @@
 
 import { Plus, Search, Settings, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import {
   Dialog,
@@ -26,6 +33,7 @@ import { KeywordSetItem, ToggleController } from '.';
 import { useBidAnnouncement } from './context/BidAnnouncementContext';
 import { useForm, UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Checkbox } from '@/components/ui/checkbox';
 
 const DEFAULT_ANNOUNCEMENT_DEADLINE = 500_000_000;
 
@@ -394,7 +402,8 @@ export function DetailedSearch() {
       공동수급_허용: false,
       실적제한_없음: false,
       인적제한_없음: false
-    }
+    },
+    conditions: []
   };
 
   const form = useForm<DetailedSearchForm>({
@@ -547,14 +556,20 @@ export function DetailedSearch() {
 
   const handleCondition = (event: React.FormEvent<HTMLInputElement>) => {
     const { name, checked } = event.currentTarget;
+    console.log({ event });
+    // return checked
+    // ? field.onChange([...field.value, key])
+    // : field.onChange(
+    //     field.value?.filter((value) => value !== key)
+    //   );
 
-    setFormModel({
-      ...formModel,
-      condition: {
-        ...formModel.condition,
-        [name]: checked
-      }
-    });
+    // setFormModel({
+    //   ...formModel,
+    //   condition: {
+    //     ...formModel.condition,
+    //     [name]: checked
+    //   }
+    // });
   };
 
   const [isPriceLimit, togglePriceLimit] = useState(false);
@@ -802,59 +817,49 @@ export function DetailedSearch() {
               </td>
             </tr>
 
-            {/* 
             <tr>
               <th>조건</th>
               <td colSpan={5}>
-                <div className="flex flex-wrap items-center gap-x-[20px] gap-y-[5px]">
-                  <label className="flex items-center gap-1">
-                    <input
-                      type="checkbox"
-                      name="업종조건_충족"
-                      checked={formModel.condition.업종조건_충족}
-                      onChange={handleCondition}
-                    />
-                    업종조건 충족
-                  </label>
-                  <label className="flex items-center gap-1">
-                    <input
-                      type="checkbox"
-                      name="물품조건_충족"
-                      checked={formModel.condition.물품조건_충족}
-                      onChange={handleCondition}
-                    />
-                    물품조건 충족
-                  </label>
-                  <label className="flex items-center gap-1">
-                    <input
-                      type="checkbox"
-                      name="공동수급_허용"
-                      checked={formModel.condition.공동수급_허용}
-                      onChange={handleCondition}
-                    />
-                    공동수급 허용
-                  </label>
-                  <label className="flex items-center gap-1">
-                    <input
-                      type="checkbox"
-                      name="실적제한_없음"
-                      checked={formModel.condition.실적제한_없음}
-                      onChange={handleCondition}
-                    />
-                    실적제한 없음
-                  </label>
-                  <label className="flex items-center gap-1">
-                    <input
-                      type="checkbox"
-                      name="인적제한_없음"
-                      checked={formModel.condition.인적제한_없음}
-                      onChange={handleCondition}
-                    />
-                    인적제한 없음
-                  </label>
-                </div>
+                <FormField
+                  control={form.control}
+                  name="conditions"
+                  render={() => (
+                    <FormItem className="flex flex-wrap items-center gap-x-[20px] gap-y-[5px]">
+                      {Object.keys(formModel.condition).map((key) => (
+                        <FormField
+                          key={key}
+                          control={form.control}
+                          name="conditions"
+                          render={({ field }) => {
+                            return (
+                              <FormItem
+                                key={key}
+                                className="flex flex-row space-x-3 space-y-0 !mt-0"
+                              >
+                                <FormControl>
+                                  <Checkbox
+                                    checked={field.value.includes(key)}
+                                    onCheckedChange={(checked) => {
+                                      return checked
+                                        ? field.onChange([...field.value, key])
+                                        : field.onChange(
+                                            field.value.filter((value) => value !== key)
+                                          );
+                                    }}
+                                  />
+                                </FormControl>
+                                <FormLabel className="font-normal">{key}</FormLabel>
+                              </FormItem>
+                            );
+                          }}
+                        />
+                      ))}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </td>
-            </tr> */}
+            </tr>
           </tbody>
         </table>
         <div className="text-right">
