@@ -24,7 +24,7 @@ import {
 } from '@/lib';
 import { KeywordSetItem, ToggleController } from '.';
 import { useBidAnnouncement } from './context/BidAnnouncementContext';
-import { useForm } from 'react-hook-form';
+import { useForm, UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const DEFAULT_ANNOUNCEMENT_DEADLINE = 500_000_000;
@@ -152,34 +152,40 @@ export function SettingButton({
 }
 
 export function KeywordSetSelect({
-  target,
-  context,
-  handleChangeKeywordSet
+  form,
+  target
 }: {
+  form: UseFormReturn<DetailedSearchForm, unknown, undefined>;
   target: string;
-  context: {
-    label?: string;
-    type?: string;
-    operation?: string;
-    text: string;
-    tags: string[];
-  };
-  handleChangeKeywordSet: (event: React.FormEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }) {
   return (
     <>
-      <select name={`${target}.type`} value={context.type} onChange={handleChangeKeywordSet}>
-        <option value="title">제목</option>
-        <option value="text">본문</option>
-      </select>
-      <select
-        name={`${target}.operation`}
-        value={context.operation}
-        onChange={handleChangeKeywordSet}
-      >
-        <option value="or">OR</option>
-        <option value="and">AND</option>
-      </select>
+      <FormField
+        control={form.control}
+        name={`keywordSets.${target}.type`}
+        render={({ field }) => (
+          <FormItem>
+            <select value={field.value} onChange={field.onChange}>
+              <option value="title">제목</option>
+              <option value="text">본문</option>
+            </select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name={`keywordSets.${target}.operation`}
+        render={({ field }) => (
+          <FormItem>
+            <select value={field.value} onChange={field.onChange}>
+              <option value="or">OR</option>
+              <option value="and">AND</option>
+            </select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
     </>
   );
 }
@@ -601,13 +607,7 @@ export function DetailedSearch() {
                     .map(([key, context], index) => {
                       return (
                         <div key={key} className="flex flex-wrap items-center gap-2">
-                          {context.label || (
-                            <KeywordSetSelect
-                              target={key}
-                              context={context}
-                              handleChangeKeywordSet={handleChangeKeywordSet}
-                            />
-                          )}
+                          {context.label || <KeywordSetSelect form={form} target={key} />}
                           <FormField
                             control={form.control}
                             name={`keywordSets.${key}.text`}
