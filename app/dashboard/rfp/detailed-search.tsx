@@ -2,6 +2,7 @@
 
 import { Plus, Search, Settings, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import {
   Dialog,
@@ -14,9 +15,17 @@ import {
 } from '@/components/ui/dialog';
 import { Dispatch, FormEvent, SetStateAction, useEffect, useState } from 'react';
 import { toast, useToast } from '@/hooks/use-toast';
-import { cn, DetailedSearchForm, generatedId, toReadableDate } from '@/lib';
+import {
+  cn,
+  DetailedSearchForm,
+  detailedSearchFormSchema,
+  generatedId,
+  toReadableDate
+} from '@/lib';
 import { KeywordSetItem, ToggleController } from '.';
 import { useBidAnnouncement } from './context/BidAnnouncementContext';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 const DEFAULT_ANNOUNCEMENT_DEADLINE = 500_000_000;
 
@@ -312,7 +321,7 @@ export function AnnouncementDate({
 }
 
 export function DetailedSearch() {
-  const [formModel, setFormModel] = useState<DetailedSearchForm>({
+  const formModel = {
     keywordSets: {
       setA: {
         type: 'title',
@@ -369,7 +378,71 @@ export function DetailedSearch() {
       실적제한_없음: false,
       인적제한_없음: false
     }
+  };
+
+  const form = useForm<DetailedSearchForm>({
+    resolver: zodResolver(detailedSearchFormSchema),
+    defaultValues: formModel
   });
+
+  // const [formModel, setFormModel] = useState<DetailedSearchForm>({
+  //   keywordSets: {
+  //     setA: {
+  //       type: 'title',
+  //       operation: 'or',
+  //       text: '',
+  //       tags: []
+  //     },
+  //     setB: {
+  //       type: 'title',
+  //       operation: 'or',
+  //       text: '',
+  //       tags: []
+  //     },
+  //     setC: {
+  //       type: 'title',
+  //       operation: 'or',
+  //       text: '',
+  //       tags: []
+  //     },
+  //     setD: {
+  //       type: 'title',
+  //       operation: 'or',
+  //       text: '',
+  //       tags: []
+  //     },
+  //     setF: {
+  //       type: 'title',
+  //       operation: 'or',
+  //       text: '',
+  //       tags: []
+  //     },
+  //     exceptionTitle: {
+  //       label: '제목 제외 키워드',
+  //       text: '',
+  //       tags: []
+  //     },
+  //     exceptionKeyword: {
+  //       label: '본문 제외 키워드',
+  //       text: '',
+  //       tags: []
+  //     }
+  //   },
+  //   priceFrom: 0,
+  //   priceTo: DEFAULT_ANNOUNCEMENT_DEADLINE,
+  //   announcementDateFrom: '',
+  //   announcementDateTo: '',
+  //   businessType: '',
+  //   ignoreType: '',
+  //   sortType: '',
+  //   condition: {
+  //     업종조건_충족: true,
+  //     물품조건_충족: false,
+  //     공동수급_허용: false,
+  //     실적제한_없음: false,
+  //     인적제한_없음: false
+  //   }
+  // });
 
   const [isPrivate, setIsPublic] = useState(false);
 
@@ -389,17 +462,20 @@ export function DetailedSearch() {
     });
   };
 
-  const handleEnter = (path: string) => (event: React.KeyboardEvent<HTMLInputElement>) => {
-    const {
-      key,
-      currentTarget: { value }
-    } = event;
+  const handleEnter =
+    (path: `keywordSets.${string}`) => (event: React.KeyboardEvent<HTMLInputElement>) => {
+      const {
+        key,
+        currentTarget: { value }
+      } = event;
 
-    if (key !== 'Enter') return;
+      if (key !== 'Enter') return;
 
-    event.preventDefault();
-    addTag(path, value);
-  };
+      event.preventDefault();
+      // addTag(path, value);
+      form.setValue(`${path}.tags`, [...new Set([...form.getValues(`${path}.tags`), value])]);
+      form.resetField(`${path}.text`);
+    };
 
   const addTag = (path: string, tag: string) => {
     if (!tag) return;
@@ -476,14 +552,12 @@ export function DetailedSearch() {
 
   const [isPriceLimit, togglePriceLimit] = useState(false);
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
+  const onSubmit = (values: DetailedSearchForm) => {
     toast({
       title: 'You submitted the following values:',
       description: (
         <pre>
-          <code>{JSON.stringify(formModel, null, 2)}</code>
+          <code>{JSON.stringify(values, null, 2)}</code>
         </pre>
       )
     });
@@ -504,238 +578,251 @@ export function DetailedSearch() {
 
   return (
     // TODO: react hook form 으로 개선하기
-    <form onSubmit={handleSubmit}>
-      <table className="search-table">
-        <tbody>
-          <tr>
-            <th>키워드세트</th>
-            <td colSpan={5}>
-              <div className="flex items-center gap-2">
-                <select className="w-[160px]">
-                  <option value="">그룹을 선택하세요</option>
-                  {keywordSetsContext
-                    ?.filter((item) => item.isPrivate === isPrivate)
-                    .map((item) => (
-                      <option key={item.id} value={item.id}>
-                        {item.name}
-                      </option>
-                    ))}
-                </select>
-                <Button type="button">현재 세트 저장</Button>
-                <SettingButton data={isPrivate} handler={setIsPublic} />
-                <ToggleController className="ml-auto" data={isPrivate} handler={setIsPublic} />
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td colSpan={6}>
-              <div className="flex flex-col gap-2">
-                {Object.entries(formModel.keywordSets)
-                  .slice(0, keywordSetSize)
-                  .map(([key, context], index) => {
-                    return (
-                      <div key={key} className="flex flex-wrap items-center gap-2">
-                        {context.label || (
-                          <KeywordSetSelect
-                            target={key}
-                            context={context}
-                            handleChangeKeywordSet={handleChangeKeywordSet}
-                          />
-                        )}
-                        <Input
-                          className="w-[180px]"
-                          name={`${key}.text`}
-                          value={context.text}
-                          placeholder="키워드를 입력해보세요"
-                          onChange={handleChangeKeywordSet}
-                          onKeyDown={handleEnter(key)}
-                        />
-                        <Button type="button" onClick={() => addTag(key, context.text)}>
-                          <Plus />
-                        </Button>
-                        <ul className="flex flex-wrap items-center gap-2">
-                          {context.tags.map((tag) => (
-                            <li
-                              key={tag}
-                              className="flex items-center gap-2 bg-violet-400 text-white h-[30px] px-[10px] rounded-[30px]"
-                            >
-                              {tag}
-                              <button type="button" onClick={() => deleteTag(key, tag)}>
-                                <X size={12} color="#ffffff" strokeWidth={3} />
-                              </button>
-                            </li>
-                          ))}
-                        </ul>
-                        {index + 1 === DEFAULT_KEYWORD_SET_SIZE && (
-                          <Button
-                            type="button"
-                            variant="secondary"
-                            className="ml-auto"
-                            onClick={toggleKeywordSetSize}
-                          >
-                            키워드셋 {toggleButtonLabel}
-                          </Button>
-                        )}
-                      </div>
-                    );
-                  })}
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <th>사업 금액</th>
-            <td colSpan={5}>
-              <div className="flex items-center gap-2">
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <table className="search-table">
+          <tbody>
+            <tr>
+              <th>키워드세트</th>
+              <td colSpan={5}>
                 <div className="flex items-center gap-2">
-                  <Input
-                    className="w-[140px]"
-                    type="text"
-                    inputMode="numeric"
-                    name="priceFrom"
-                    value={numberFormattedForm.priceFrom}
-                    onChange={(event) => handleChange(event, 'priceFrom')}
-                  />
-                  ~
-                  <Input
-                    className={cn('w-[140px]', isPriceLimit ? 'invisible' : '')}
-                    type="text"
-                    inputMode="numeric"
-                    name="priceTo"
-                    value={numberFormattedForm.priceTo}
-                    onChange={(event) => handleChange(event, 'priceTo')}
-                  />
+                  <select className="w-[160px]">
+                    <option value="">그룹을 선택하세요</option>
+                    {keywordSetsContext
+                      ?.filter((item) => item.isPrivate === isPrivate)
+                      .map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
+                  </select>
+                  <Button type="button">현재 세트 저장</Button>
+                  <SettingButton data={isPrivate} handler={setIsPublic} />
+                  <ToggleController className="ml-auto" data={isPrivate} handler={setIsPublic} />
                 </div>
+              </td>
+            </tr>
 
-                <label className="flex items-center gap-2 text-[14px]">
-                  <input
-                    type="checkbox"
-                    checked={isPriceLimit}
-                    onChange={({ target: { checked } }) => {
-                      togglePriceLimit(checked);
-                    }}
-                  />
-                  금액 제한 없음
-                </label>
-              </div>
-            </td>
-          </tr>
+            <tr>
+              <td colSpan={6}>
+                <div className="flex flex-col gap-2">
+                  {Object.entries(formModel.keywordSets)
+                    .slice(0, keywordSetSize)
+                    .map(([key, context], index) => {
+                      return (
+                        <div key={key} className="flex flex-wrap items-center gap-2">
+                          {context.label || (
+                            <KeywordSetSelect
+                              target={key}
+                              context={context}
+                              handleChangeKeywordSet={handleChangeKeywordSet}
+                            />
+                          )}
+                          <FormField
+                            control={form.control}
+                            name={`keywordSets.${key}.text`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <Input
+                                    className="w-[180px]"
+                                    placeholder="키워드를 입력해보세요"
+                                    {...field}
+                                    onKeyDown={handleEnter(`keywordSets.${key}`)}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <Button type="button" onClick={() => addTag(key, context.text)}>
+                            <Plus />
+                          </Button>
+                          <ul className="flex flex-wrap items-center gap-2">
+                            {context.tags.map((tag) => (
+                              <li
+                                key={tag}
+                                className="flex items-center gap-2 bg-violet-400 text-white h-[30px] px-[10px] rounded-[30px]"
+                              >
+                                {tag}
+                                <button type="button" onClick={() => deleteTag(key, tag)}>
+                                  <X size={12} color="#ffffff" strokeWidth={3} />
+                                </button>
+                              </li>
+                            ))}
+                          </ul>
+                          {index + 1 === DEFAULT_KEYWORD_SET_SIZE && (
+                            <Button
+                              type="button"
+                              variant="secondary"
+                              className="ml-auto"
+                              onClick={toggleKeywordSetSize}
+                            >
+                              키워드셋 {toggleButtonLabel}
+                            </Button>
+                          )}
+                        </div>
+                      );
+                    })}
+                </div>
+              </td>
+            </tr>
 
-          <AnnouncementDate
-            formModel={formModel}
-            setFormModel={setFormModel}
-            handleChange={handleChange}
-          />
+            {/* <tr>
+              <th>사업 금액</th>
+              <td colSpan={5}>
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2">
+                    <Input
+                      className="w-[140px]"
+                      type="text"
+                      inputMode="numeric"
+                      name="priceFrom"
+                      value={numberFormattedForm.priceFrom}
+                      onChange={(event) => handleChange(event, 'priceFrom')}
+                    />
+                    ~
+                    <Input
+                      className={cn('w-[140px]', isPriceLimit ? 'invisible' : '')}
+                      type="text"
+                      inputMode="numeric"
+                      name="priceTo"
+                      value={numberFormattedForm.priceTo}
+                      onChange={(event) => handleChange(event, 'priceTo')}
+                    />
+                  </div>
 
-          <tr>
-            <th>사업 구분</th>
-            <td>
-              <select
-                className="w-[140px]"
-                name="businessType"
-                value={formModel.businessType}
-                onChange={handleChange}
-              >
-                <option value="">전체</option>
-                <option value="용역">용역</option>
-                <option value="물품">물품</option>
-                <option value="공사">공사</option>
-                <option value="외자">외자</option>
-                <option value="기타">기타</option>
-              </select>
-            </td>
-            <th>기업 제한</th>
-            <td>
-              <select
-                className="w-[140px]"
-                name="ignoreType"
-                value={formModel.ignoreType}
-                onChange={handleChange}
-              >
-                <option value="">전체 보기</option>
-                <option value="문서 참조 필요">문서 참조 필요</option>
-                <option value="대기업 참여 불가">대기업 참여 불가</option>
-                <option value="대기업 참여 가능">대기업 참여 가능</option>
-              </select>
-            </td>
-            <th>정렬 기준</th>
-            <td>
-              <select
-                className="w-[140px]"
-                name="sortType"
-                value={formModel.sortType}
-                onChange={handleChange}
-              >
-                <option value="">정확도</option>
-                <option value="게시일 내림차순">게시일 내림차순</option>
-                <option value="게시일 오름차순">게시일 오름차순</option>
-                <option value="마감일 내림차순">마감일 내림차순</option>
-                <option value="마감일 오름차순">마감일 오름차순</option>
-                <option value="금액 내림차순">금액 내림차순</option>
-                <option value="금액 오름차순">금액 오름차순</option>
-              </select>
-            </td>
-          </tr>
+                  <label className="flex items-center gap-2 text-[14px]">
+                    <input
+                      type="checkbox"
+                      checked={isPriceLimit}
+                      onChange={({ target: { checked } }) => {
+                        togglePriceLimit(checked);
+                      }}
+                    />
+                    금액 제한 없음
+                  </label>
+                </div>
+              </td>
+            </tr> */}
 
-          <tr>
-            <th>조건</th>
-            <td colSpan={5}>
-              <div className="flex flex-wrap items-center gap-x-[20px] gap-y-[5px]">
-                <label className="flex items-center gap-1">
-                  <input
-                    type="checkbox"
-                    name="업종조건_충족"
-                    checked={formModel.condition.업종조건_충족}
-                    onChange={handleCondition}
-                  />
-                  업종조건 충족
-                </label>
-                <label className="flex items-center gap-1">
-                  <input
-                    type="checkbox"
-                    name="물품조건_충족"
-                    checked={formModel.condition.물품조건_충족}
-                    onChange={handleCondition}
-                  />
-                  물품조건 충족
-                </label>
-                <label className="flex items-center gap-1">
-                  <input
-                    type="checkbox"
-                    name="공동수급_허용"
-                    checked={formModel.condition.공동수급_허용}
-                    onChange={handleCondition}
-                  />
-                  공동수급 허용
-                </label>
-                <label className="flex items-center gap-1">
-                  <input
-                    type="checkbox"
-                    name="실적제한_없음"
-                    checked={formModel.condition.실적제한_없음}
-                    onChange={handleCondition}
-                  />
-                  실적제한 없음
-                </label>
-                <label className="flex items-center gap-1">
-                  <input
-                    type="checkbox"
-                    name="인적제한_없음"
-                    checked={formModel.condition.인적제한_없음}
-                    onChange={handleCondition}
-                  />
-                  인적제한 없음
-                </label>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div className="text-right">
-        <Button>
-          <Search color="#ffffff" strokeWidth={3} />
-          검색하기
-        </Button>
-      </div>
-    </form>
+            {/* <AnnouncementDate
+              formModel={formModel}
+              setFormModel={setFormModel}
+              handleChange={handleChange}
+            /> */}
+
+            {/* <tr>
+              <th>사업 구분</th>
+              <td>
+                <select
+                  className="w-[140px]"
+                  name="businessType"
+                  value={formModel.businessType}
+                  onChange={handleChange}
+                >
+                  <option value="">전체</option>
+                  <option value="용역">용역</option>
+                  <option value="물품">물품</option>
+                  <option value="공사">공사</option>
+                  <option value="외자">외자</option>
+                  <option value="기타">기타</option>
+                </select>
+              </td>
+              <th>기업 제한</th>
+              <td>
+                <select
+                  className="w-[140px]"
+                  name="ignoreType"
+                  value={formModel.ignoreType}
+                  onChange={handleChange}
+                >
+                  <option value="">전체 보기</option>
+                  <option value="문서 참조 필요">문서 참조 필요</option>
+                  <option value="대기업 참여 불가">대기업 참여 불가</option>
+                  <option value="대기업 참여 가능">대기업 참여 가능</option>
+                </select>
+              </td>
+              <th>정렬 기준</th>
+              <td>
+                <select
+                  className="w-[140px]"
+                  name="sortType"
+                  value={formModel.sortType}
+                  onChange={handleChange}
+                >
+                  <option value="">정확도</option>
+                  <option value="게시일 내림차순">게시일 내림차순</option>
+                  <option value="게시일 오름차순">게시일 오름차순</option>
+                  <option value="마감일 내림차순">마감일 내림차순</option>
+                  <option value="마감일 오름차순">마감일 오름차순</option>
+                  <option value="금액 내림차순">금액 내림차순</option>
+                  <option value="금액 오름차순">금액 오름차순</option>
+                </select>
+              </td>
+            </tr> */}
+            {/* 
+            <tr>
+              <th>조건</th>
+              <td colSpan={5}>
+                <div className="flex flex-wrap items-center gap-x-[20px] gap-y-[5px]">
+                  <label className="flex items-center gap-1">
+                    <input
+                      type="checkbox"
+                      name="업종조건_충족"
+                      checked={formModel.condition.업종조건_충족}
+                      onChange={handleCondition}
+                    />
+                    업종조건 충족
+                  </label>
+                  <label className="flex items-center gap-1">
+                    <input
+                      type="checkbox"
+                      name="물품조건_충족"
+                      checked={formModel.condition.물품조건_충족}
+                      onChange={handleCondition}
+                    />
+                    물품조건 충족
+                  </label>
+                  <label className="flex items-center gap-1">
+                    <input
+                      type="checkbox"
+                      name="공동수급_허용"
+                      checked={formModel.condition.공동수급_허용}
+                      onChange={handleCondition}
+                    />
+                    공동수급 허용
+                  </label>
+                  <label className="flex items-center gap-1">
+                    <input
+                      type="checkbox"
+                      name="실적제한_없음"
+                      checked={formModel.condition.실적제한_없음}
+                      onChange={handleCondition}
+                    />
+                    실적제한 없음
+                  </label>
+                  <label className="flex items-center gap-1">
+                    <input
+                      type="checkbox"
+                      name="인적제한_없음"
+                      checked={formModel.condition.인적제한_없음}
+                      onChange={handleCondition}
+                    />
+                    인적제한 없음
+                  </label>
+                </div>
+              </td>
+            </tr> */}
+          </tbody>
+        </table>
+        <div className="text-right">
+          <Button>
+            <Search color="#ffffff" strokeWidth={3} />
+            검색하기
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 }
