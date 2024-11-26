@@ -79,8 +79,8 @@ export interface DetailedSearchForm {
   announcementDateFrom: string;
   announcementDateTo: string;
   businessType: string;
-  ignoreType: '';
-  sortType: '';
+  ignoreType: string;
+  sortType: string;
   condition: {
     [key: string]: boolean;
   };
