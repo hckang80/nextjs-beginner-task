@@ -20,15 +20,9 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog';
-import { Dispatch, FormEvent, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { toast, useToast } from '@/hooks/use-toast';
-import {
-  cn,
-  DetailedSearchForm,
-  detailedSearchFormSchema,
-  generatedId,
-  toReadableDate
-} from '@/lib';
+import { DetailedSearchForm, detailedSearchFormSchema, generatedId, toReadableDate } from '@/lib';
 import { KeywordSetItem, ToggleController } from '.';
 import { useBidAnnouncement } from './context/BidAnnouncementContext';
 import { useForm, UseFormReturn } from 'react-hook-form';
@@ -411,82 +405,7 @@ export function DetailedSearch() {
     defaultValues: formModel
   });
 
-  // const [formModel, setFormModel] = useState<DetailedSearchForm>({
-  //   keywordSets: {
-  //     setA: {
-  //       type: 'title',
-  //       operation: 'or',
-  //       text: '',
-  //       tags: []
-  //     },
-  //     setB: {
-  //       type: 'title',
-  //       operation: 'or',
-  //       text: '',
-  //       tags: []
-  //     },
-  //     setC: {
-  //       type: 'title',
-  //       operation: 'or',
-  //       text: '',
-  //       tags: []
-  //     },
-  //     setD: {
-  //       type: 'title',
-  //       operation: 'or',
-  //       text: '',
-  //       tags: []
-  //     },
-  //     setF: {
-  //       type: 'title',
-  //       operation: 'or',
-  //       text: '',
-  //       tags: []
-  //     },
-  //     exceptionTitle: {
-  //       label: '제목 제외 키워드',
-  //       text: '',
-  //       tags: []
-  //     },
-  //     exceptionKeyword: {
-  //       label: '본문 제외 키워드',
-  //       text: '',
-  //       tags: []
-  //     }
-  //   },
-  //   priceFrom: 0,
-  //   priceTo: DEFAULT_ANNOUNCEMENT_DEADLINE,
-  //   announcementDateFrom: '',
-  //   announcementDateTo: '',
-  //   businessType: '',
-  //   ignoreType: '',
-  //   sortType: '',
-  //   condition: {
-  //     업종조건_충족: true,
-  //     물품조건_충족: false,
-  //     공동수급_허용: false,
-  //     실적제한_없음: false,
-  //     인적제한_없음: false
-  //   }
-  // });
-
   const [isPrivate, setIsPublic] = useState(false);
-
-  const handleChangeKeywordSet = (event: React.FormEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = event.currentTarget;
-    const [depth1, depth2] = name.split('.');
-
-    setFormModel({
-      ...formModel,
-      keywordSets: {
-        ...formModel.keywordSets,
-        [depth1]: {
-          ...formModel.keywordSets[depth1],
-          [depth2]: value
-        }
-      }
-    });
-  };
 
   const handleEnter =
     (path: `keywordSets.${string}`) => (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -517,55 +436,6 @@ export function DetailedSearch() {
       form.getValues(`${path}.tags`).filter((originTag) => originTag !== value)
     );
     form.resetField(`${path}.text`); // TODO: 제거하면 실시간으로 반영 안됨
-  };
-
-  const [numberFormattedForm, setNumberFormattedForm] = useState({
-    priceFrom: '0',
-    priceTo: Number(DEFAULT_ANNOUNCEMENT_DEADLINE).toLocaleString('en-US')
-  });
-
-  const setReadableFormat = (key: string, value: string) => {
-    setNumberFormattedForm({
-      ...numberFormattedForm,
-      [key]: Number(value).toLocaleString('en-US')
-    });
-  };
-
-  const omitExcludingNumbers = (value: string) => {
-    return value.replace(/[^0-9]/g, '');
-  };
-
-  const handleChange = (
-    // TODO: 동적 타입(Generic?)으로 적용되게 개선 필요
-    event: React.FormEvent<HTMLInputElement | HTMLSelectElement>,
-    numberFormatter?: string
-  ) => {
-    const { name, value } = event.currentTarget;
-
-    if (numberFormatter) setReadableFormat(numberFormatter, omitExcludingNumbers(value));
-
-    setFormModel({
-      ...formModel,
-      [name]: numberFormatter ? omitExcludingNumbers(value) : value
-    });
-  };
-
-  const handleCondition = (event: React.FormEvent<HTMLInputElement>) => {
-    const { name, checked } = event.currentTarget;
-    console.log({ event });
-    // return checked
-    // ? field.onChange([...field.value, key])
-    // : field.onChange(
-    //     field.value?.filter((value) => value !== key)
-    //   );
-
-    // setFormModel({
-    //   ...formModel,
-    //   condition: {
-    //     ...formModel.condition,
-    //     [name]: checked
-    //   }
-    // });
   };
 
   const [isPriceLimit, togglePriceLimit] = useState(false);
