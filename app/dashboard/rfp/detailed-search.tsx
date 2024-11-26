@@ -514,7 +514,11 @@ export function DetailedSearch() {
                     .map(([key, context], index) => {
                       return (
                         <div key={key} className="flex flex-wrap items-center gap-2">
-                          {context.label || <KeywordSetSelect form={form} target={key} />}
+                          {'label' in context ? (
+                            context.label
+                          ) : (
+                            <KeywordSetSelect form={form} target={key} />
+                          )}
                           <FormField
                             control={form.control}
                             name={`keywordSets.${key}.text`}
