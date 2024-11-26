@@ -666,27 +666,49 @@ export function DetailedSearch() {
               </td>
             </tr>
 
-            {/* <tr>
+            <tr>
               <th>사업 금액</th>
               <td colSpan={5}>
                 <div className="flex items-center gap-2">
                   <div className="flex items-center gap-2">
-                    <Input
-                      className="w-[140px]"
-                      type="text"
-                      inputMode="numeric"
+                    <FormField
+                      control={form.control}
                       name="priceFrom"
-                      value={numberFormattedForm.priceFrom}
-                      onChange={(event) => handleChange(event, 'priceFrom')}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              className="w-[140px]"
+                              inputMode="numeric"
+                              {...field}
+                              onChange={(event) =>
+                                field.onChange(+event.target.value.replace(/[^0-9]/g, ''))
+                              }
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
                     ~
-                    <Input
-                      className={cn('w-[140px]', isPriceLimit ? 'invisible' : '')}
-                      type="text"
-                      inputMode="numeric"
+                    <FormField
+                      control={form.control}
                       name="priceTo"
-                      value={numberFormattedForm.priceTo}
-                      onChange={(event) => handleChange(event, 'priceTo')}
+                      render={({ field }) => (
+                        <FormItem className={isPriceLimit ? 'invisible' : ''}>
+                          <FormControl>
+                            <Input
+                              className="w-[140px]"
+                              inputMode="numeric"
+                              {...field}
+                              onChange={(event) =>
+                                field.onChange(+event.target.value.replace(/[^0-9]/g, ''))
+                              }
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
                   </div>
 
@@ -702,7 +724,7 @@ export function DetailedSearch() {
                   </label>
                 </div>
               </td>
-            </tr> */}
+            </tr>
 
             {/* <AnnouncementDate
               formModel={formModel}
