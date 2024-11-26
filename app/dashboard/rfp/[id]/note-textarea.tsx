@@ -9,7 +9,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const formSchema = z.object({
-  noteValue: z.string().min(1, '작성된 내용이 없습니다.')
+  note: z.string().min(1, '작성된 내용이 없습니다.')
 });
 
 export function NoteTextarea() {
@@ -18,7 +18,7 @@ export function NoteTextarea() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      noteValue: ''
+      note: ''
     }
   });
 
@@ -38,7 +38,7 @@ export function NoteTextarea() {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
-          name="noteValue"
+          name="note"
           render={({ field }) => (
             <FormItem>
               <FormControl>
