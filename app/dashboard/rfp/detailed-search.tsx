@@ -413,13 +413,6 @@ export function DetailedSearch() {
     businessType: '',
     ignoreType: '',
     sortType: '',
-    condition: {
-      업종조건_충족: true,
-      물품조건_충족: false,
-      공동수급_허용: false,
-      실적제한_없음: false,
-      인적제한_없음: false
-    },
     conditions: []
   };
 
