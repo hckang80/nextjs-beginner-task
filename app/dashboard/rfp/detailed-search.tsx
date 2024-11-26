@@ -31,6 +31,29 @@ import { Checkbox } from '@/components/ui/checkbox';
 
 const DEFAULT_ANNOUNCEMENT_DEADLINE = 500_000_000;
 
+const conditions = [
+  {
+    id: 1,
+    label: '업종조건 충족'
+  },
+  {
+    id: 2,
+    label: '물품조건 충족'
+  },
+  {
+    id: 3,
+    label: '공동수급 허용'
+  },
+  {
+    id: 4,
+    label: '실적제한 없음'
+  },
+  {
+    id: 5,
+    label: '인적제한 없음'
+  }
+];
+
 export function SettingButton({
   data: isPrivate,
   handler
@@ -693,31 +716,31 @@ export function DetailedSearch() {
                   control={form.control}
                   name="conditions"
                   render={() => (
-                    <FormItem className="flex flex-wrap items-center gap-x-[20px] gap-y-[5px]">
-                      {Object.keys(formModel.condition).map((key) => (
+                    <FormItem className="flex flex-wrap items-center gap-x-[20px] gap-y-[10px]">
+                      {conditions.map(({ id, label }) => (
                         <FormField
-                          key={key}
+                          key={id}
                           control={form.control}
                           name="conditions"
                           render={({ field }) => {
                             return (
                               <FormItem
-                                key={key}
+                                key={id}
                                 className="flex flex-row space-x-3 space-y-0 !mt-0"
                               >
                                 <FormControl>
                                   <Checkbox
-                                    checked={field.value.includes(key)}
+                                    checked={field.value.includes(label)}
                                     onCheckedChange={(checked) => {
                                       return checked
-                                        ? field.onChange([...field.value, key])
+                                        ? field.onChange([...field.value, label])
                                         : field.onChange(
-                                            field.value.filter((value) => value !== key)
+                                            field.value.filter((value) => value !== label)
                                           );
                                     }}
                                   />
                                 </FormControl>
-                                <FormLabel className="font-normal">{key}</FormLabel>
+                                <FormLabel className="font-normal">{label}</FormLabel>
                               </FormItem>
                             );
                           }}
