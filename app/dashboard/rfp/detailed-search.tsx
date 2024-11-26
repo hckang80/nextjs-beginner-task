@@ -191,13 +191,9 @@ export function KeywordSetSelect({
 }
 
 export function AnnouncementDate({
-  formModel,
-  setFormModel,
-  handleChange
+  form
 }: {
-  formModel: DetailedSearchForm;
-  setFormModel: Dispatch<SetStateAction<DetailedSearchForm>>;
-  handleChange: (event: React.FormEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  form: UseFormReturn<DetailedSearchForm, unknown, undefined>;
 }) {
   const dateRange = [
     {
@@ -261,11 +257,8 @@ export function AnnouncementDate({
 
     const date = item.calculatedDate?.();
 
-    setFormModel({
-      ...formModel,
-      announcementDateFrom: isFreeInput(value) ? '' : toReadableDate(date),
-      announcementDateTo: isFreeInput(value) ? '' : toReadableDate()
-    });
+    form.setValue('announcementDateFrom', isFreeInput(value) ? '' : toReadableDate(date));
+    form.setValue('announcementDateTo', isFreeInput(value) ? '' : toReadableDate());
   };
 
   const [announcementDate, setAnnouncementDate] = useState('inAWeek');
@@ -280,22 +273,40 @@ export function AnnouncementDate({
       <td colSpan={5}>
         <div className="flex items-center gap-2 mb-[10px]">
           <div className="flex items-center gap-2">
-            <Input
-              readOnly={!isFreeInput(announcementDate)}
-              className="w-[140px]"
-              type="date"
+            <FormField
+              control={form.control}
               name="announcementDateFrom"
-              value={formModel.announcementDateFrom}
-              onChange={handleChange}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      readOnly={!isFreeInput(announcementDate)}
+                      className="w-[140px]"
+                      type="date"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
             ~
-            <Input
-              readOnly={!isFreeInput(announcementDate)}
-              className="w-[140px]"
-              type="date"
+            <FormField
+              control={form.control}
               name="announcementDateTo"
-              value={formModel.announcementDateTo}
-              onChange={handleChange}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      readOnly={!isFreeInput(announcementDate)}
+                      className="w-[140px]"
+                      type="date"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
           </div>
 
@@ -726,11 +737,7 @@ export function DetailedSearch() {
               </td>
             </tr>
 
-            {/* <AnnouncementDate
-              formModel={formModel}
-              setFormModel={setFormModel}
-              handleChange={handleChange}
-            /> */}
+            <AnnouncementDate form={form} />
 
             {/* <tr>
               <th>사업 구분</th>
