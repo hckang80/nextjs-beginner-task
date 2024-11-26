@@ -637,7 +637,7 @@ export function DetailedSearch() {
                             <Plus />
                           </Button>
                           <ul className="flex flex-wrap items-center gap-2">
-                            {context.tags.map((tag) => (
+                            {form.getValues(`keywordSets.${key}.tags`).map((tag) => (
                               <li
                                 key={tag}
                                 className="flex items-center gap-2 bg-violet-400 text-white h-[30px] px-[10px] rounded-[30px]"
