@@ -1,3 +1,5 @@
+import { z } from 'zod';
+
 export interface KeywordSet {
   id: number;
   name: string;
@@ -63,28 +65,27 @@ export interface BidAnnouncementContext {
   totalProducts: number;
 }
 
-export interface DetailedSearchForm {
-  keywordSets: Record<
-    string,
-    {
-      label?: string;
-      type?: string;
-      operation?: string;
-      text: string;
-      tags: string[];
-    }
-  >;
-  priceFrom: number;
-  priceTo: number;
-  announcementDateFrom: string;
-  announcementDateTo: string;
-  businessType: string;
-  ignoreType: string;
-  sortType: string;
-  condition: {
-    [key: string]: boolean;
-  };
-}
+export const keywordSetContextSchema = z.object({
+  label: z.string().optional(),
+  type: z.string().optional(),
+  operation: z.string().optional(),
+  text: z.string(),
+  tags: z.string().array()
+});
+export type KeywordSetContext = z.infer<typeof keywordSetContextSchema>;
+
+export const detailedSearchFormSchema = z.object({
+  keywordSets: z.record(z.string(), keywordSetContextSchema),
+  priceFrom: z.number(),
+  priceTo: z.number(),
+  announcementDateFrom: z.string(),
+  announcementDateTo: z.string(),
+  businessType: z.string(),
+  ignoreType: z.string(),
+  sortType: z.string(),
+  condition: z.record(z.boolean())
+});
+export type DetailedSearchForm = z.infer<typeof detailedSearchFormSchema>;
 
 export const channelContext = [
   { label: '입찰기관', type: 'agency' },
