@@ -509,18 +509,14 @@ export function DetailedSearch() {
     form.resetField(`${path}.text`);
   };
 
-  const deleteTag = (path: string, tag: string) => {
-    setFormModel({
-      ...formModel,
-      keywordSets: {
-        ...formModel.keywordSets,
-        [path]: {
-          ...formModel.keywordSets[path],
-          text: '',
-          tags: formModel.keywordSets[path].tags.filter((originTag) => originTag !== tag)
-        }
-      }
-    });
+  const deleteTag = (path: `keywordSets.${string}`, value: string) => {
+    if (!value) return;
+
+    form.setValue(
+      `${path}.tags`,
+      form.getValues(`${path}.tags`).filter((originTag) => originTag !== value)
+    );
+    form.resetField(`${path}.text`); // TODO: 제거하면 실시간으로 반영 안됨
   };
 
   const [numberFormattedForm, setNumberFormattedForm] = useState({
@@ -669,7 +665,10 @@ export function DetailedSearch() {
                                 className="flex items-center gap-2 bg-violet-400 text-white h-[30px] px-[10px] rounded-[30px]"
                               >
                                 {tag}
-                                <button type="button" onClick={() => deleteTag(key, tag)}>
+                                <button
+                                  type="button"
+                                  onClick={() => deleteTag(`keywordSets.${key}`, tag)}
+                                >
                                   <X size={12} color="#ffffff" strokeWidth={3} />
                                 </button>
                               </li>
