@@ -7,16 +7,13 @@ import { useToast } from '@/hooks/use-toast';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useParams } from 'next/navigation';
 
 const formSchema = z.object({
   note: z.string().min(1, '작성된 내용이 없습니다.')
 });
 
-export function NoteTextarea() {
+export function NoteTextarea({ id }: { id: number }) {
   const { toast } = useToast();
-
-  const { id } = useParams<{ id: string }>();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -30,7 +27,7 @@ export function NoteTextarea() {
       title: 'You submitted the following values:',
       description: (
         <pre>
-          <code>{JSON.stringify({ ...values, id: +id }, null, 2)}</code>
+          <code>{JSON.stringify({ ...values, id }, null, 2)}</code>
         </pre>
       )
     });

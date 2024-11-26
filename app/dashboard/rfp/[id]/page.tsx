@@ -73,7 +73,7 @@ export default function RfpDetail() {
               <CardTitle>자격 분석 노트</CardTitle>
             </CardHeader>
             <CardContent>
-              <NoteTextarea />
+              <NoteTextarea id={+id} />
             </CardContent>
           </Card>
           <Card className="grow basis-full">
