@@ -488,7 +488,6 @@ export function DetailedSearch() {
   };
 
   return (
-    // TODO: react hook form 으로 개선하기
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <table className="search-table">
