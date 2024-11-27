@@ -76,8 +76,8 @@ export type KeywordSetContext = z.infer<typeof keywordSetContextSchema>;
 
 export const detailedSearchFormSchema = z.object({
   keywordSets: z.record(z.string(), keywordSetContextSchema),
-  priceFrom: z.number(),
-  priceTo: z.number(),
+  priceFrom: z.string(),
+  priceTo: z.string(),
   announcementDateFrom: z.string(),
   announcementDateTo: z.string(),
   businessType: z.string(),

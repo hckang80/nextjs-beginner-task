@@ -22,7 +22,13 @@ import {
 } from '@/components/ui/dialog';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { toast, useToast } from '@/hooks/use-toast';
-import { DetailedSearchForm, detailedSearchFormSchema, generatedId, toReadableDate } from '@/lib';
+import {
+  DetailedSearchForm,
+  detailedSearchFormSchema,
+  generatedId,
+  toReadableDate,
+  toReadableNumber
+} from '@/lib';
 import { KeywordSetItem, ToggleController } from '.';
 import { useBidAnnouncement } from './context/BidAnnouncementContext';
 import { useForm, UseFormReturn } from 'react-hook-form';
@@ -406,8 +412,8 @@ export function DetailedSearch() {
         tags: []
       }
     },
-    priceFrom: 0,
-    priceTo: DEFAULT_ANNOUNCEMENT_DEADLINE,
+    priceFrom: toReadableNumber(0),
+    priceTo: toReadableNumber(DEFAULT_ANNOUNCEMENT_DEADLINE),
     announcementDateFrom: '',
     announcementDateTo: '',
     businessType: '',
@@ -596,7 +602,9 @@ export function DetailedSearch() {
                               inputMode="numeric"
                               {...field}
                               onChange={(event) =>
-                                field.onChange(+event.target.value.replace(/[^0-9]/g, ''))
+                                field.onChange(
+                                  toReadableNumber(+event.target.value.replace(/[^0-9]/g, ''))
+                                )
                               }
                             />
                           </FormControl>
@@ -616,7 +624,9 @@ export function DetailedSearch() {
                               inputMode="numeric"
                               {...field}
                               onChange={(event) =>
-                                field.onChange(+event.target.value.replace(/[^0-9]/g, ''))
+                                field.onChange(
+                                  toReadableNumber(+event.target.value.replace(/[^0-9]/g, ''))
+                                )
                               }
                             />
                           </FormControl>
