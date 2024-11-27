@@ -124,13 +124,6 @@ svg {
   border: 0;
 }
 
-input,
-button,
-textarea,
-select {
-  font: inherit;
-}
-
 select {
   height: 36px;
   border: 1px solid hsl(var(--input));
@@ -152,7 +145,6 @@ i {
 }
 
 button {
-  all: unset;
   box-sizing: border-box;
 
   &:focus-visible {
@@ -162,6 +154,13 @@ button {
   &:not(:disabled) {
     cursor: pointer;
   }
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
 }
 
 a,
