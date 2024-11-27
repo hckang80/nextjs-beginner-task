@@ -20,7 +20,7 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
 import { toast, useToast } from '@/hooks/use-toast';
 import {
   DetailedSearchForm,
@@ -227,77 +227,83 @@ export function AnnouncementDate({
 }: {
   form: UseFormReturn<DetailedSearchForm, unknown, undefined>;
 }) {
-  const dateRange = [
-    {
-      label: '하루 전',
-      value: 'inADay',
-      calculatedDate() {
-        const today = new Date();
-        const date = new Date(today);
-        date.setDate(today.getDate() - 1);
-        return date;
+  const dateRange = useMemo(
+    () => [
+      {
+        label: '하루 전',
+        value: 'inADay',
+        calculatedDate() {
+          const today = new Date();
+          const date = new Date(today);
+          date.setDate(today.getDate() - 1);
+          return date;
+        }
+      },
+      {
+        label: '일주일 전',
+        value: 'inAWeek',
+        calculatedDate() {
+          const today = new Date();
+          const date = new Date(today);
+          date.setDate(today.getDate() - 7);
+          return date;
+        }
+      },
+      {
+        label: '한 달 전',
+        value: 'inAMonth',
+        calculatedDate() {
+          const today = new Date();
+          const date = new Date(today);
+          date.setMonth(today.getMonth() - 1);
+          return date;
+        }
+      },
+      {
+        label: '일 년 전',
+        value: 'inAYear',
+        calculatedDate() {
+          const today = new Date();
+          const date = new Date(today);
+          date.setFullYear(today.getFullYear() - 1);
+          return date;
+        }
+      },
+      {
+        label: '전체 조회',
+        value: 'all',
+        calculatedDate() {
+          return new Date(2020, 0, 1);
+        }
+      },
+      {
+        label: '자유 입력',
+        value: 'etc'
       }
-    },
-    {
-      label: '일주일 전',
-      value: 'inAWeek',
-      calculatedDate() {
-        const today = new Date();
-        const date = new Date(today);
-        date.setDate(today.getDate() - 7);
-        return date;
-      }
-    },
-    {
-      label: '한 달 전',
-      value: 'inAMonth',
-      calculatedDate() {
-        const today = new Date();
-        const date = new Date(today);
-        date.setMonth(today.getMonth() - 1);
-        return date;
-      }
-    },
-    {
-      label: '일 년 전',
-      value: 'inAYear',
-      calculatedDate() {
-        const today = new Date();
-        const date = new Date(today);
-        date.setFullYear(today.getFullYear() - 1);
-        return date;
-      }
-    },
-    {
-      label: '전체 조회',
-      value: 'all',
-      calculatedDate() {
-        return new Date(2020, 0, 1);
-      }
-    },
-    {
-      label: '자유 입력',
-      value: 'etc'
-    }
-  ];
+    ],
+    []
+  );
 
   const isFreeInput = (value: string) => value === 'etc';
 
-  const setDateRange = (value: string) => {
-    const item = dateRange.find((item) => item.value === value);
-    if (!item) return;
-
-    const date = item.calculatedDate?.();
-
-    form.setValue('announcementDateFrom', isFreeInput(value) ? '' : toReadableDate(date));
-    form.setValue('announcementDateTo', isFreeInput(value) ? '' : toReadableDate());
-  };
-
   const [announcementDate, setAnnouncementDate] = useState('inAWeek');
+
+  const setDateRange = useCallback(
+    (value: string) => {
+      const item = dateRange.find((item) => item.value === value);
+      if (!item) return;
+
+      const date = item.calculatedDate?.();
+
+      form.setValue('announcementDateFrom', isFreeInput(value) ? '' : toReadableDate(date));
+      form.setValue('announcementDateTo', isFreeInput(value) ? '' : toReadableDate());
+    },
+    [dateRange, form]
+  );
 
   useEffect(() => {
     setDateRange(announcementDate);
-  }, [announcementDate]);
+  }, [announcementDate, setDateRange]);
 
   return (
     <tr>

@@ -6,7 +6,7 @@ import { useToast } from '@/hooks/use-toast';
 import { AnnouncementContext, getProducts, MY_FAVORITES } from '@/lib';
 import { Star } from 'lucide-react';
 import { useParams } from 'next/navigation';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { NoteTextarea } from './note-textarea';
 
 export default function RfpDetail() {
@@ -15,17 +15,16 @@ export default function RfpDetail() {
   const [data, setData] = useState<AnnouncementContext | undefined>();
 
   const { toast } = useToast();
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     // TODO: 데이터를 여기서 호출하지 말고 부모에서 넘겨주는 형태로 개선 필요. 데이터 호출 최소화. Context API
     const { products } = await getProducts(0);
     const product = products.find((item) => item.id === +id);
     setData(product);
-  };
+  }, [id]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   if (!data) {
     return 'Loading...';
