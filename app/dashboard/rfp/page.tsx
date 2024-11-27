@@ -1,69 +1,32 @@
-'use client';
+import { Suspense } from 'react';
+import Rfp from './_rfp';
+import { headers } from 'next/headers';
 
-import { useEffect, useState } from 'react';
-import { KeywordSet, BidAnnouncementContext, fetcher } from '@/lib';
-import { ProductsTable, DetailedSearch, ChannelSearch } from '.';
-import { Card } from '@/components/ui/card';
-import { useBidAnnouncement } from './context/BidAnnouncementContext';
-import useSWR from 'swr';
+async function fetchInitialData() {
+  const headersList = await headers();
+  const protocol = headersList.get('x-forwarded-proto') || 'http';
+  const host = headersList.get('host');
+  const origin = `${protocol}://${host}`;
 
-export default function Rfp() {
-  const [searchParams, setSearchParams] = useState<URLSearchParams | null>(null);
-  const offset = Number(searchParams?.get('offset'));
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      setSearchParams(params);
-    }
-  }, []);
-
-  const { setBidAnnouncementsContext, setKeywordSetsContext } = useBidAnnouncement();
-
-  const { data, error } = useSWR<[BidAnnouncementContext, KeywordSet[]], unknown, string[]>(
-    ['/bidAnnouncementContext.json', '/keywordSets.json'],
-    ([url1, url2]) => Promise.all([fetcher(url1), fetcher(url2)])
+  const urls = [`${origin}/bidAnnouncementContext.json`, `${origin}/keywordSets.json`];
+  const [data1, data2] = await Promise.all(
+    urls.map(async (url) => {
+      const res = await fetch(url);
+      if (!res.ok) {
+        throw new Error(`Failed to fetch: ${url}`);
+      }
+      return res.json();
+    })
   );
+  return { data1, data2 };
+}
 
-  useEffect(() => {
-    if (data) {
-      const [bidAnnouncementsContext, keywordSetsContext] = data;
-      setBidAnnouncementsContext({ ...bidAnnouncementsContext, newOffset: offset });
-      setKeywordSetsContext(keywordSetsContext);
-    }
-  }, [data, setBidAnnouncementsContext, setKeywordSetsContext, offset]);
-
-  if (error) {
-    return <div>Error loading data</div>;
-  }
-
-  if (!data) {
-    return <div>Loading...</div>;
-  }
+export default async function RfpPage() {
+  const initialData = await fetchInitialData();
 
   return (
-    <div>
-      <header className="flex items-center justify-between mb-[15px]">
-        <h2 className="text-[18px] font-bold text-indigo-600">입찰 공고</h2>
-      </header>
-
-      <div className="grid gap-[15px]">
-        <details open className="contents">
-          <summary>검색 숨기기</summary>
-
-          <Card className="p-6">
-            <DetailedSearch />
-          </Card>
-
-          <Card className="p-6">
-            <ChannelSearch />
-          </Card>
-        </details>
-
-        <div>
-          <ProductsTable />
-        </div>
-      </div>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Rfp initialData={initialData} />
+    </Suspense>
   );
 }

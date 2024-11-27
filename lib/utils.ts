@@ -27,4 +27,4 @@ export function extractNumbers(value: string) {
 
 export const MY_FAVORITES = 'myFavorites';
 
-export const fetcher = (url: string) => fetch(url).then((res) => res.json());
+export const fetcher = async <T>(url: string): Promise<T> => fetch(url).then((res) => res.json());
