@@ -27,7 +27,7 @@ export default async function RfpPage({
   searchParams: Promise<{ offset?: string }>;
 }) {
   const initialData = await fetchInitialData();
-  const { offset } = await searchParams;
+  const { offset = '0' } = await searchParams;
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
