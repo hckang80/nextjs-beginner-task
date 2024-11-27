@@ -33,9 +33,14 @@ export default function BidFavorites() {
 
   const { setTags, setAppliedTags, setBidAnnouncementsContext } = useFavoriteList();
 
-  const { data, error } = useSWR<[BidAnnouncementContext, Tag[], AppliedTag[]], unknown, string[]>(
+  const { data, error } = useSWR(
     ['/bidAnnouncementContext.json', '/tags.json', '/appliedTags.json'],
-    ([url1, url2, url3]) => Promise.all([fetcher(url1), fetcher(url2), fetcher(url3)])
+    ([url1, url2, url3]) =>
+      Promise.all([
+        fetcher<BidAnnouncementContext>(url1),
+        fetcher<Tag[]>(url2),
+        fetcher<AppliedTag[]>(url3)
+      ])
   );
 
   useEffect(() => {
