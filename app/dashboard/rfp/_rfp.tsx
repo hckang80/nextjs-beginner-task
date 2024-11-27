@@ -8,10 +8,10 @@ import { useBidAnnouncement } from './context/BidAnnouncementContext';
 import useSWR from 'swr';
 
 export default function Rfp({
-  initialData,
+  initialData: { bidAnnouncementContext, keywordSets },
   offset
 }: {
-  initialData: { data1: BidAnnouncementContext; data2: KeywordSet[] };
+  initialData: { bidAnnouncementContext: BidAnnouncementContext; keywordSets: KeywordSet[] };
   offset: number;
 }) {
   const { setBidAnnouncementsContext, setKeywordSetsContext } = useBidAnnouncement();
@@ -21,7 +21,7 @@ export default function Rfp({
     ([url1, url2]) =>
       Promise.all([fetcher<BidAnnouncementContext>(url1), fetcher<KeywordSet[]>(url2)]),
     {
-      fallbackData: [initialData.data1, initialData.data2]
+      fallbackData: [bidAnnouncementContext, keywordSets]
     }
   );
 
