@@ -21,6 +21,10 @@ export function toReadableNumber(value: number) {
   return value.toLocaleString('ko-KR');
 }
 
+export function extractNumbers(value: string) {
+  return value.replace(/[^0-9]/g, '');
+}
+
 export const MY_FAVORITES = 'myFavorites';
 
 export const fetcher = (url: string) => fetch(url).then((res) => res.json());
