@@ -17,6 +17,10 @@ export function toReadableDate(date: Date | string | undefined = new Date()) {
   return new Intl.DateTimeFormat('en-CA').format(new Date(date));
 }
 
+export function toReadableNumber(value: number) {
+  return value.toLocaleString('ko-KR');
+}
+
 export const MY_FAVORITES = 'myFavorites';
 
 export const fetcher = (url: string) => fetch(url).then((res) => res.json());
