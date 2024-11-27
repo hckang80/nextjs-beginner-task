@@ -25,6 +25,7 @@ import { toast, useToast } from '@/hooks/use-toast';
 import {
   DetailedSearchForm,
   detailedSearchFormSchema,
+  extractNumbers,
   generatedId,
   toReadableDate,
   toReadableNumber
@@ -467,7 +468,17 @@ export function DetailedSearch() {
       title: 'You submitted the following values:',
       description: (
         <pre>
-          <code>{JSON.stringify(values, null, 2)}</code>
+          <code>
+            {JSON.stringify(
+              {
+                ...values,
+                priceFrom: +extractNumbers(values.priceFrom),
+                priceTo: +extractNumbers(values.priceTo)
+              },
+              null,
+              2
+            )}
+          </code>
         </pre>
       )
     });
@@ -603,7 +614,7 @@ export function DetailedSearch() {
                               {...field}
                               onChange={(event) =>
                                 field.onChange(
-                                  toReadableNumber(+event.target.value.replace(/[^0-9]/g, ''))
+                                  toReadableNumber(+extractNumbers(event.target.value))
                                 )
                               }
                             />
@@ -625,7 +636,7 @@ export function DetailedSearch() {
                               {...field}
                               onChange={(event) =>
                                 field.onChange(
-                                  toReadableNumber(+event.target.value.replace(/[^0-9]/g, ''))
+                                  toReadableNumber(+extractNumbers(event.target.value))
                                 )
                               }
                             />
