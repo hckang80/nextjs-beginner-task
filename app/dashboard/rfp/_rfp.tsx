@@ -6,6 +6,7 @@ import { ProductsTable, DetailedSearch, ChannelSearch } from '.';
 import { Card } from '@/components/ui/card';
 import { useBidAnnouncement } from './context/BidAnnouncementContext';
 import useSWR from 'swr';
+import { ProductPagination } from '../product-pagination';
 
 export default function Rfp({
   initialData: { bidAnnouncementContext, keywordSets },
@@ -33,6 +34,8 @@ export default function Rfp({
     }
   }, [data, setBidAnnouncementsContext, setKeywordSetsContext, offset]);
 
+  const { bidAnnouncementsContext } = useBidAnnouncement();
+
   if (error) {
     return <div>Error loading data</div>;
   }
@@ -40,6 +43,14 @@ export default function Rfp({
   if (!data) {
     return <div>Loading...</div>;
   }
+
+  const LIST_PER_PAGE = 5;
+
+  const { products, newOffset, totalProducts } = bidAnnouncementsContext || {
+    products: [],
+    newOffset: 0,
+    totalProducts: 0
+  };
 
   return (
     <div>
@@ -60,9 +71,15 @@ export default function Rfp({
           </Card>
         </details>
 
-        <div>
-          <ProductsTable />
-        </div>
+        <ProductsTable products={products} offset={newOffset} listPerPage={LIST_PER_PAGE} />
+
+        {LIST_PER_PAGE < totalProducts && (
+          <ProductPagination
+            productsPerPage={LIST_PER_PAGE}
+            offset={newOffset}
+            totalProducts={totalProducts}
+          />
+        )}
       </div>
     </div>
   );

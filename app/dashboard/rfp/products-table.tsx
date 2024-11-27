@@ -1,26 +1,21 @@
-'use client';
-
 import { useEffect, useRef } from 'react';
 import { Product } from '.';
-import { ProductPagination } from '../product-pagination';
-import { useBidAnnouncement } from './context/BidAnnouncementContext';
+import { AnnouncementContext } from '@/lib';
 
-export function ProductsTable() {
-  const LIST_PER_PAGE = 5;
-
+export function ProductsTable({
+  products,
+  offset,
+  listPerPage
+}: {
+  products: AnnouncementContext[];
+  offset: number;
+  listPerPage: number;
+}) {
   const tableRef = useRef<HTMLTableElement | null>(null);
 
   const focusDataTable = () => {
     tableRef?.current?.scrollIntoView();
   };
-
-  const { bidAnnouncementsContext } = useBidAnnouncement();
-
-  const {
-    products,
-    newOffset: offset,
-    totalProducts
-  } = bidAnnouncementsContext || { products: [], newOffset: 0, totalProducts: 0 };
 
   useEffect(() => {
     // TODO: offset 0일때만 다르게 동작함
@@ -55,19 +50,11 @@ export function ProductsTable() {
           </tr>
         </thead>
         <tbody>
-          {products.slice(offset, offset + LIST_PER_PAGE).map((product) => (
+          {products.slice(offset, offset + listPerPage).map((product) => (
             <Product key={product.id} product={product} />
           ))}
         </tbody>
       </table>
-
-      {LIST_PER_PAGE < totalProducts && (
-        <ProductPagination
-          productsPerPage={LIST_PER_PAGE}
-          offset={offset}
-          totalProducts={totalProducts}
-        />
-      )}
     </>
   );
 }
