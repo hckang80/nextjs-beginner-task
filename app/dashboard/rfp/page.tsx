@@ -21,12 +21,17 @@ async function fetchInitialData() {
   return { data1, data2 };
 }
 
-export default async function RfpPage() {
+export default async function RfpPage({
+  searchParams
+}: {
+  searchParams: Promise<{ offset?: string }>;
+}) {
   const initialData = await fetchInitialData();
+  const { offset } = await searchParams;
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Rfp initialData={initialData} />
+      <Rfp initialData={initialData} offset={Number(offset)} />
     </Suspense>
   );
 }

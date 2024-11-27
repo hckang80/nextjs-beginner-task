@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { KeywordSet, BidAnnouncementContext, fetcher } from '@/lib';
 import { ProductsTable, DetailedSearch, ChannelSearch } from '.';
 import { Card } from '@/components/ui/card';
@@ -8,20 +8,12 @@ import { useBidAnnouncement } from './context/BidAnnouncementContext';
 import useSWR from 'swr';
 
 export default function Rfp({
-  initialData
+  initialData,
+  offset
 }: {
   initialData: { data1: BidAnnouncementContext; data2: KeywordSet[] };
+  offset: number;
 }) {
-  const [searchParams, setSearchParams] = useState<URLSearchParams | null>(null);
-  const offset = Number(searchParams?.get('offset'));
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      setSearchParams(params);
-    }
-  }, []);
-
   const { setBidAnnouncementsContext, setKeywordSetsContext } = useBidAnnouncement();
 
   const { data, error } = useSWR(
