@@ -19,13 +19,13 @@ export function ProductsTable({
   isVisibleMemoContext: boolean;
   setData: Dispatch<SetStateAction<BidAnnouncementContext | null>>;
 }) {
-  const { bidAnnouncementsContext } = useFavoriteList();
+  const { bidAnnouncementContext } = useFavoriteList();
 
   const {
     products,
     newOffset: offset,
     totalProducts
-  } = bidAnnouncementsContext || { products: [], newOffset: 0, totalProducts: 0 };
+  } = bidAnnouncementContext || { products: [], newOffset: 0, totalProducts: 0 };
 
   const LIST_PER_PAGE = 10;
 

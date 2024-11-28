@@ -8,7 +8,7 @@ type UseFavoriteListContextState = {
   setTags: React.Dispatch<React.SetStateAction<Tag[]>>;
   appliedTags: AppliedTag[];
   setAppliedTags: React.Dispatch<AppliedTag[]>;
-  bidAnnouncementsContext: BidAnnouncementContext | null;
+  bidAnnouncementContext: BidAnnouncementContext | null;
   setBidAnnouncementsContext: React.Dispatch<React.SetStateAction<BidAnnouncementContext | null>>;
 };
 
@@ -17,7 +17,7 @@ const UseFavoriteListContext = createContext<UseFavoriteListContextState | undef
 export const FavoriteListProvider = ({ children }: { children: ReactNode }) => {
   const [tags, setTags] = useState<Tag[]>([]);
   const [appliedTags, setAppliedTags] = useState<AppliedTag[]>([]);
-  const [bidAnnouncementsContext, setBidAnnouncementsContext] =
+  const [bidAnnouncementContext, setBidAnnouncementsContext] =
     useState<BidAnnouncementContext | null>(null);
 
   return (
@@ -27,7 +27,7 @@ export const FavoriteListProvider = ({ children }: { children: ReactNode }) => {
         setTags,
         appliedTags,
         setAppliedTags,
-        bidAnnouncementsContext,
+        bidAnnouncementContext,
         setBidAnnouncementsContext
       }}
     >

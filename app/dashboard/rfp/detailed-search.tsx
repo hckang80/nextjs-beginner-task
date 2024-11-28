@@ -127,33 +127,31 @@ export function SettingButton({
   data: boolean;
   handler: Dispatch<SetStateAction<boolean>>;
 }) {
-  const { keywordSetsContext, setKeywordSetsContext } = useBidAnnouncement();
+  const { keywordSets, setKeywordSets } = useBidAnnouncement();
 
   const pinKeywordSetItem = (id: number) => {
-    if (!keywordSetsContext) return;
+    if (!keywordSets) return;
 
-    setKeywordSetsContext(
-      keywordSetsContext.map((item) =>
-        item.id === id ? { ...item, isPined: !item.isPined } : item
-      )
+    setKeywordSets(
+      keywordSets.map((item) => (item.id === id ? { ...item, isPined: !item.isPined } : item))
     );
   };
 
   const deleteKeywordSetItem = (id: number) => {
-    if (!keywordSetsContext) return;
+    if (!keywordSets) return;
 
-    setKeywordSetsContext(keywordSetsContext.filter((item) => item.id !== id));
+    setKeywordSets(keywordSets.filter((item) => item.id !== id));
     toast({
       title: '그룹이 삭제되었습니다.'
     });
-    // console.log(keywordSetsContext); // TODO: 화면 출력은 올바르게 되지만 콘솔은 setKeywordSetsContext 실행 직전의 값으로 찍힘. 원래 이런건가 ?_?
+    // console.log(keywordSets); // TODO: 화면 출력은 올바르게 되지만 콘솔은 setKeywordSets 실행 직전의 값으로 찍힘. 원래 이런건가 ?_?
   };
 
   const changeKeywordSetName = (id: number) => (event: React.FormEvent<HTMLInputElement>) => {
-    if (!keywordSetsContext) return;
+    if (!keywordSets) return;
 
-    setKeywordSetsContext(
-      keywordSetsContext.map((item) =>
+    setKeywordSets(
+      keywordSets.map((item) =>
         item.id === id ? { ...item, name: event.currentTarget.value } : item
       )
     );
@@ -172,12 +170,12 @@ export function SettingButton({
   };
 
   const addKeywordSet = () => {
-    if (!keywordSetsContext) return;
+    if (!keywordSets) return;
 
-    setKeywordSetsContext([
-      ...keywordSetsContext,
+    setKeywordSets([
+      ...keywordSets,
       {
-        id: generatedId(keywordSetsContext),
+        id: generatedId(keywordSets),
         name: getKeywordSetName(),
         isPined: false,
         isPrivate
@@ -190,7 +188,7 @@ export function SettingButton({
       title: '검색 그룹이 설정되었습니다.',
       description: (
         <pre>
-          <code>{JSON.stringify(keywordSetsContext, null, 2)}</code>
+          <code>{JSON.stringify(keywordSets, null, 2)}</code>
         </pre>
       )
     });
@@ -214,7 +212,7 @@ export function SettingButton({
             선택하신 상단의 그룹이 기본 검색 조건으로 설정됩니다
           </div>
           <ul className="flex flex-col gap-2 mb-4">
-            {keywordSetsContext
+            {keywordSets
               ?.filter((item) => item.isPrivate === isPrivate)
               .map((item) => (
                 <KeywordSetItem
@@ -485,7 +483,7 @@ export function DetailedSearch() {
     });
   };
 
-  const { keywordSetsContext } = useBidAnnouncement();
+  const { keywordSets } = useBidAnnouncement();
 
   const DEFAULT_KEYWORD_SET_SIZE = 2;
   const [keywordSetSize, setKeywordSetSize] = useState(DEFAULT_KEYWORD_SET_SIZE);
@@ -509,7 +507,7 @@ export function DetailedSearch() {
                 <div className="flex items-center gap-2">
                   <select className="w-[160px]">
                     <option value="">그룹을 선택하세요</option>
-                    {keywordSetsContext
+                    {keywordSets
                       ?.filter((item) => item.isPrivate === isPrivate)
                       .map((item) => (
                         <option key={item.id} value={item.id}>

@@ -45,8 +45,8 @@ export default function BidFavorites() {
 
   useEffect(() => {
     if (data) {
-      const [bidAnnouncementsContext, myTags, appliedTags] = data;
-      const favoriteProducts = bidAnnouncementsContext.products.filter(({ id }) =>
+      const [bidAnnouncementContext, myTags, appliedTags] = data;
+      const favoriteProducts = bidAnnouncementContext.products.filter(({ id }) =>
         JSON.parse(localStorage.getItem(MY_FAVORITES) || '[]').includes(id)
       );
 

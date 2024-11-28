@@ -9,7 +9,7 @@ async function fetchInitialData() {
   const origin = `${protocol}://${host}`;
 
   const urls = [`${origin}/bidAnnouncementContext.json`, `${origin}/keywordSets.json`];
-  const [bidAnnouncementContext, keywordSets] = await Promise.all(
+  const [bidAnnouncementContextData, keywordSetsData] = await Promise.all(
     urls.map(async (url) => {
       const res = await fetch(url);
       if (!res.ok) {
@@ -18,7 +18,7 @@ async function fetchInitialData() {
       return res.json();
     })
   );
-  return { bidAnnouncementContext, keywordSets };
+  return { bidAnnouncementContextData, keywordSetsData };
 }
 
 export default async function RfpPage({

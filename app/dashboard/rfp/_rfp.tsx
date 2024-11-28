@@ -8,31 +8,30 @@ import useSWR from 'swr';
 import { ProductPagination } from '../product-pagination';
 
 export default function Rfp({
-  initialData: { bidAnnouncementContext, keywordSets },
+  initialData: { bidAnnouncementContextData, keywordSetsData },
   offset
 }: {
-  initialData: { bidAnnouncementContext: BidAnnouncementContext; keywordSets: KeywordSet[] };
+  initialData: {
+    bidAnnouncementContextData: BidAnnouncementContext;
+    keywordSetsData: KeywordSet[];
+  };
   offset: number;
 }) {
-  const {
-    keywordSetsContext,
-    setKeywordSetsContext,
-    bidAnnouncementsContext,
-    setBidAnnouncementsContext
-  } = useBidAnnouncement();
+  const { keywordSets, setKeywordSets, bidAnnouncementContext, setBidAnnouncementsContext } =
+    useBidAnnouncement();
 
   const { data, error } = useSWR(
     ['/bidAnnouncementContext.json', '/keywordSets.json'],
     ([url1, url2]) =>
       Promise.all([fetcher<BidAnnouncementContext>(url1), fetcher<KeywordSet[]>(url2)]),
     {
-      fallbackData: [bidAnnouncementContext, keywordSets],
+      fallbackData: [bidAnnouncementContextData, keywordSetsData],
       onSuccess: () => {
-        const hasData = keywordSetsContext.length || bidAnnouncementsContext;
+        const hasData = keywordSets.length || bidAnnouncementContext;
         if (hasData) return;
 
-        setBidAnnouncementsContext({ ...bidAnnouncementContext, newOffset: offset });
-        setKeywordSetsContext(keywordSets);
+        setBidAnnouncementsContext({ ...bidAnnouncementContextData, newOffset: offset });
+        setKeywordSets(keywordSetsData);
       }
     }
   );
@@ -47,7 +46,7 @@ export default function Rfp({
 
   const LIST_PER_PAGE = 5;
 
-  const { products, newOffset, totalProducts } = bidAnnouncementsContext || {
+  const { products, newOffset, totalProducts } = bidAnnouncementContext || {
     products: [],
     newOffset: 0,
     totalProducts: 0
