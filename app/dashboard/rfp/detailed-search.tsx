@@ -283,8 +283,7 @@ export function AnnouncementDate({
 }: {
   form: UseFormReturn<DetailedSearchForm, unknown, undefined>;
 }) {
-  const isFreeInput = (value: string) => value === 'etc';
-
+  const isFreeInputChecked = (value: string) => value === 'etc';
   const [announcementDate, setAnnouncementDate] = useState(DEFAULT_ANNOUNCEMENT_DAY_TYPE);
 
   const setDateRange = (value: string) => {
@@ -293,8 +292,8 @@ export function AnnouncementDate({
 
     const date = item.calculatedDate?.();
 
-    form.setValue('announcementDateFrom', isFreeInput(value) ? '' : toReadableDate(date));
-    form.setValue('announcementDateTo', isFreeInput(value) ? '' : toReadableDate());
+    form.setValue('announcementDateFrom', isFreeInputChecked(value) ? '' : toReadableDate(date));
+    form.setValue('announcementDateTo', isFreeInputChecked(value) ? '' : toReadableDate());
     setAnnouncementDate(value);
   };
 
@@ -311,7 +310,7 @@ export function AnnouncementDate({
                 <FormItem>
                   <FormControl>
                     <Input
-                      readOnly={!isFreeInput(announcementDate)}
+                      readOnly={!isFreeInputChecked(announcementDate)}
                       className="w-[140px]"
                       type="date"
                       {...field}
@@ -329,7 +328,7 @@ export function AnnouncementDate({
                 <FormItem>
                   <FormControl>
                     <Input
-                      readOnly={!isFreeInput(announcementDate)}
+                      readOnly={!isFreeInputChecked(announcementDate)}
                       className="w-[140px]"
                       type="date"
                       {...field}
