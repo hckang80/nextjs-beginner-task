@@ -71,7 +71,7 @@ const dateRange = [
       const today = new Date();
       const date = new Date(today);
       date.setDate(today.getDate() - 1);
-      return date;
+      return toReadableDate(date);
     }
   },
   {
@@ -81,7 +81,7 @@ const dateRange = [
       const today = new Date();
       const date = new Date(today);
       date.setDate(today.getDate() - 7);
-      return date;
+      return toReadableDate(date);
     }
   },
   {
@@ -91,7 +91,7 @@ const dateRange = [
       const today = new Date();
       const date = new Date(today);
       date.setMonth(today.getMonth() - 1);
-      return date;
+      return toReadableDate(date);
     }
   },
   {
@@ -101,19 +101,22 @@ const dateRange = [
       const today = new Date();
       const date = new Date(today);
       date.setFullYear(today.getFullYear() - 1);
-      return date;
+      return toReadableDate(date);
     }
   },
   {
     label: '전체 조회',
     value: 'all',
     calculatedDate() {
-      return new Date(2020, 0, 1);
+      return toReadableDate(new Date(2020, 0, 1));
     }
   },
   {
     label: '자유 입력',
-    value: 'etc'
+    value: 'etc',
+    calculatedDate() {
+      return '';
+    }
   }
 ];
 
@@ -290,9 +293,7 @@ export function AnnouncementDate({
     const item = dateRange.find((item) => item.value === value);
     if (!item) return;
 
-    const date = item.calculatedDate?.();
-
-    form.setValue('announcementDateFrom', isFreeInputChecked(value) ? '' : toReadableDate(date));
+    form.setValue('announcementDateFrom', item.calculatedDate());
     form.setValue('announcementDateTo', isFreeInputChecked(value) ? '' : toReadableDate());
     setAnnouncementDate(value);
   };
@@ -413,9 +414,9 @@ export function DetailedSearch() {
     },
     priceFrom: toReadableNumber(0),
     priceTo: toReadableNumber(DEFAULT_ANNOUNCEMENT_DEADLINE),
-    announcementDateFrom: toReadableDate(
-      dateRange.find(({ value }) => value === DEFAULT_ANNOUNCEMENT_DAY_TYPE)?.calculatedDate?.()
-    ),
+    announcementDateFrom:
+      dateRange.find(({ value }) => value === DEFAULT_ANNOUNCEMENT_DAY_TYPE)?.calculatedDate() ||
+      '',
     announcementDateTo: toReadableDate(),
     businessType: '',
     ignoreType: '',
