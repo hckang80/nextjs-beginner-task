@@ -38,6 +38,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 
 const DEFAULT_ANNOUNCEMENT_DEADLINE = 500_000_000;
 
+const DEFAULT_ANNOUNCEMENT_DAY_TYPE = 'inAWeek';
+
 const conditions = [
   {
     id: 1,
@@ -283,7 +285,7 @@ export function AnnouncementDate({
 }) {
   const isFreeInput = (value: string) => value === 'etc';
 
-  const [announcementDate, setAnnouncementDate] = useState('inAWeek');
+  const [announcementDate, setAnnouncementDate] = useState(DEFAULT_ANNOUNCEMENT_DAY_TYPE);
 
   const setDateRange = useCallback(
     (value: string) => {
@@ -419,7 +421,7 @@ export function DetailedSearch() {
     priceFrom: toReadableNumber(0),
     priceTo: toReadableNumber(DEFAULT_ANNOUNCEMENT_DEADLINE),
     announcementDateFrom: toReadableDate(
-      dateRange.find(({ value }) => value === 'inAWeek')?.calculatedDate?.()
+      dateRange.find(({ value }) => value === DEFAULT_ANNOUNCEMENT_DAY_TYPE)?.calculatedDate?.()
     ),
     announcementDateTo: toReadableDate(),
     businessType: '',
