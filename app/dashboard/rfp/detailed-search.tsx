@@ -20,7 +20,7 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog';
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { toast, useToast } from '@/hooks/use-toast';
 import {
   DetailedSearchForm,
@@ -287,22 +287,16 @@ export function AnnouncementDate({
 
   const [announcementDate, setAnnouncementDate] = useState(DEFAULT_ANNOUNCEMENT_DAY_TYPE);
 
-  const setDateRange = useCallback(
-    (value: string) => {
-      const item = dateRange.find((item) => item.value === value);
-      if (!item) return;
+  const setDateRange = (value: string) => {
+    const item = dateRange.find((item) => item.value === value);
+    if (!item) return;
 
-      const date = item.calculatedDate?.();
+    const date = item.calculatedDate?.();
 
-      form.setValue('announcementDateFrom', isFreeInput(value) ? '' : toReadableDate(date));
-      form.setValue('announcementDateTo', isFreeInput(value) ? '' : toReadableDate());
-    },
-    [form]
-  );
-
-  useEffect(() => {
-    setDateRange(announcementDate);
-  }, [announcementDate, setDateRange]);
+    form.setValue('announcementDateFrom', isFreeInput(value) ? '' : toReadableDate(date));
+    form.setValue('announcementDateTo', isFreeInput(value) ? '' : toReadableDate());
+    setAnnouncementDate(value);
+  };
 
   return (
     <tr>
@@ -362,7 +356,7 @@ export function AnnouncementDate({
                 value={value}
                 type="radio"
                 onChange={() => {
-                  setAnnouncementDate(value);
+                  setDateRange(value);
                 }}
               />
               {label}
