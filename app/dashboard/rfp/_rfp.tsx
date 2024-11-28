@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import { KeywordSet, BidAnnouncementContext, fetcher } from '@/lib';
 import { ProductsTable, DetailedSearch, ChannelSearch } from '.';
 import { Card } from '@/components/ui/card';
@@ -15,26 +14,28 @@ export default function Rfp({
   initialData: { bidAnnouncementContext: BidAnnouncementContext; keywordSets: KeywordSet[] };
   offset: number;
 }) {
-  const { setBidAnnouncementsContext, setKeywordSetsContext } = useBidAnnouncement();
+  const {
+    keywordSetsContext,
+    setKeywordSetsContext,
+    bidAnnouncementsContext,
+    setBidAnnouncementsContext
+  } = useBidAnnouncement();
 
   const { data, error } = useSWR(
     ['/bidAnnouncementContext.json', '/keywordSets.json'],
     ([url1, url2]) =>
       Promise.all([fetcher<BidAnnouncementContext>(url1), fetcher<KeywordSet[]>(url2)]),
     {
-      fallbackData: [bidAnnouncementContext, keywordSets]
+      fallbackData: [bidAnnouncementContext, keywordSets],
+      onSuccess: () => {
+        const hasData = keywordSetsContext.length || bidAnnouncementsContext;
+        if (hasData) return;
+
+        setBidAnnouncementsContext({ ...bidAnnouncementContext, newOffset: offset });
+        setKeywordSetsContext(keywordSets);
+      }
     }
   );
-
-  useEffect(() => {
-    if (!data) return;
-
-    const [bidAnnouncementsContext, keywordSetsContext] = data;
-    setBidAnnouncementsContext({ ...bidAnnouncementsContext, newOffset: offset });
-    setKeywordSetsContext(keywordSetsContext);
-  }, [data, setBidAnnouncementsContext, setKeywordSetsContext, offset]);
-
-  const { bidAnnouncementsContext } = useBidAnnouncement();
 
   if (error) {
     return <div>Error loading data</div>;
