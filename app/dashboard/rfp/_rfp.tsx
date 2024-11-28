@@ -27,11 +27,11 @@ export default function Rfp({
   );
 
   useEffect(() => {
-    if (data) {
-      const [bidAnnouncementsContext, keywordSetsContext] = data;
-      setBidAnnouncementsContext({ ...bidAnnouncementsContext, newOffset: offset });
-      setKeywordSetsContext(keywordSetsContext);
-    }
+    if (!data) return;
+
+    const [bidAnnouncementsContext, keywordSetsContext] = data;
+    setBidAnnouncementsContext({ ...bidAnnouncementsContext, newOffset: offset });
+    setKeywordSetsContext(keywordSetsContext);
   }, [data, setBidAnnouncementsContext, setKeywordSetsContext, offset]);
 
   const { bidAnnouncementsContext } = useBidAnnouncement();
