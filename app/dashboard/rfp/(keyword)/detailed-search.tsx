@@ -30,8 +30,8 @@ import {
   toReadableDate,
   toReadableNumber
 } from '@/lib';
-import { KeywordSetItem, ToggleController } from '.';
-import { useBidAnnouncement } from './context/BidAnnouncementContext';
+import { KeywordSetItem, ToggleController } from '..';
+import { useBidAnnouncement } from '../context/BidAnnouncementContext';
 import { useForm, UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Checkbox } from '@/components/ui/checkbox';
