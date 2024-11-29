@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { ChannelSearchHead } from './channel-search-head';
-import { ChannelSearchList } from './channel-search-list';
+import { ChannelHead } from './channel-head';
+import { ChannelList } from './channel-list';
 import { channelContext, ChannelItem } from '@/lib';
 import { Button } from '@/components/ui/button';
 import { Search } from 'lucide-react';
@@ -23,7 +23,7 @@ const data: ChannelItem[] = [
   { id: 14, name: '고려대학교', type: 'university' }
 ].map((item) => ({ ...item, checked: true }));
 
-export function ChannelSearch() {
+export function ChannelContainer() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [dataGroups, setDataGroups] = useState(data);
@@ -81,7 +81,7 @@ export function ChannelSearch() {
     <>
       <table className="search-table">
         <tbody>
-          <ChannelSearchHead
+          <ChannelHead
             isAllSelected={isAllSelected}
             handleSelectAll={handleSelectAll}
             searchQuery={searchQuery}
@@ -92,7 +92,7 @@ export function ChannelSearch() {
 
           {isOpen &&
             channelContext.map(({ label, type }) => (
-              <ChannelSearchList
+              <ChannelList
                 key={label}
                 label={label}
                 type={type}

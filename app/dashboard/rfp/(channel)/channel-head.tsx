@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dispatch, SetStateAction } from 'react';
 
-export function ChannelSearchHead({
+export function ChannelHead({
   isAllSelected,
   handleSelectAll,
   searchQuery,

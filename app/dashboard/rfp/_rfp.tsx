@@ -1,7 +1,7 @@
 'use client';
 
 import { KeywordSet, BidAnnouncementContext, fetcher } from '@/lib';
-import { ProductsTable, DetailedSearch, ChannelSearch } from '.';
+import { ProductsTable, DetailedSearch, ChannelContainer } from '.';
 import { Card } from '@/components/ui/card';
 import { useBidAnnouncement } from './context/BidAnnouncementContext';
 import useSWR from 'swr';
@@ -67,7 +67,7 @@ export default function Rfp({
           </Card>
 
           <Card className="p-6">
-            <ChannelSearch />
+            <ChannelContainer />
           </Card>
         </details>
 

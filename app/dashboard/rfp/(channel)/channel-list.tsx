@@ -1,6 +1,6 @@
 import { ChannelItem, cn } from '@/lib';
 
-export function ChannelSearchList({
+export function ChannelList({
   label,
   type,
   isGroupSelected,
