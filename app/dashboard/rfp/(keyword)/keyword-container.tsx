@@ -366,7 +366,7 @@ export function AnnouncementDate({
   );
 }
 
-export function DetailedSearch() {
+export function KeywordContainer() {
   const formModel: DetailedSearchForm = {
     keywordSets: {
       setA: {
