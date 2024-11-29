@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import Rfp from './_rfp';
+import Container from './container';
 import { headers } from 'next/headers';
 
 async function fetchInitialData() {
@@ -31,7 +31,7 @@ export default async function RfpPage({
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Rfp initialData={initialData} offset={Number(offset)} />
+      <Container initialData={initialData} offset={Number(offset)} />
     </Suspense>
   );
 }

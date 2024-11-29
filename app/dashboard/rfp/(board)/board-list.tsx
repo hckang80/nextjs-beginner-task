@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { BoardContainer } from '..';
 import { AnnouncementContext } from '@/lib';
 
-export function ProductsTable({
+export function BoardList({
   products,
   offset,
   listPerPage

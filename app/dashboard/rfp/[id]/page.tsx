@@ -9,7 +9,7 @@ import { useParams } from 'next/navigation';
 import React, { useState, useEffect, useCallback } from 'react';
 import { NoteTextarea } from './note-textarea';
 
-export default function RfpDetail() {
+export default function RfpDetailPage() {
   const { id } = useParams<{ id: string }>();
 
   const [data, setData] = useState<AnnouncementContext | undefined>();

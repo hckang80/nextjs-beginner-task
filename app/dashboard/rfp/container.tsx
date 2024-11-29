@@ -1,13 +1,13 @@
 'use client';
 
 import { KeywordSet, BidAnnouncementContext, fetcher } from '@/lib';
-import { ProductsTable, KeywordContainer, ChannelContainer } from '.';
+import { BoardList, KeywordContainer, ChannelContainer } from '.';
 import { Card } from '@/components/ui/card';
 import { useBidAnnouncement } from './context/BidAnnouncementContext';
 import useSWR from 'swr';
 import { ProductPagination } from '../product-pagination';
 
-export default function Rfp({
+export default function Container({
   initialData: { bidAnnouncementContextData, keywordSetsData },
   offset
 }: {
@@ -71,7 +71,7 @@ export default function Rfp({
           </Card>
         </details>
 
-        <ProductsTable products={products} offset={newOffset} listPerPage={LIST_PER_PAGE} />
+        <BoardList products={products} offset={newOffset} listPerPage={LIST_PER_PAGE} />
 
         {LIST_PER_PAGE < totalProducts && (
           <ProductPagination
