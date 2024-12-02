@@ -7,7 +7,7 @@ type UseFavoriteListContextState = {
   tags: Tag[];
   setTags: React.Dispatch<React.SetStateAction<Tag[]>>;
   appliedTags: AppliedTag[];
-  setAppliedTags: React.Dispatch<AppliedTag[]>;
+  setAppliedTags: React.Dispatch<React.SetStateAction<AppliedTag[]>>;
   bidAnnouncementContext: BidAnnouncementContext | null;
   setBidAnnouncementsContext: React.Dispatch<React.SetStateAction<BidAnnouncementContext | null>>;
 };
