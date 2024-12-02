@@ -27,6 +27,7 @@ import {
   detailedSearchFormSchema,
   extractNumbers,
   generatedId,
+  KeywordSet,
   toReadableDate,
   toReadableNumber
 } from '@/lib';
@@ -366,7 +367,7 @@ export function AnnouncementDate({
   );
 }
 
-export function KeywordContainer() {
+export function KeywordContainer({ keywordSets }: { keywordSets: KeywordSet[] }) {
   const formModel: DetailedSearchForm = {
     keywordSets: {
       setA: {
@@ -482,8 +483,6 @@ export function KeywordContainer() {
       )
     });
   };
-
-  const { keywordSets } = useBidAnnouncement();
 
   const DEFAULT_KEYWORD_SET_SIZE = 2;
   const [keywordSetSize, setKeywordSetSize] = useState(DEFAULT_KEYWORD_SET_SIZE);

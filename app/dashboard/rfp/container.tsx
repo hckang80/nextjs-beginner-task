@@ -7,7 +7,7 @@ import { useLayoutData } from './LayoutContextProvider';
 
 export default function Container({ offset }: { offset: number }) {
   const {
-    data: [{ products, totalProducts }]
+    data: [{ products, totalProducts }, keywordSets]
   } = useLayoutData();
 
   const LIST_PER_PAGE = 5;
@@ -23,7 +23,7 @@ export default function Container({ offset }: { offset: number }) {
           <summary>검색 숨기기</summary>
 
           <Card className="p-6">
-            <KeywordContainer />
+            <KeywordContainer keywordSets={keywordSets} />
           </Card>
 
           <Card className="p-6">
