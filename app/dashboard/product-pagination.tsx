@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Pagination,
   PaginationContent,
@@ -6,32 +8,40 @@ import {
   PaginationNext,
   PaginationPrevious
 } from '@/components/ui/pagination';
+import { useRouter } from 'next/navigation';
 
 export function ProductPagination({
   productsPerPage,
   offset,
-  totalProducts
+  totalProducts,
+  pathname
 }: {
   productsPerPage: number;
   offset: number;
   totalProducts: number;
+  pathname?: string;
 }) {
   const pageSize = Math.ceil(totalProducts / productsPerPage);
+  const path = pathname || location.pathname;
+
+  const router = useRouter();
+
+  function navigate(pageOffset: number) {
+    router.push(`${path}?offset=${pageOffset}`, { scroll: false });
+  }
 
   return (
     <Pagination className="mt-[15px]">
       <PaginationContent>
         <PaginationItem className={offset ? '' : 'invisible'}>
           <PaginationPrevious
-            href={`${location.pathname}?offset=${
-              (~~(offset / productsPerPage) - 1) * productsPerPage
-            }`}
+            onClick={() => navigate((~~(offset / productsPerPage) - 1) * productsPerPage)}
           />
         </PaginationItem>
         {Array.from({ length: pageSize }, (_, i) => (
           <PaginationItem key={i}>
             <PaginationLink
-              href={`${location.pathname}?offset=${i * productsPerPage}`} // TODO: 객체 형태로 query 전달이 안됨. 즉, Link와 다르게 동작함
+              onClick={() => navigate(i * productsPerPage)}
               isActive={i === ~~(offset / productsPerPage)}
             >
               {i + 1}
@@ -40,9 +50,7 @@ export function ProductPagination({
         ))}
         <PaginationItem className={totalProducts > offset + productsPerPage ? '' : 'invisible'}>
           <PaginationNext
-            href={`${location.pathname}?offset=${
-              (~~(offset / productsPerPage) + 1) * productsPerPage
-            }`}
+            onClick={() => navigate((~~(offset / productsPerPage) + 1) * productsPerPage)}
           />
         </PaginationItem>
       </PaginationContent>

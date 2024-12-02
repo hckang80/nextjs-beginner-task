@@ -1,14 +1,12 @@
 'use client';
 
-import { KeywordSet, BidAnnouncementContext, fetcher } from '@/lib';
+import { KeywordSet, BidAnnouncementContext } from '@/lib';
 import { BoardList, KeywordContainer, ChannelContainer } from '.';
 import { Card } from '@/components/ui/card';
-import { useBidAnnouncement } from './context/BidAnnouncementContext';
-import useSWR from 'swr';
 import { ProductPagination } from '../product-pagination';
+import { useLayoutData } from './LayoutContextProvider';
 
 export default function Container({
-  initialData: { bidAnnouncementContextData, keywordSetsData },
   offset
 }: {
   initialData: {
@@ -17,40 +15,12 @@ export default function Container({
   };
   offset: number;
 }) {
-  const { keywordSets, setKeywordSets, bidAnnouncementContext, setBidAnnouncementsContext } =
-    useBidAnnouncement();
-
-  const { data, error } = useSWR(
-    ['/bidAnnouncementContext.json', '/keywordSets.json'],
-    ([url1, url2]) =>
-      Promise.all([fetcher<BidAnnouncementContext>(url1), fetcher<KeywordSet[]>(url2)]),
-    {
-      fallbackData: [bidAnnouncementContextData, keywordSetsData],
-      onSuccess: () => {
-        const hasData = keywordSets.length || bidAnnouncementContext;
-        if (hasData) return;
-
-        setBidAnnouncementsContext({ ...bidAnnouncementContextData, newOffset: offset });
-        setKeywordSets(keywordSetsData);
-      }
-    }
-  );
-
-  if (error) {
-    return <div>Error loading data</div>;
-  }
-
-  if (!data) {
-    return <div>Loading...</div>;
-  }
+  const {
+    data: [{ products, totalProducts }],
+    url
+  } = useLayoutData();
 
   const LIST_PER_PAGE = 5;
-
-  const { products, newOffset, totalProducts } = bidAnnouncementContext || {
-    products: [],
-    newOffset: 0,
-    totalProducts: 0
-  };
 
   return (
     <div>
@@ -71,13 +41,14 @@ export default function Container({
           </Card>
         </details>
 
-        <BoardList products={products} offset={newOffset} listPerPage={LIST_PER_PAGE} />
+        <BoardList products={products} offset={offset} listPerPage={LIST_PER_PAGE} />
 
         {LIST_PER_PAGE < totalProducts && (
           <ProductPagination
             productsPerPage={LIST_PER_PAGE}
-            offset={newOffset}
+            offset={offset}
             totalProducts={totalProducts}
+            pathname={new URL(url).pathname}
           />
         )}
       </div>

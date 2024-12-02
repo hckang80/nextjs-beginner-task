@@ -10,7 +10,8 @@ export default async function RfpLayout({
   children: React.ReactNode;
 }>) {
   const headersList = await headers();
-  const { origin } = new URL(headersList.get('referer') || '');
+  const url = headersList.get('referer') || '';
+  const { origin } = new URL(url);
   const queryClient = new QueryClient();
 
   const data = await Promise.all([
@@ -26,7 +27,8 @@ export default async function RfpLayout({
 
   return (
     <BidAnnouncementProvider>
-      <LayoutDataProvider data={data}>{children}</LayoutDataProvider>
+      <LayoutDataProvider data={{ data, url }}>{children}</LayoutDataProvider>
+      {/* TODO: url - 클라이언트 사이드에서 접근 가능하기 위해 전달함 */}
     </BidAnnouncementProvider>
   );
 }
