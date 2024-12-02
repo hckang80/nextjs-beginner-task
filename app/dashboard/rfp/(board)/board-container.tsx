@@ -47,8 +47,8 @@ export function BoardContainer({ product }: { product: AnnouncementContext }) {
       <td>{price}</td>
       <td>{type}</td>
       <td>{source}</td>
-      <td>{toReadableDate(createdAt)}</td>
-      <td>{toReadableDate(endedAt)}</td>
+      <td suppressHydrationWarning>{toReadableDate(createdAt)}</td>
+      <td suppressHydrationWarning>{toReadableDate(endedAt)}</td>
     </tr>
   );
 }
