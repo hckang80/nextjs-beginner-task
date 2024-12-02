@@ -1,5 +1,6 @@
+import useAppStore from '@/app/store';
 import { useToast } from '@/hooks/use-toast';
-import { MY_FAVORITES, AnnouncementContext, toReadableDate } from '@/lib';
+import { AnnouncementContext, toReadableDate } from '@/lib';
 import { Star } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -8,14 +9,13 @@ export function BoardContainer({ product }: { product: AnnouncementContext }) {
 
   const { toast } = useToast();
 
-  const storageKey = MY_FAVORITES;
-  const currentFavorites: number[] = JSON.parse(localStorage.getItem(storageKey) || '[]');
+  const currentFavorites = useAppStore((state) => state.values);
   const hasFavorite = (id: number) => currentFavorites.includes(id);
-
+  const updateFavorite = useAppStore((state) => state.save);
   const saveFavorite = (id: number) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation();
 
-    localStorage.setItem(storageKey, JSON.stringify(getSaveResult(id)));
+    updateFavorite(id);
 
     toast({
       title: getToastTitle(id),
