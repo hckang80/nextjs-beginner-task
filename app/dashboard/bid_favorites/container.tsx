@@ -23,7 +23,7 @@ export default function Container({ offset }: { offset: number }) {
 
   const { setTags, setAppliedTags, setBidAnnouncementsContext } = useFavoriteList();
 
-  // TODO: react-query로 스펙 통일
+  // TODO: react-query로 스펙 통일 필요
   const { data, error } = useSWR(
     ['/bidAnnouncementContext.json', '/tags.json', '/appliedTags.json'],
     ([url1, url2, url3]) =>
