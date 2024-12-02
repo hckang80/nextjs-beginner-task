@@ -12,7 +12,7 @@ type Action = {
 
 const useAppStore = create<State & Action>((set) => ({
   values: [1, 3, 5], // Mockup Data
-  save: (id) =>
+  save: (id: number) =>
     set(({ values }) => ({
       values: values.includes(id)
         ? values.filter((uid) => uid !== id)
