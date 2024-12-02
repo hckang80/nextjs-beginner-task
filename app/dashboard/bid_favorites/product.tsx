@@ -186,6 +186,7 @@ export function TagEditor({ bid, generatedTags }: { bid: number; generatedTags: 
 
   const addTag = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!tag) return;
 
     const result = [
       ...tags,
