@@ -5,7 +5,6 @@ import React, { createContext, useContext } from 'react';
 
 const LayoutDataContext = createContext<{
   data: [BidAnnouncementContext, KeywordSet[]];
-  url: string;
 } | null>(null);
 
 export function useLayoutData() {
@@ -23,7 +22,6 @@ export function LayoutDataProvider({
   children: React.ReactNode;
   data: {
     data: [BidAnnouncementContext, KeywordSet[]];
-    url: string;
   };
 }) {
   return <LayoutDataContext.Provider value={data}>{children}</LayoutDataContext.Provider>;

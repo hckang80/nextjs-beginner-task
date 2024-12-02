@@ -8,23 +8,21 @@ import {
   PaginationNext,
   PaginationPrevious
 } from '@/components/ui/pagination';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 export function ProductPagination({
   productsPerPage,
   offset,
-  totalProducts,
-  pathname
+  totalProducts
 }: {
   productsPerPage: number;
   offset: number;
   totalProducts: number;
-  pathname?: string;
 }) {
   const pageSize = Math.ceil(totalProducts / productsPerPage);
-  const path = pathname || location.pathname;
 
   const router = useRouter();
+  const path = usePathname();
 
   function navigate(pageOffset: number) {
     router.push(`${path}?offset=${pageOffset}`, { scroll: false });

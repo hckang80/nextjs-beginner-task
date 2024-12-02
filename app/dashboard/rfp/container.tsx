@@ -16,8 +16,7 @@ export default function Container({
   offset: number;
 }) {
   const {
-    data: [{ products, totalProducts }],
-    url
+    data: [{ products, totalProducts }]
   } = useLayoutData();
 
   const LIST_PER_PAGE = 5;
@@ -48,7 +47,6 @@ export default function Container({
             productsPerPage={LIST_PER_PAGE}
             offset={offset}
             totalProducts={totalProducts}
-            pathname={new URL(url).pathname}
           />
         )}
       </div>
