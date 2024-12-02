@@ -1,11 +1,12 @@
 'use client';
 
-import { AnnouncementContext, BidAnnouncementContext, MY_FAVORITES } from '@/lib';
+import { AnnouncementContext, BidAnnouncementContext } from '@/lib';
 import { ArrowUpDown } from 'lucide-react';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Product } from '.';
 import { ProductPagination } from '../product-pagination';
 import { useFavoriteList } from './context/UseFavoriteListContext';
+import useAppStore from '@/app/store';
 
 interface SortConfig {
   key: keyof AnnouncementContext | null;
@@ -68,10 +69,10 @@ export function ProductsTable({
     focusDataTable();
   }, [offset]);
 
+  const updateFavorite = useAppStore((state) => state.save);
+
   const deleteFavorite = (id: number) => {
-    const currentFavorites: number[] = JSON.parse(localStorage.getItem(MY_FAVORITES) || '[]');
-    const result = currentFavorites.filter((uid) => uid !== id);
-    localStorage.setItem(MY_FAVORITES, JSON.stringify(result));
+    updateFavorite(id);
 
     setData({
       newOffset: offset,
