@@ -9,7 +9,6 @@ import {
   Tag,
   AppliedTag,
   BidAnnouncementContext,
-  MY_FAVORITES,
   fetcher
 } from '@/lib';
 import { ProductsTable } from '.';
@@ -17,6 +16,7 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import useSWR from 'swr';
 import { useFavoriteList } from './context/UseFavoriteListContext';
+import useAppStore from '@/app/store';
 
 export default function BidFavorites() {
   const [searchParams, setSearchParams] = useState<URLSearchParams | null>(null);
@@ -43,11 +43,13 @@ export default function BidFavorites() {
       ])
   );
 
+  const currentFavorites = useAppStore((state) => state.values);
+
   useEffect(() => {
     if (data) {
       const [bidAnnouncementContext, myTags, appliedTags] = data;
       const favoriteProducts = bidAnnouncementContext.products.filter(({ id }) =>
-        JSON.parse(localStorage.getItem(MY_FAVORITES) || '[]').includes(id)
+        currentFavorites.includes(id)
       );
 
       setBidAnnouncementsContext({
