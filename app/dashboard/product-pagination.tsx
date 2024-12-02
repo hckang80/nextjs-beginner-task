@@ -24,22 +24,27 @@ export function ProductPagination({
   const router = useRouter();
   const path = usePathname();
 
-  function navigate(pageOffset: number) {
-    router.push(`${path}?offset=${pageOffset}`, { scroll: false });
-  }
+  const navigate = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    router.push(event.currentTarget.href, { scroll: false });
+  };
+
+  const getHref = (pageOffset: number) => `${path}?offset=${pageOffset}`;
 
   return (
     <Pagination className="mt-[15px]">
       <PaginationContent>
         <PaginationItem className={offset ? '' : 'invisible'}>
           <PaginationPrevious
-            onClick={() => navigate((~~(offset / productsPerPage) - 1) * productsPerPage)}
+            href={getHref((~~(offset / productsPerPage) - 1) * productsPerPage)}
+            onClick={navigate}
           />
         </PaginationItem>
         {Array.from({ length: pageSize }, (_, i) => (
           <PaginationItem key={i}>
             <PaginationLink
-              onClick={() => navigate(i * productsPerPage)}
+              href={getHref(i * productsPerPage)}
+              onClick={navigate}
               isActive={i === ~~(offset / productsPerPage)}
             >
               {i + 1}
@@ -48,7 +53,8 @@ export function ProductPagination({
         ))}
         <PaginationItem className={totalProducts > offset + productsPerPage ? '' : 'invisible'}>
           <PaginationNext
-            onClick={() => navigate((~~(offset / productsPerPage) + 1) * productsPerPage)}
+            href={getHref((~~(offset / productsPerPage) + 1) * productsPerPage)}
+            onClick={navigate}
           />
         </PaginationItem>
       </PaginationContent>
