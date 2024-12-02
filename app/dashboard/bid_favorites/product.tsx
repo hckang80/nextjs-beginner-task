@@ -188,6 +188,9 @@ export function TagEditor({ bid, generatedTags }: { bid: number; generatedTags: 
     event.preventDefault();
     if (!tag) return;
 
+    const hasTag = tags.some(({ text }) => text === tag);
+    if (hasTag) return;
+
     const result = [
       ...tags,
       {
