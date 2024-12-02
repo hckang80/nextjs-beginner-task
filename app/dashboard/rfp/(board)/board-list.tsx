@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react';
 import { BoardContainer } from '..';
 import { AnnouncementContext } from '@/lib';
 
@@ -11,22 +10,9 @@ export function BoardList({
   offset: number;
   listPerPage: number;
 }) {
-  const tableRef = useRef<HTMLTableElement | null>(null);
-
-  const focusDataTable = () => {
-    tableRef?.current?.scrollIntoView();
-  };
-
-  useEffect(() => {
-    // TODO: offset 0일때만 다르게 동작함
-    const isPaginationTouch = new URLSearchParams(location.search).has('offset');
-    if (!isPaginationTouch) return;
-    focusDataTable();
-  }, [offset]);
-
   return (
     <>
-      <table className="data-table" ref={tableRef}>
+      <table className="data-table">
         <colgroup>
           <col />
           <col />

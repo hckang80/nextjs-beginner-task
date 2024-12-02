@@ -23,9 +23,6 @@ export function BoardContainer({ product }: { product: AnnouncementContext }) {
     });
   };
 
-  const getSaveResult = (id: number) =>
-    hasFavorite(id) ? currentFavorites.filter((uid) => uid !== id) : [...currentFavorites, id];
-
   const getToastTitle = (id: number) =>
     hasFavorite(id) ? '관심 공고에서 삭제되었습니다.' : '관심 공고에 추가되었습니다.';
 

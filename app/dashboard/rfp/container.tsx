@@ -1,20 +1,11 @@
 'use client';
 
-import { KeywordSet, BidAnnouncementContext } from '@/lib';
 import { BoardList, KeywordContainer, ChannelContainer } from '.';
 import { Card } from '@/components/ui/card';
 import { ProductPagination } from '../product-pagination';
 import { useLayoutData } from './LayoutContextProvider';
 
-export default function Container({
-  offset
-}: {
-  initialData: {
-    bidAnnouncementContextData: BidAnnouncementContext;
-    keywordSetsData: KeywordSet[];
-  };
-  offset: number;
-}) {
+export default function Container({ offset }: { offset: number }) {
   const {
     data: [{ products, totalProducts }]
   } = useLayoutData();
