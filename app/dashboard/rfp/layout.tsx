@@ -1,5 +1,4 @@
 import { BidAnnouncementContext, fetcher, KeywordSet } from '@/lib';
-import { BidAnnouncementProvider } from './context/BidAnnouncementContext';
 import { QueryClient } from '@tanstack/react-query';
 import { headers } from 'next/headers';
 import { LayoutDataProvider } from './LayoutContextProvider';
@@ -24,9 +23,5 @@ export default async function RfpLayout({
     })
   ]);
 
-  return (
-    <BidAnnouncementProvider>
-      <LayoutDataProvider data={{ data }}>{children}</LayoutDataProvider>
-    </BidAnnouncementProvider>
-  );
+  return <LayoutDataProvider data={{ data }}>{children}</LayoutDataProvider>;
 }
