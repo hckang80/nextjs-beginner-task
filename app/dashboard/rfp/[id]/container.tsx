@@ -18,10 +18,6 @@ export default function Container({ id }: { id: number }) {
 
   const product = products.find((item) => item.id === +id);
 
-  if (!product) {
-    return 'Loading...';
-  }
-
   const currentFavorites = useAppStore((state) => state.values);
   const hasFavorite = (id: number) => currentFavorites.includes(id);
   const updateFavorite = useAppStore((state) => state.save);
@@ -40,6 +36,10 @@ export default function Container({ id }: { id: number }) {
 
   const getStateColor = (id: number) =>
     hasFavorite(id) ? 'hsl(var(--chart-4))' : 'hsl(var(--border))';
+
+  if (!product) {
+    return 'Loading...';
+  }
 
   return (
     <div>
