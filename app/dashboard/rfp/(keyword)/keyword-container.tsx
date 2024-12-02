@@ -36,6 +36,7 @@ import { useBidAnnouncement } from '../context/BidAnnouncementContext';
 import { useForm, UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Checkbox } from '@/components/ui/checkbox';
+import { useQueryClient } from '@tanstack/react-query';
 
 const DEFAULT_ANNOUNCEMENT_DEADLINE = 500_000_000;
 
@@ -123,39 +124,38 @@ const dateRange = [
 
 export function SettingButton({
   data: isPrivate,
-  handler
+  handler,
+  keywordSets
 }: {
   data: boolean;
   handler: Dispatch<SetStateAction<boolean>>;
+  keywordSets: KeywordSet[];
 }) {
-  const { keywordSets, setKeywordSets } = useBidAnnouncement();
+  const queryClient = useQueryClient();
 
   const pinKeywordSetItem = (id: number) => {
-    if (!keywordSets) return;
-
-    setKeywordSets(
-      keywordSets.map((item) => (item.id === id ? { ...item, isPined: !item.isPined } : item))
-    );
+    queryClient.setQueryData(['keywordSets'], (keywordSets: KeywordSet[]) => {
+      return keywordSets.map((item) =>
+        item.id === id ? { ...item, isPined: !item.isPined } : item
+      );
+    });
   };
 
   const deleteKeywordSetItem = (id: number) => {
-    if (!keywordSets) return;
-
-    setKeywordSets(keywordSets.filter((item) => item.id !== id));
+    queryClient.setQueryData(['keywordSets'], (keywordSets: KeywordSet[]) => {
+      return keywordSets.filter((item) => item.id !== id);
+    });
     toast({
       title: '그룹이 삭제되었습니다.'
     });
-    // console.log(keywordSets); // TODO: 화면 출력은 올바르게 되지만 콘솔은 setKeywordSets 실행 직전의 값으로 찍힘. 원래 이런건가 ?_?
   };
 
   const changeKeywordSetName = (id: number) => (event: React.FormEvent<HTMLInputElement>) => {
-    if (!keywordSets) return;
-
-    setKeywordSets(
-      keywordSets.map((item) =>
+    queryClient.setQueryData(['keywordSets'], (keywordSets: KeywordSet[]) => {
+      return keywordSets.map((item) =>
         item.id === id ? { ...item, name: event.currentTarget.value } : item
-      )
-    );
+      );
+    });
   };
 
   const { toast } = useToast();
@@ -171,17 +171,17 @@ export function SettingButton({
   };
 
   const addKeywordSet = () => {
-    if (!keywordSets) return;
-
-    setKeywordSets([
-      ...keywordSets,
-      {
-        id: generatedId(keywordSets),
-        name: getKeywordSetName(),
-        isPined: false,
-        isPrivate
-      }
-    ]);
+    queryClient.setQueryData(['keywordSets'], (keywordSets: KeywordSet[]) => {
+      return [
+        ...keywordSets,
+        {
+          id: generatedId(keywordSets),
+          name: getKeywordSetName(),
+          isPined: false,
+          isPrivate
+        }
+      ];
+    });
   };
 
   const postKeywordSet = () => {
@@ -515,7 +515,7 @@ export function KeywordContainer({ keywordSets }: { keywordSets: KeywordSet[] })
                       ))}
                   </select>
                   <Button type="button">현재 세트 저장</Button>
-                  <SettingButton data={isPrivate} handler={setIsPublic} />
+                  <SettingButton data={isPrivate} handler={setIsPublic} keywordSets={keywordSets} />
                   <ToggleController className="ml-auto" data={isPrivate} handler={setIsPublic} />
                 </div>
               </td>

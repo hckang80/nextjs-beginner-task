@@ -4,6 +4,8 @@ import { BoardList, KeywordContainer, ChannelContainer } from '.';
 import { Card } from '@/components/ui/card';
 import { ProductPagination } from '../product-pagination';
 import { useLayoutData } from './LayoutContextProvider';
+import { useQuery } from '@tanstack/react-query';
+import { fetcher, KeywordSet } from '@/lib';
 
 export default function Container({ offset }: { offset: number }) {
   const {
@@ -11,6 +13,12 @@ export default function Container({ offset }: { offset: number }) {
   } = useLayoutData();
 
   const LIST_PER_PAGE = 5;
+
+  const { data } = useQuery({
+    queryKey: ['keywordSets'],
+    queryFn: () => fetcher<KeywordSet[]>('/keywordSets.json'),
+    initialData: keywordSets
+  });
 
   return (
     <div>
@@ -22,9 +30,7 @@ export default function Container({ offset }: { offset: number }) {
         <details open className="contents">
           <summary>검색 숨기기</summary>
 
-          <Card className="p-6">
-            <KeywordContainer keywordSets={keywordSets} />
-          </Card>
+          <Card className="p-6">{keywordSets && <KeywordContainer keywordSets={data} />}</Card>
 
           <Card className="p-6">
             <ChannelContainer />
