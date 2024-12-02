@@ -2,6 +2,7 @@ import { BidAnnouncementContext, fetcher, KeywordSet } from '@/lib';
 import { BidAnnouncementProvider } from './context/BidAnnouncementContext';
 import { QueryClient } from '@tanstack/react-query';
 import { headers } from 'next/headers';
+import { LayoutDataProvider } from './LayoutContextProvider';
 
 export default async function RfpLayout({
   children
@@ -12,7 +13,7 @@ export default async function RfpLayout({
   const { origin } = new URL(headersList.get('referer') || '');
   const queryClient = new QueryClient();
 
-  await Promise.all([
+  const data = await Promise.all([
     queryClient.fetchQuery({
       queryKey: ['bidAnnouncementContext'],
       queryFn: () => fetcher<BidAnnouncementContext>(`${origin}/bidAnnouncementContext.json`)
@@ -23,5 +24,9 @@ export default async function RfpLayout({
     })
   ]);
 
-  return <BidAnnouncementProvider>{children}</BidAnnouncementProvider>;
+  return (
+    <BidAnnouncementProvider>
+      <LayoutDataProvider data={data}>{children}</LayoutDataProvider>
+    </BidAnnouncementProvider>
+  );
 }
