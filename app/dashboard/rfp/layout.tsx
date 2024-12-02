@@ -9,7 +9,9 @@ export default async function RfpLayout({
   children: React.ReactNode;
 }>) {
   const headersList = await headers();
-  const { origin } = new URL(headersList.get('referer') || '');
+  const protocol = headersList.get('x-forwarded-proto') || 'http';
+  const host = headersList.get('host');
+  const origin = `${protocol}://${host}`;
   const queryClient = new QueryClient();
 
   const data = await Promise.all([
