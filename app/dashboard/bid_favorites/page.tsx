@@ -33,6 +33,7 @@ export default function BidFavorites() {
 
   const { setTags, setAppliedTags, setBidAnnouncementsContext } = useFavoriteList();
 
+  // TODO: react-query로 스펙 통일
   const { data, error } = useSWR(
     ['/bidAnnouncementContext.json', '/tags.json', '/appliedTags.json'],
     ([url1, url2, url3]) =>
