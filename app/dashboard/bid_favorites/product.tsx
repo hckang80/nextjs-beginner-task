@@ -188,7 +188,9 @@ export function TagEditor({ bid, generatedTags }: { bid: number; generatedTags: 
   const { tags, setTags, appliedTags, setAppliedTags } = useFavoriteList();
 
   const resetTags = (bid: number) => {
-    setAppliedTags(appliedTags.filter((item) => item.id !== bid));
+    setAppliedTags((appliedTags) =>
+      appliedTags.map((item) => (item.id === bid ? { ...item, tags: [] } : item))
+    );
   };
 
   const addTag = (event: React.FormEvent<HTMLFormElement>) => {
