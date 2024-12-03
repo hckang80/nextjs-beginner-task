@@ -3,7 +3,14 @@
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { AnnouncementContext, generatedId, suggestedStates, Tag, toReadableDate } from '@/lib';
+import {
+  AnnouncementContext,
+  AppliedTag,
+  generatedId,
+  suggestedStates,
+  Tag,
+  toReadableDate
+} from '@/lib';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -211,6 +218,14 @@ export function TagEditor({ bid, generatedTags }: { bid: number; generatedTags: 
     setAppliedTags(result);
   };
 
+  const deleteAppliedTags = (bid: number, id: number) => {
+    const result = (appliedTags: AppliedTag[]) =>
+      appliedTags.map((item) =>
+        item.id === bid ? { ...item, tags: item.tags.filter((tag) => tag !== id) } : item
+      );
+    setAppliedTags(result);
+  };
+
   const [isOpenEditor, setIsOpenEditor] = useState(false);
   const [selectedTag, setSelectedTag] = useState<Tag>({
     id: 0,
@@ -285,7 +300,7 @@ export function TagEditor({ bid, generatedTags }: { bid: number; generatedTags: 
               className="flex justify-between items-center basis-[150px] rounded-[4px] px-[10px] h-[30px] text-white text-[12px] cursor-pointer"
             >
               {text}
-              <TagDeleteButton deleteTag={() => deleteTag(id)}>
+              <TagDeleteButton deleteTag={() => deleteAppliedTags(bid, id)}>
                 <button className="p-[5px]">
                   <X size={10} color="#ffffff" strokeWidth={1.25} />
                 </button>
