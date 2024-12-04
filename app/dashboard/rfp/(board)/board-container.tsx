@@ -47,9 +47,16 @@ export function BoardContainer({ product }: { product: AnnouncementContext }) {
       <td>{price}</td>
       <td>{type}</td>
       <td>{source}</td>
-      {/* TODO: suppressHydrationWarning 추가 이후 warning은 제거되었으나 날짜가 다르게 찍힘 */}
-      <td suppressHydrationWarning>{toReadableDate(createdAt)}</td>
-      <td suppressHydrationWarning>{toReadableDate(endedAt)}</td>
+      <td>
+        <time dateTime={toReadableDate(createdAt)} suppressHydrationWarning>
+          {toReadableDate(createdAt)}
+        </time>
+      </td>
+      <td>
+        <time dateTime={toReadableDate(endedAt)} suppressHydrationWarning>
+          {toReadableDate(endedAt)}
+        </time>
+      </td>
     </tr>
   );
 }
