@@ -107,7 +107,10 @@ body {
     sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
   color: var(--foreground);
   background: var(--background);
-  overflow-y: hidden;
+  min-width: 768px;
+  @media all and (min-width: 768px) {
+    overflow-y: hidden;
+  }
 }
 
 ul,
@@ -206,31 +209,41 @@ input::-webkit-inner-spin-button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: fixed;
-  top: 0;
+  flex: 0 0 auto;
   z-index: 2;
   inset: auto 0;
   height: var(--header-height);
   padding: 10px 40px;
   border-bottom: 1px solid hsl(var(--input));
   background: #fff;
+  @media all and (min-width: 768px) {
+    position: fixed;
+  }
 }
 
 .global-inner {
   display: flex;
   flex: 1 1 100%;
+  flex-direction: column;
+  @media all and (min-width: 768px) {
+    flex-direction: row;
+  }
 }
 
 .global-aside {
   display: flex;
   flex-flow: column;
-  overflow: auto;
-  max-height: calc(100vh - var(--header-height));
-  max-height: calc(100dvh - var(--header-height));
-  margin: var(--header-height) 0 0;
   padding: 30px;
   flex: 0 0 240px;
   border-right: 1px solid hsl(var(--input));
+  order: 1;
+  @media all and (min-width: 768px) {
+    order: 0;
+    overflow: auto;
+    max-height: calc(100vh - var(--header-height));
+    max-height: calc(100dvh - var(--header-height));
+    margin: var(--header-height) 0 0;
+  }
 }
 
 .global-nav {
@@ -267,13 +280,15 @@ summary.global-main-item {
 }
 
 .global-main {
-  overflow: auto;
-  margin: var(--header-height) 0 0;
   flex: 1 1 100%;
-  max-height: calc(100vh - var(--header-height));
-  max-height: calc(100dvh - var(--header-height));
   padding: 40px;
   background: hsl(var(--muted));
+  @media all and (min-width: 768px) {
+    overflow: auto;
+    max-height: calc(100vh - var(--header-height));
+    max-height: calc(100dvh - var(--header-height));
+    margin: var(--header-height) 0 0;
+  }
 }
 
 table.search-table {
