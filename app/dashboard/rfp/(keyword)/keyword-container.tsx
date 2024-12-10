@@ -2,8 +2,7 @@
 
 import { Plus, Search, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import { Form } from '@/components/ui/form';
 import {
   Dialog,
   DialogContent,
@@ -25,7 +24,7 @@ import {
   toReadableNumber
 } from '@/lib';
 import { KeywordSetItem, ToggleController } from '..';
-import { useForm, UseFormReturn } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import ConditionsRow from './conditions-row';
@@ -33,6 +32,7 @@ import BusinessPriceRow from './business-price-row';
 import KeywordSetItemRow from './keyword-set-item-row';
 import KeywordSetHeadRow from './keyword-set-head-row';
 import SelectFilterRow from './select-filter-row';
+import AnnouncementDateRow from './announcement-date-row';
 
 const DEFAULT_ANNOUNCEMENT_DEADLINE = 500_000_000;
 
@@ -214,93 +214,6 @@ export function SettingButton({
   );
 }
 
-export function AnnouncementDate({
-  form
-}: {
-  form: UseFormReturn<DetailedSearchForm, unknown, undefined>;
-}) {
-  const isFreeInputChecked = (value: string) => value === 'etc';
-  const [announcementDate, setAnnouncementDate] = useState(DEFAULT_ANNOUNCEMENT_DAY_TYPE);
-
-  const setDateRange = (value: string) => {
-    const item = dateRange.find((item) => item.value === value);
-    if (!item) return;
-
-    form.setValue('announcementDateFrom', item.calculatedDate());
-    form.setValue('announcementDateTo', isFreeInputChecked(value) ? '' : toReadableDate());
-    setAnnouncementDate(value);
-  };
-
-  return (
-    <tr>
-      <th className="align-top">공고일</th>
-      <td colSpan={5}>
-        <div className="flex items-center gap-2 mb-[10px]">
-          <div className="flex items-center gap-2">
-            <FormField
-              control={form.control}
-              name="announcementDateFrom"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      readOnly={!isFreeInputChecked(announcementDate)}
-                      className="w-[140px]"
-                      type="date"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            ~
-            <FormField
-              control={form.control}
-              name="announcementDateTo"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      readOnly={!isFreeInputChecked(announcementDate)}
-                      className="w-[140px]"
-                      type="date"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <label className="flex items-center gap-2 text-[14px]">
-            <input type="checkbox" />
-            마감일 지난 공고 포함
-          </label>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-x-[20px] gap-y-[5px]">
-          {dateRange.map(({ label, value }) => (
-            <label key={label} className="flex items-center gap-2">
-              <input
-                name="announcementDate"
-                checked={value === announcementDate}
-                value={value}
-                type="radio"
-                onChange={() => {
-                  setDateRange(value);
-                }}
-              />
-              {label}
-            </label>
-          ))}
-        </div>
-      </td>
-    </tr>
-  );
-}
-
 export function KeywordContainer({ keywordSets }: { keywordSets: KeywordSet[] }) {
   const formModel: DetailedSearchForm = {
     keywordSets: {
@@ -400,7 +313,11 @@ export function KeywordContainer({ keywordSets }: { keywordSets: KeywordSet[] })
 
             <BusinessPriceRow form={form} />
 
-            <AnnouncementDate form={form} />
+            <AnnouncementDateRow
+              form={form}
+              dateRange={dateRange}
+              announcementDayType={DEFAULT_ANNOUNCEMENT_DAY_TYPE}
+            />
 
             <SelectFilterRow form={form} />
 
