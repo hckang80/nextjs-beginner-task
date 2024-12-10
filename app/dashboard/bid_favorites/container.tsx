@@ -51,7 +51,7 @@ export default function Container({ offset }: { offset: number }) {
       setTags(myTags);
       setAppliedTags(appliedTags);
     }
-  }, [data, setBidAnnouncementsContext, setTags, setAppliedTags, offset]);
+  }, [currentFavorites, data, setBidAnnouncementsContext, setTags, setAppliedTags, offset]);
 
   if (error) {
     return <div>Error loading data</div>;
