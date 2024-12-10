@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import Aside from './aside';
 
 export default function DashboardLayout({
   children
@@ -30,7 +31,7 @@ export default function DashboardLayout({
         </h1>
       </header>
       <div className="global-inner">
-        <aside className="global-aside">
+        <Aside>
           <nav className="global-nav">
             <details open>
               <summary className="global-main-item">입찰검색</summary>
@@ -54,7 +55,7 @@ export default function DashboardLayout({
               </ul>
             </details>
           </nav>
-        </aside>
+        </Aside>
         <main className="global-main">{children}</main>
       </div>
     </div>
