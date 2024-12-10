@@ -29,6 +29,7 @@ import { useForm, UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import ConditionsRow from './conditions-row';
+import BusinessPriceRow from './business-price-row';
 
 const DEFAULT_ANNOUNCEMENT_DEADLINE = 500_000_000;
 
@@ -430,8 +431,6 @@ export function KeywordContainer({ keywordSets }: { keywordSets: KeywordSet[] })
     form.resetField(`${path}.text`); // TODO: 제거하면 실시간으로 반영 안됨
   };
 
-  const [isPriceLimit, togglePriceLimit] = useState(false);
-
   const onSubmit = (values: DetailedSearchForm) => {
     toast({
       title: 'You submitted the following values:',
@@ -564,69 +563,7 @@ export function KeywordContainer({ keywordSets }: { keywordSets: KeywordSet[] })
               </td>
             </tr>
 
-            <tr>
-              <th>사업 금액</th>
-              <td colSpan={5}>
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-2">
-                    <FormField
-                      control={form.control}
-                      name="priceFrom"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input
-                              className="w-[140px]"
-                              inputMode="numeric"
-                              {...field}
-                              onChange={(event) =>
-                                field.onChange(
-                                  toReadableNumber(+extractNumbers(event.target.value))
-                                )
-                              }
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    ~
-                    <FormField
-                      control={form.control}
-                      name="priceTo"
-                      render={({ field }) => (
-                        <FormItem className={isPriceLimit ? 'invisible' : ''}>
-                          <FormControl>
-                            <Input
-                              className="w-[140px]"
-                              inputMode="numeric"
-                              {...field}
-                              onChange={(event) =>
-                                field.onChange(
-                                  toReadableNumber(+extractNumbers(event.target.value))
-                                )
-                              }
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <label className="flex items-center gap-2 text-[14px]">
-                    <input
-                      type="checkbox"
-                      checked={isPriceLimit}
-                      onChange={({ target: { checked } }) => {
-                        togglePriceLimit(checked);
-                      }}
-                    />
-                    금액 제한 없음
-                  </label>
-                </div>
-              </td>
-            </tr>
+            <BusinessPriceRow form={form} />
 
             <AnnouncementDate form={form} />
 
