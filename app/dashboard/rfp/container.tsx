@@ -27,15 +27,11 @@ export default function Container({ offset }: { offset: number }) {
       </header>
 
       <div className="grid gap-[15px]">
-        <details open className="contents">
-          <summary>검색 숨기기</summary>
+        <Card className="p-6">{keywordSets && <KeywordContainer keywordSets={data} />}</Card>
 
-          <Card className="p-6">{keywordSets && <KeywordContainer keywordSets={data} />}</Card>
-
-          <Card className="p-6">
-            <ChannelContainer />
-          </Card>
-        </details>
+        <Card className="p-6">
+          <ChannelContainer />
+        </Card>
 
         <BoardList products={products} offset={offset} listPerPage={LIST_PER_PAGE} />
 
