@@ -1,21 +1,12 @@
-'use client';
-
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
 import Image from 'next/image';
 import Aside from './aside';
+import Nav from './nav';
 
 export default function DashboardLayout({
   children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pathname = usePathname();
-
-  const isActive = (path: string) => {
-    return pathname.startsWith(path);
-  };
-
   return (
     <div className="wrap">
       <header className="global-header">
@@ -32,29 +23,7 @@ export default function DashboardLayout({
       </header>
       <div className="global-inner">
         <Aside>
-          <nav className="global-nav">
-            <details open>
-              <summary className="global-main-item">입찰검색</summary>
-              <ul className="global-sub-menu">
-                <li className="global-sub-menu__item">
-                  <Link
-                    href="/dashboard/rfp"
-                    className={isActive('/dashboard/rfp') ? 'is-active' : ''}
-                  >
-                    국내입찰
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/dashboard/bid_favorites"
-                    className={isActive('/dashboard/bid_favorites') ? 'is-active' : ''}
-                  >
-                    관심공고
-                  </Link>
-                </li>
-              </ul>
-            </details>
-          </nav>
+          <Nav />
         </Aside>
         <main className="global-main">{children}</main>
       </div>
