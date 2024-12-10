@@ -1,6 +1,6 @@
 'use client';
 
-import { Plus, Search, Settings, X } from 'lucide-react';
+import { Plus, Search, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -30,6 +30,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import ConditionsRow from './conditions-row';
 import BusinessPriceRow from './business-price-row';
+import KeywordSetItemRow from './keyword-set-item-row';
 
 const DEFAULT_ANNOUNCEMENT_DEADLINE = 500_000_000;
 
@@ -211,45 +212,6 @@ export function SettingButton({
   );
 }
 
-export function KeywordSetSelect({
-  form,
-  target
-}: {
-  form: UseFormReturn<DetailedSearchForm, unknown, undefined>;
-  target: string;
-}) {
-  return (
-    <>
-      <FormField
-        control={form.control}
-        name={`keywordSets.${target}.type`}
-        render={({ field }) => (
-          <FormItem>
-            <select value={field.value} onChange={field.onChange}>
-              <option value="title">제목</option>
-              <option value="text">본문</option>
-            </select>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name={`keywordSets.${target}.operation`}
-        render={({ field }) => (
-          <FormItem>
-            <select value={field.value} onChange={field.onChange}>
-              <option value="or">OR</option>
-              <option value="and">AND</option>
-            </select>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-    </>
-  );
-}
-
 export function AnnouncementDate({
   form
 }: {
@@ -400,37 +362,6 @@ export function KeywordContainer({ keywordSets }: { keywordSets: KeywordSet[] })
 
   const [isPrivate, setIsPublic] = useState(false);
 
-  const handleEnter =
-    (path: `keywordSets.${string}`) => (event: React.KeyboardEvent<HTMLInputElement>) => {
-      const {
-        key,
-        currentTarget: { value }
-      } = event;
-
-      if (key !== 'Enter') return;
-
-      event.preventDefault();
-
-      addTag(path, value);
-    };
-
-  const addTag = (path: `keywordSets.${string}`, value: string) => {
-    if (!value) return;
-
-    form.setValue(`${path}.tags`, [...new Set([...form.getValues(`${path}.tags`), value])]);
-    form.resetField(`${path}.text`);
-  };
-
-  const deleteTag = (path: `keywordSets.${string}`, value: string) => {
-    if (!value) return;
-
-    form.setValue(
-      `${path}.tags`,
-      form.getValues(`${path}.tags`).filter((originTag) => originTag !== value)
-    );
-    form.resetField(`${path}.text`); // TODO: 제거하면 실시간으로 반영 안됨
-  };
-
   const onSubmit = (values: DetailedSearchForm) => {
     toast({
       title: 'You submitted the following values:',
@@ -450,17 +381,6 @@ export function KeywordContainer({ keywordSets }: { keywordSets: KeywordSet[] })
         </pre>
       )
     });
-  };
-
-  const DEFAULT_KEYWORD_SET_SIZE = 2;
-  const [keywordSetSize, setKeywordSetSize] = useState(DEFAULT_KEYWORD_SET_SIZE);
-  const toggleButtonLabel = keywordSetSize === DEFAULT_KEYWORD_SET_SIZE ? '열기' : '접기';
-  const toggleKeywordSetSize = () => {
-    setKeywordSetSize(
-      keywordSetSize === DEFAULT_KEYWORD_SET_SIZE
-        ? Object.keys(formModel.keywordSets).length
-        : DEFAULT_KEYWORD_SET_SIZE
-    );
   };
 
   return (
@@ -489,79 +409,7 @@ export function KeywordContainer({ keywordSets }: { keywordSets: KeywordSet[] })
               </td>
             </tr>
 
-            <tr>
-              <td colSpan={6}>
-                <div className="flex flex-col gap-2">
-                  {Object.entries(formModel.keywordSets)
-                    .slice(0, keywordSetSize)
-                    .map(([key, context], index) => {
-                      return (
-                        <div key={key} className="flex flex-wrap items-center gap-2">
-                          {'label' in context ? (
-                            context.label
-                          ) : (
-                            <KeywordSetSelect form={form} target={key} />
-                          )}
-                          <FormField
-                            control={form.control}
-                            name={`keywordSets.${key}.text`}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormControl>
-                                  <Input
-                                    className="w-[180px]"
-                                    placeholder="키워드를 입력해보세요"
-                                    {...field}
-                                    onKeyDown={handleEnter(`keywordSets.${key}`)}
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                          <Button
-                            type="button"
-                            onClick={() =>
-                              addTag(
-                                `keywordSets.${key}`,
-                                form.getValues(`keywordSets.${key}.text`)
-                              )
-                            }
-                          >
-                            <Plus />
-                          </Button>
-                          <ul className="flex flex-wrap items-center gap-2">
-                            {form.getValues(`keywordSets.${key}.tags`).map((tag) => (
-                              <li
-                                key={tag}
-                                className="flex items-center gap-2 bg-violet-400 text-white h-[30px] px-[10px] rounded-[30px]"
-                              >
-                                {tag}
-                                <button
-                                  type="button"
-                                  onClick={() => deleteTag(`keywordSets.${key}`, tag)}
-                                >
-                                  <X size={12} color="#ffffff" strokeWidth={3} />
-                                </button>
-                              </li>
-                            ))}
-                          </ul>
-                          {index + 1 === DEFAULT_KEYWORD_SET_SIZE && (
-                            <Button
-                              type="button"
-                              variant="secondary"
-                              className="ml-auto"
-                              onClick={toggleKeywordSetSize}
-                            >
-                              키워드셋 {toggleButtonLabel}
-                            </Button>
-                          )}
-                        </div>
-                      );
-                    })}
-                </div>
-              </td>
-            </tr>
+            <KeywordSetItemRow form={form} item={formModel.keywordSets} />
 
             <BusinessPriceRow form={form} />
 
