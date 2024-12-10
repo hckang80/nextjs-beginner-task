@@ -31,6 +31,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import ConditionsRow from './conditions-row';
 import BusinessPriceRow from './business-price-row';
 import KeywordSetItemRow from './keyword-set-item-row';
+import KeywordSetHeadRow from './keyword-set-head-row';
 
 const DEFAULT_ANNOUNCEMENT_DEADLINE = 500_000_000;
 
@@ -388,26 +389,11 @@ export function KeywordContainer({ keywordSets }: { keywordSets: KeywordSet[] })
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <table className="search-table">
           <tbody>
-            <tr>
-              <th>키워드세트</th>
-              <td colSpan={5}>
-                <div className="flex items-center gap-2">
-                  <select className="w-[160px]">
-                    <option value="">그룹을 선택하세요</option>
-                    {keywordSets
-                      ?.filter((item) => item.isPrivate === isPrivate)
-                      .map((item) => (
-                        <option key={item.id} value={item.id}>
-                          {item.name}
-                        </option>
-                      ))}
-                  </select>
-                  <Button type="button">현재 세트 저장</Button>
-                  <SettingButton data={isPrivate} handler={setIsPublic} keywordSets={keywordSets} />
-                  <ToggleController className="ml-auto" data={isPrivate} handler={setIsPublic} />
-                </div>
-              </td>
-            </tr>
+            <KeywordSetHeadRow keywordSets={keywordSets} isPrivate={isPrivate}>
+              <Button type="button">현재 세트 저장</Button>
+              <SettingButton data={isPrivate} handler={setIsPublic} keywordSets={keywordSets} />
+              <ToggleController className="ml-auto" data={isPrivate} handler={setIsPublic} />
+            </KeywordSetHeadRow>
 
             <KeywordSetItemRow form={form} item={formModel.keywordSets} />
 
