@@ -6,7 +6,7 @@ import { Plus, X } from 'lucide-react';
 import { UseFormReturn } from 'react-hook-form';
 import { useState } from 'react';
 
-export default function KeywordSetItemRow({
+export function KeywordSetItemRow({
   form,
   item
 }: {

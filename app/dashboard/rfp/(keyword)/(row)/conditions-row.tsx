@@ -26,7 +26,7 @@ const conditions = [
   }
 ];
 
-export default function ConditionsRow({
+export function ConditionsRow({
   form
 }: {
   form: UseFormReturn<DetailedSearchForm, unknown, undefined>;

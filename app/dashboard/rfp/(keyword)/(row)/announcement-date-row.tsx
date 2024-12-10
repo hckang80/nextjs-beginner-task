@@ -4,7 +4,7 @@ import { DetailedSearchForm, toReadableDate } from '@/lib';
 import { useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
-export default function AnnouncementDateRow({
+export function AnnouncementDateRow({
   form,
   dateRange,
   announcementDayType

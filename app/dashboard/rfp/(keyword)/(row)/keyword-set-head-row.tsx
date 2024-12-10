@@ -2,7 +2,7 @@
 
 import { KeywordSet } from '@/lib';
 
-export default function KeywordSetHeadRow({
+export function KeywordSetHeadRow({
   children,
   keywordSets,
   isPrivate

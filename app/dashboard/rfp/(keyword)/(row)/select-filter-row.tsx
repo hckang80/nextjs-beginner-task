@@ -2,7 +2,7 @@ import { FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { DetailedSearchForm } from '@/lib';
 import { UseFormReturn } from 'react-hook-form';
 
-export default function SelectFilterRow({
+export function SelectFilterRow({
   form
 }: {
   form: UseFormReturn<DetailedSearchForm, unknown, undefined>;

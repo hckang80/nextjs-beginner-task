@@ -16,7 +16,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { KeywordSetItem } from './keyword-set-item';
 import { ToggleController } from './toggle-controller';
 
-export default function SettingButton({
+export function SettingButton({
   data: isPrivate,
   handler,
   keywordSets

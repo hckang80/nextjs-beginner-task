@@ -6,7 +6,7 @@ import { DetailedSearchForm, extractNumbers, toReadableNumber } from '@/lib';
 import { useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
-export default function BusinessPriceRow({
+export function BusinessPriceRow({
   form
 }: {
   form: UseFormReturn<DetailedSearchForm, unknown, undefined>;
