@@ -74,11 +74,14 @@ export function Product({
   const { toast } = useToast();
 
   const saveMemo = (id: number) => {
+    const memoContents = memo[id];
+    if (!memoContents) return;
+
     toast({
       title: 'You submitted the following values:',
       description: (
         <pre>
-          <code>{JSON.stringify({ id, value: memo[id] }, null, 2)}</code>
+          <code>{JSON.stringify({ id, value: memoContents }, null, 2)}</code>
         </pre>
       )
     });
