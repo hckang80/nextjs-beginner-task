@@ -42,7 +42,7 @@ export default function DashboardNav() {
           {children && (
             <List>
               {children.map((child) => (
-                <List.Item item={child} key={child.name} />
+                <List.Item item={child} key={child.path} />
               ))}
             </List>
           )}
@@ -64,7 +64,7 @@ export function ListItem({ item: { name, path: depth2 } }: { item: Nav }) {
   const navigation = useNavigation();
 
   return (
-    <li className="global-sub-menu__item" key={depth2}>
+    <li className="global-sub-menu__item">
       <Link href={depth2} className={navigation.isActive(depth2) ? 'is-active' : ''}>
         {name}
       </Link>
