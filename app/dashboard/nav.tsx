@@ -1,8 +1,8 @@
 'use client';
 
+import { useNavigation } from '@/hooks/use-navigation';
 import { cn } from '@/lib';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { ReactNode } from 'react';
 
 type Nav = {
@@ -11,7 +11,7 @@ type Nav = {
   children?: Nav[];
 };
 
-const navigation: Nav[] = [
+const mainNav: Nav[] = [
   {
     name: '입찰검색',
     path: 'dashboard',
@@ -28,20 +28,14 @@ const navigation: Nav[] = [
 ];
 
 export default function DashboardNav() {
-  const pathname = usePathname();
-
-  const getFullPath = (...depths: string[]) => `/${[...depths].join('/')}`;
-
-  const isActive = (path: string) => {
-    return pathname.startsWith(path);
-  };
+  const navigation = useNavigation();
 
   return (
     <nav className="global-nav">
-      {navigation.map(({ name, path: depth1, children }, i) => (
+      {mainNav.map(({ name, path: depth1, children }, i) => (
         <details name="nav" key={depth1} open={!i}>
           <summary
-            className={cn('global-main-item', isActive(getFullPath(depth1)) ? 'is-active' : '')}
+            className={cn('global-main-item', navigation.isActive(depth1) ? 'is-active' : '')}
           >
             {name}
           </summary>
@@ -67,16 +61,11 @@ export function ListMain({ children }: { children: ReactNode }) {
 }
 
 export function ListItem({ item: { name, path: depth2 } }: { item: Nav }) {
-  const pathname = usePathname();
+  const navigation = useNavigation();
 
-  const getFullPath = (...depths: string[]) => `/${[...depths].join('/')}`;
-
-  const isActive = (path: string) => {
-    return pathname.startsWith(path);
-  };
   return (
     <li className="global-sub-menu__item" key={depth2}>
-      <Link href={getFullPath(depth2)} className={isActive(getFullPath(depth2)) ? 'is-active' : ''}>
+      <Link href={depth2} className={navigation.isActive(depth2) ? 'is-active' : ''}>
         {name}
       </Link>
     </li>
