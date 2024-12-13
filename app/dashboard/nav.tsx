@@ -12,7 +12,7 @@ export default function DashboardNav() {
 
   return (
     <nav className="global-nav">
-      <details open>
+      <details name="nav" open>
         <summary className="global-main-item">입찰검색</summary>
         <ul className="global-sub-menu">
           <li className="global-sub-menu__item">
@@ -26,6 +26,19 @@ export default function DashboardNav() {
               className={isActive('/dashboard/bid_favorites') ? 'is-active' : ''}
             >
               관심공고
+            </Link>
+          </li>
+        </ul>
+      </details>
+      <details name="nav">
+        <summary className="global-main-item">산업분석</summary>
+        <ul className="global-sub-menu">
+          <li className="global-sub-menu__item">
+            <Link
+              href="/analysis/supplier"
+              className={isActive('/analysis/supplier') ? 'is-active' : ''}
+            >
+              공급기업
             </Link>
           </li>
         </ul>
