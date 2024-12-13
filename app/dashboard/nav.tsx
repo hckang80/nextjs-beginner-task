@@ -3,6 +3,28 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+type Nav = {
+  name: string;
+  path: string;
+  children?: Nav[];
+};
+
+const navigation: Nav[] = [
+  {
+    name: '입찰검색',
+    path: 'dashboard',
+    children: [
+      { name: '국내입찰', path: 'rfp' },
+      { name: '관심공고', path: 'bid_favorites' }
+    ]
+  },
+  {
+    name: '산업분석',
+    path: 'analysis',
+    children: [{ name: '공급기업', path: 'supplier' }]
+  }
+];
+console.log({ navigation });
 export default function DashboardNav() {
   const pathname = usePathname();
 
