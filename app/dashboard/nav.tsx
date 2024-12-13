@@ -52,15 +52,15 @@ export default function DashboardNav() {
   );
 }
 
-export const List = Object.assign(ListMain, {
+const List = Object.assign(ListMain, {
   Item: ListItem
 });
 
-export function ListMain({ children }: { children: ReactNode }) {
+function ListMain({ children }: { children: ReactNode }) {
   return <ul className="global-sub-menu">{children}</ul>;
 }
 
-export function ListItem({ item: { name, path: depth2 } }: { item: Nav }) {
+function ListItem({ item: { name, path: depth2 } }: { item: Nav }) {
   const navigation = useNavigation();
 
   return (
