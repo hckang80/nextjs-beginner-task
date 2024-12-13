@@ -2,6 +2,7 @@
 
 import { useNavigation } from '@/hooks/use-navigation';
 import { cn } from '@/lib';
+import { ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
@@ -38,6 +39,7 @@ export default function DashboardNav() {
             className={cn('global-main-item', navigation.isActive(depth1) ? 'is-active' : '')}
           >
             {name}
+            {children && <ChevronDown size={16} />}
           </summary>
           {children && (
             <List>

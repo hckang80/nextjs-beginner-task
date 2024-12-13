@@ -252,7 +252,8 @@ input::-webkit-inner-spin-button {
 }
 
 .global-main-item {
-  display: block;
+  display: flex;
+  justify-content: space-between;
   padding: 10px;
   border-radius: 4px;
 
@@ -261,6 +262,10 @@ input::-webkit-inner-spin-button {
     background: rgb(21, 22, 99);
     color: #fff;
   }
+}
+
+[open] .global-main-item .lucide {
+  transform: rotate(180deg);
 }
 
 .global-sub-menu {
