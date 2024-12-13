@@ -14,16 +14,16 @@ type Nav = {
 const mainNav: Nav[] = [
   {
     name: '입찰검색',
-    path: 'dashboard',
+    path: '/dashboard',
     children: [
-      { name: '국내입찰', path: 'dashboard/rfp' },
-      { name: '관심공고', path: 'dashboard/bid_favorites' }
+      { name: '국내입찰', path: '/dashboard/rfp' },
+      { name: '관심공고', path: '/dashboard/bid_favorites' }
     ]
   },
   {
     name: '산업분석',
-    path: 'analysis',
-    children: [{ name: '공급기업', path: 'dashboard/supplier' }]
+    path: '/analysis',
+    children: [{ name: '공급기업', path: '/analysis/supplier' }]
   }
 ];
 
