@@ -255,12 +255,12 @@ input::-webkit-inner-spin-button {
   display: block;
   padding: 10px;
   border-radius: 4px;
-}
 
-summary.global-main-item {
-  font-weight: bold;
-  background: rgb(21, 22, 99);
-  color: #fff;
+  &.is-active {
+    font-weight: bold;
+    background: rgb(21, 22, 99);
+    color: #fff;
+  }
 }
 
 .global-sub-menu {

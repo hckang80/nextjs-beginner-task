@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/lib';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -28,7 +29,9 @@ const navigation: Nav[] = [
 export default function DashboardNav() {
   const pathname = usePathname();
 
-  const isActive = (path: string) => {
+  const isActive = (...depths: string[]) => {
+    const path = `/${[...depths].join('/')}`;
+
     return pathname.startsWith(path);
   };
 
@@ -36,14 +39,16 @@ export default function DashboardNav() {
     <nav className="global-nav">
       {navigation.map(({ name, path: depth1, children }, i) => (
         <details name="nav" key={depth1} open={!i}>
-          <summary className="global-main-item">{name}</summary>
+          <summary className={cn('global-main-item', isActive(depth1) ? 'is-active' : '')}>
+            {name}
+          </summary>
           {children && (
             <ul className="global-sub-menu">
               {children.map(({ name, path: depth2 }) => (
                 <li className="global-sub-menu__item" key={depth2}>
                   <Link
                     href={`/${[depth1, depth2].join('/')}`}
-                    className={isActive(`/${[depth1, depth2].join('/')}`) ? 'is-active' : ''}
+                    className={isActive(depth1, depth2) ? 'is-active' : ''}
                   >
                     {name}
                   </Link>
