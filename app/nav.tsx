@@ -9,14 +9,14 @@ import { ReactNode } from 'react';
 type Nav = {
   name: string;
   path: string;
-  children?: Nav[];
+  items?: Nav[];
 };
 
 const mainNav: Nav[] = [
   {
     name: '입찰검색',
     path: '/dashboard',
-    children: [
+    items: [
       { name: '국내입찰', path: '/dashboard/rfp' },
       { name: '관심공고', path: '/dashboard/bid_favorites' }
     ]
@@ -24,7 +24,7 @@ const mainNav: Nav[] = [
   {
     name: '산업분석',
     path: '/analysis',
-    children: [{ name: '공급기업', path: '/analysis/supplier' }]
+    items: [{ name: '공급기업', path: '/analysis/supplier' }]
   }
 ];
 
@@ -33,17 +33,17 @@ export default function DashboardNav() {
 
   return (
     <nav className="global-nav">
-      {mainNav.map(({ name, path: depth1, children }, i) => (
+      {mainNav.map(({ name, path: depth1, items }, i) => (
         <details name="nav" key={depth1} open={!i}>
           <summary
             className={cn('global-main-item', navigation.isActive(depth1) ? 'is-active' : '')}
           >
             {name}
-            {children && <ChevronDown size={16} />}
+            {items && <ChevronDown size={16} />}
           </summary>
-          {children && (
+          {items && (
             <List>
-              {children.map(({ name, path: depth2 }) => (
+              {items.map(({ name, path: depth2 }) => (
                 <List.Item key={depth2}>
                   <Link href={depth2} className={navigation.isActive(depth2) ? 'is-active' : ''}>
                     {name}
