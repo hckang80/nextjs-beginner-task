@@ -29,9 +29,9 @@ const navigation: Nav[] = [
 export default function DashboardNav() {
   const pathname = usePathname();
 
-  const isActive = (...depths: string[]) => {
-    const path = `/${[...depths].join('/')}`;
+  const getFullPath = (...depths: string[]) => `/${[...depths].join('/')}`;
 
+  const isActive = (path: string) => {
     return pathname.startsWith(path);
   };
 
@@ -39,7 +39,9 @@ export default function DashboardNav() {
     <nav className="global-nav">
       {navigation.map(({ name, path: depth1, children }, i) => (
         <details name="nav" key={depth1} open={!i}>
-          <summary className={cn('global-main-item', isActive(depth1) ? 'is-active' : '')}>
+          <summary
+            className={cn('global-main-item', isActive(getFullPath(depth1)) ? 'is-active' : '')}
+          >
             {name}
           </summary>
           {children && (
@@ -47,8 +49,8 @@ export default function DashboardNav() {
               {children.map(({ name, path: depth2 }) => (
                 <li className="global-sub-menu__item" key={depth2}>
                   <Link
-                    href={`/${[depth1, depth2].join('/')}`}
-                    className={isActive(depth1, depth2) ? 'is-active' : ''}
+                    href={getFullPath(depth1, depth2)}
+                    className={isActive(getFullPath(depth1, depth2)) ? 'is-active' : ''}
                   >
                     {name}
                   </Link>
