@@ -41,8 +41,12 @@ export default function DashboardNav() {
           </summary>
           {children && (
             <List>
-              {children.map((child) => (
-                <List.Item item={child} key={child.path} />
+              {children.map(({ name, path: depth2 }) => (
+                <List.Item key={depth2}>
+                  <Link href={depth2} className={navigation.isActive(depth2) ? 'is-active' : ''}>
+                    {name}
+                  </Link>
+                </List.Item>
               ))}
             </List>
           )}
@@ -60,14 +64,6 @@ function ListMain({ children }: { children: ReactNode }) {
   return <ul className="global-sub-menu">{children}</ul>;
 }
 
-function ListItem({ item: { name, path: depth2 } }: { item: Nav }) {
-  const navigation = useNavigation();
-
-  return (
-    <li className="global-sub-menu__item">
-      <Link href={depth2} className={navigation.isActive(depth2) ? 'is-active' : ''}>
-        {name}
-      </Link>
-    </li>
-  );
+function ListItem({ children }: { children: ReactNode }) {
+  return <li className="global-sub-menu__item">{children}</li>;
 }
