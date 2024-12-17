@@ -65,6 +65,14 @@ export interface BidAnnouncementContext {
   totalProducts: number;
 }
 
+export interface Supplier {
+  id: number;
+  contract: number;
+  failure: number;
+  successful: number;
+  createdAt: Date;
+}
+
 export const keywordSetContextSchema = z.object({
   label: z.string().optional(),
   type: z.string().optional(),
