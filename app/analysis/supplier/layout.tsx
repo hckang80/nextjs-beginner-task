@@ -1,4 +1,4 @@
-import { BidAnnouncementContext, fetcher, KeywordSet } from '@/lib';
+import { fetcher, Supplier } from '@/lib';
 import { QueryClient } from '@tanstack/react-query';
 import { headers } from 'next/headers';
 import { LayoutDataProvider } from './LayoutContextProvider';
@@ -14,16 +14,10 @@ export default async function RfpLayout({
   const origin = `${protocol}://${host}`;
   const queryClient = new QueryClient();
 
-  const data = await Promise.all([
-    queryClient.fetchQuery({
-      queryKey: ['bidAnnouncementContext'],
-      queryFn: () => fetcher<BidAnnouncementContext>(`${origin}/bidAnnouncementContext.json`)
-    }),
-    queryClient.fetchQuery({
-      queryKey: ['keywordSets'],
-      queryFn: () => fetcher<KeywordSet[]>(`${origin}/keywordSets.json`)
-    })
-  ]);
+  const data = await queryClient.fetchQuery({
+    queryKey: ['supplierList'],
+    queryFn: () => fetcher<Supplier>(`${origin}/supplierList.json`)
+  });
 
   return <LayoutDataProvider data={{ data }}>{children}</LayoutDataProvider>;
 }
