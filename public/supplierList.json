@@ -1,50 +1,50 @@
 [
   {
     "id": 1,
-    "contract": 120,
-    "failure": 1,
-    "successful": 80,
+    "contract": 90,
+    "failure": 2,
+    "successful": 65,
     "createdAt": "2024-05-31T15:00:00.000Z"
   },
   {
     "id": 2,
-    "contract": 120,
-    "failure": 1,
+    "contract": 100,
+    "failure": 0,
     "successful": 80,
     "createdAt": "2024-06-30T15:00:00.000Z"
   },
   {
     "id": 3,
-    "contract": 120,
+    "contract": 110,
     "failure": 1,
-    "successful": 80,
+    "successful": 75,
     "createdAt": "2024-07-31T15:00:00.000Z"
   },
   {
     "id": 4,
     "contract": 120,
-    "failure": 1,
-    "successful": 80,
+    "failure": 2,
+    "successful": 90,
     "createdAt": "2024-08-31T15:00:00.000Z"
   },
   {
     "id": 5,
-    "contract": 120,
-    "failure": 1,
-    "successful": 80,
+    "contract": 80,
+    "failure": 4,
+    "successful": 55,
     "createdAt": "2024-09-30T15:00:00.000Z"
   },
   {
     "id": 6,
-    "contract": 120,
-    "failure": 1,
-    "successful": 80,
+    "contract": 100,
+    "failure": 10,
+    "successful": 70,
     "createdAt": "2024-10-31T15:00:00.000Z"
   },
   {
     "id": 7,
     "contract": 120,
-    "failure": 1,
+    "failure": 5,
     "successful": 80,
     "createdAt": "2024-11-30T15:00:00.000Z"
   }
