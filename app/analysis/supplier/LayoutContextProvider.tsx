@@ -4,7 +4,7 @@ import type { Supplier } from '@/lib';
 import React, { createContext, useContext } from 'react';
 
 const LayoutDataContext = createContext<{
-  data: Supplier;
+  data: Supplier[];
 } | null>(null);
 
 export function useLayoutData() {
@@ -21,7 +21,7 @@ export function LayoutDataProvider({
 }: {
   children: React.ReactNode;
   data: {
-    data: Supplier;
+    data: Supplier[];
   };
 }) {
   return <LayoutDataContext.Provider value={data}>{children}</LayoutDataContext.Provider>;
