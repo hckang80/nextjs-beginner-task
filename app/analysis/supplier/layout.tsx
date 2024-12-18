@@ -13,7 +13,7 @@ export default async function RfpLayout({
 
   const data = await queryClient.fetchQuery({
     queryKey: ['supplierList'],
-    queryFn: () => fetcher<Supplier>(`${origin}/supplierList.json`)
+    queryFn: () => fetcher<Supplier[]>(`${origin}/supplierList.json`)
   });
 
   return <LayoutDataProvider data={{ data }}>{children}</LayoutDataProvider>;
