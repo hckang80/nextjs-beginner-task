@@ -16,17 +16,17 @@ const BarChart = ({ supplierList }: { supplierList: Supplier[] }) => {
     datasets: [
       {
         label: '계약',
-        data: [128, 70, 189, 48, 2, 77, 46],
+        data: supplierList.map(({ contract }) => contract),
         backgroundColor: '#2698f9'
       },
       {
         label: '낙찰',
-        data: [35, 115, 188, 148, 84, 193, 177],
+        data: supplierList.map(({ successful }) => successful),
         backgroundColor: '#45e29e'
       },
       {
         label: '실주',
-        data: [86, 156, 62, 22, 150, 59, 68],
+        data: supplierList.map(({ failure }) => failure),
         backgroundColor: '#fda627'
       }
     ]
