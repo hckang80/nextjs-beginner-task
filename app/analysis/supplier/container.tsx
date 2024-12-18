@@ -14,5 +14,13 @@ export default function SupplierContainer() {
     initialData: data
   });
 
-  return <SupplierChart supplierList={supplierList} />;
+  return (
+    <>
+      <header className="flex items-center justify-between mb-[15px]">
+        <h2 className="text-[18px] font-bold text-indigo-600">공급 기업</h2>
+      </header>
+
+      <SupplierChart supplierList={supplierList} />
+    </>
+  );
 }
