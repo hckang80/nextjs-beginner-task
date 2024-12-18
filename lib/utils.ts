@@ -16,8 +16,11 @@ export function generatedId(array: { id: number }[]) {
   return getMaxNumber(array.map(({ id }) => id)) + 1;
 }
 
-export function toReadableDate(date: Date | string | undefined = new Date()) {
-  return new Intl.DateTimeFormat('en-CA').format(new Date(date));
+export function toReadableDate(
+  date: Date | string | undefined = new Date(),
+  options?: Intl.DateTimeFormatOptions
+) {
+  return new Intl.DateTimeFormat('en-CA', options).format(new Date(date));
 }
 
 export function toReadableNumber(value: number) {
