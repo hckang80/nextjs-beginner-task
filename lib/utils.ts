@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from 'clsx';
+import { ReadonlyHeaders } from 'next/dist/server/web/spec-extension/adapters/headers';
 import { twMerge } from 'tailwind-merge';
 
 export const MY_FAVORITES = 'myFavorites';
@@ -29,4 +30,13 @@ export function extractNumbers(value: string) {
 
 export function fetcher<T>(url: string): Promise<T> {
   return fetch(url).then((res) => res.json());
+}
+
+// TODO: layout.tsx -> layout.tsx SSR에서 props 전달이 안되어 유틸 함수로 처리함
+export function getOrigin(headersList: ReadonlyHeaders) {
+  const protocol = headersList.get('x-forwarded-proto') || 'http';
+  const host = headersList.get('host');
+  const origin = `${protocol}://${host}`;
+
+  return origin;
 }
