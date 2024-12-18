@@ -3,12 +3,16 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
-import { Supplier } from '@/lib';
+import { Supplier, toReadableDate } from '@/lib';
 
 const BarChart = ({ supplierList }: { supplierList: Supplier[] }) => {
-  console.log({ supplierList });
   const data = {
-    labels: ['AD', 'AE', 'AF', 'AG', 'AI', 'AL', 'AM'],
+    labels: supplierList.map(({ createdAt }) =>
+      toReadableDate(createdAt, {
+        year: '2-digit',
+        month: '2-digit'
+      })
+    ),
     datasets: [
       {
         label: '계약',
