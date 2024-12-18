@@ -5,7 +5,7 @@ Next.js(React.js)를 이용해 클론 코딩을 진행해봤습니다.
 기술 스택
 - 코어: Next.js 15(React.js, App Router), Typescript
 - Data fetching: React Query, SWR(제거 예정)
-- 상태 관리: Zustand
+- 전역 상태 관리: Zustand
 - Form 관리: React-Hook-Form, Zod
 - UI Kit/Styling: shadcn/ui, Tailwind CSS
 - 패키지 매니저: PNPM
