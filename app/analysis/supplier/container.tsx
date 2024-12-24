@@ -23,7 +23,7 @@ export default function SupplierContainer() {
 
       <Card className="p-[20px] grid gap-[10px]">
         <div className="flex gap-[10px]">
-          <Card className="grow">
+          <Card className="p-[10px] grow">
             <SupplierChart supplierList={supplierList} />
           </Card>
           <Card className="shrink-0 basis-[300px]">insert table</Card>
