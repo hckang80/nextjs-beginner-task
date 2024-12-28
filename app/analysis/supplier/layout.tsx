@@ -1,7 +1,6 @@
-import { fetcher, Supplier } from '@/lib';
+import { fetcher, getOrigin, Supplier } from '@/lib';
 import { QueryClient } from '@tanstack/react-query';
 import { LayoutDataProvider } from './LayoutContextProvider';
-import { getOrigin } from '@/lib/server';
 
 export default async function RfpLayout({
   children

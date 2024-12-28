@@ -1,7 +1,6 @@
-import { BidAnnouncementContext, fetcher, KeywordSet } from '@/lib';
+import { BidAnnouncementContext, fetcher, getOrigin, KeywordSet } from '@/lib';
 import { QueryClient } from '@tanstack/react-query';
 import { LayoutDataProvider } from './LayoutContextProvider';
-import { getOrigin } from '@/lib/server';
 
 export default async function RfpLayout({
   children
