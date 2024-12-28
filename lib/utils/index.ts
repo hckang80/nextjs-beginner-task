@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+export * from './server';
 
 export const MY_FAVORITES = 'myFavorites';
 
