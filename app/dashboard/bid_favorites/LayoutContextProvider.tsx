@@ -1,10 +1,10 @@
 'use client';
 
-import type { BidAnnouncementContext, Tag } from '@/lib';
+import type { AppliedTag, BidAnnouncementContext, Tag } from '@/lib';
 import React, { createContext, useContext } from 'react';
 
 const LayoutDataContext = createContext<{
-  data: [BidAnnouncementContext, Tag[], Tag[]];
+  data: [BidAnnouncementContext, Tag[], AppliedTag[]];
 } | null>(null);
 
 export function useLayoutData() {
@@ -21,7 +21,7 @@ export function LayoutDataProvider({
 }: {
   children: React.ReactNode;
   data: {
-    data: [BidAnnouncementContext, Tag[], Tag[]];
+    data: [BidAnnouncementContext, Tag[], AppliedTag[]];
   };
 }) {
   return <LayoutDataContext.Provider value={data}>{children}</LayoutDataContext.Provider>;

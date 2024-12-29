@@ -1,4 +1,4 @@
-import { getOrigin, fetcher, BidAnnouncementContext, Tag } from '@/lib';
+import { getOrigin, fetcher, BidAnnouncementContext, Tag, AppliedTag } from '@/lib';
 import { QueryClient } from '@tanstack/react-query';
 import { LayoutDataProvider } from './LayoutContextProvider';
 import { FavoriteListProvider } from './context/UseFavoriteListContext';
@@ -22,7 +22,7 @@ export default async function BidFavoriteLayout({
     }),
     queryClient.fetchQuery({
       queryKey: ['appliedTags'],
-      queryFn: () => fetcher<Tag[]>(`${origin}/appliedTags.json`)
+      queryFn: () => fetcher<AppliedTag[]>(`${origin}/appliedTags.json`)
     })
   ]);
 
