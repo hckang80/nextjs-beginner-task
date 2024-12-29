@@ -117,10 +117,7 @@ export default function Container({ offset }: { offset: number }) {
         </div>
       </Card>
 
-      <ProductsTable
-        isVisibleMemoContext={isVisibleMemoContext}
-        setData={setBidAnnouncementsContext}
-      />
+      <ProductsTable isVisibleMemoContext={isVisibleMemoContext} />
     </>
   );
 }

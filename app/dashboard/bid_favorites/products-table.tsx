@@ -1,26 +1,31 @@
 'use client';
 
-import { AnnouncementContext, BidAnnouncementContext } from '@/lib';
+import { AnnouncementContext, BidAnnouncementContext, fetcher } from '@/lib';
 import { ArrowUpDown } from 'lucide-react';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Product } from '.';
 import { ProductPagination } from '../product-pagination';
-import { useFavoriteList } from './context/UseFavoriteListContext';
 import useAppStore from '@/app/store';
+import { useLayoutData } from './LayoutContextProvider';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 interface SortConfig {
   key: keyof AnnouncementContext | null;
   direction: 'ascending' | 'descending' | null;
 }
 
-export function ProductsTable({
-  isVisibleMemoContext,
-  setData
-}: {
-  isVisibleMemoContext: boolean;
-  setData: Dispatch<SetStateAction<BidAnnouncementContext | null>>;
-}) {
-  const { bidAnnouncementContext } = useFavoriteList();
+export function ProductsTable({ isVisibleMemoContext }: { isVisibleMemoContext: boolean }) {
+  const {
+    data: [data]
+  } = useLayoutData();
+
+  const { data: bidAnnouncementContext } = useQuery({
+    queryKey: ['bidAnnouncementContext'],
+    queryFn: () => fetcher<BidAnnouncementContext>('/bidAnnouncementContext.json'),
+    initialData: data
+  });
+
+  const queryClient = useQueryClient();
 
   const {
     products,
@@ -49,11 +54,14 @@ export function ProductsTable({
       return 0;
     });
 
-    setData({
-      newOffset: offset,
-      totalProducts,
-      products: sortedData
+    queryClient.setQueryData(['bidAnnouncementContext'], () => {
+      return {
+        newOffset: offset,
+        totalProducts,
+        products: sortedData
+      };
     });
+
     setSortConfig({ key, direction });
   };
 
@@ -74,10 +82,12 @@ export function ProductsTable({
   const deleteFavorite = (id: number) => {
     updateFavorite(id);
 
-    setData({
-      newOffset: offset,
-      totalProducts,
-      products: products.filter((item) => item.id !== id)
+    queryClient.setQueryData(['bidAnnouncementContext'], () => {
+      return {
+        newOffset: offset,
+        totalProducts,
+        products: products.filter((item) => item.id !== id)
+      };
     });
   };
 
