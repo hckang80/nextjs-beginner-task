@@ -142,7 +142,7 @@ export function Product({
               <dl className="flex flex-wrap items-center gap-6">
                 <div className="flex items-center gap-2">
                   <dt className="shrink-0 font-bold">담당</dt>
-                  <dd>Next.js</dd>
+                  <dd>Sky</dd>
                 </div>
                 <div className="flex items-center gap-2">
                   <dt className="shrink-0 font-bold">제안상태</dt>
