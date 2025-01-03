@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import useAppStore from '@/app/store';
 import { useLayoutData } from './LayoutContextProvider';
 import { useQuery } from '@tanstack/react-query';
+import { ProductPagination } from '../product-pagination';
 
 export default function Container({ offset }: { offset: number }) {
   const [isVisibleMemoContext, setIsVisibleMemoContext] = useState(true);
@@ -22,6 +23,8 @@ export default function Container({ offset }: { offset: number }) {
   const {
     data: [data]
   } = useLayoutData();
+
+  const LIST_PER_PAGE = 5;
 
   const currentFavorites = useAppStore((state) => state.values);
 
@@ -43,6 +46,8 @@ export default function Container({ offset }: { offset: number }) {
       totalProducts: data.products.filter(({ id }) => currentFavorites.includes(id)).length
     }
   });
+
+  const { totalProducts } = bidAnnouncementContext;
 
   return (
     <>
@@ -103,7 +108,17 @@ export default function Container({ offset }: { offset: number }) {
       <ProductsTable
         isVisibleMemoContext={isVisibleMemoContext}
         bidAnnouncementContext={bidAnnouncementContext}
+        offset={offset}
+        listPerPage={LIST_PER_PAGE}
       />
+
+      {LIST_PER_PAGE < totalProducts && (
+        <ProductPagination
+          productsPerPage={LIST_PER_PAGE}
+          offset={offset}
+          totalProducts={totalProducts}
+        />
+      )}
     </>
   );
 }

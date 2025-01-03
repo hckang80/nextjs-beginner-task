@@ -4,7 +4,6 @@ import { AnnouncementContext, BidAnnouncementContext } from '@/lib';
 import { ArrowUpDown } from 'lucide-react';
 import { useState } from 'react';
 import { Product } from '.';
-import { ProductPagination } from '../product-pagination';
 import useAppStore from '@/app/store';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -15,16 +14,18 @@ interface SortConfig {
 
 export function ProductsTable({
   isVisibleMemoContext,
-  bidAnnouncementContext
+  bidAnnouncementContext,
+  offset,
+  listPerPage
 }: {
   isVisibleMemoContext: boolean;
   bidAnnouncementContext: BidAnnouncementContext;
+  offset: number;
+  listPerPage: number;
 }) {
   const queryClient = useQueryClient();
 
-  const { products, newOffset: offset, totalProducts } = bidAnnouncementContext;
-
-  const LIST_PER_PAGE = 5;
+  const { products, totalProducts } = bidAnnouncementContext;
 
   const [sortConfig, setSortConfig] = useState<SortConfig>({
     key: null,
@@ -120,7 +121,7 @@ export function ProductsTable({
             <th>삭제</th>
           </tr>
         </thead>
-        {products.slice(offset, offset + LIST_PER_PAGE).map((product) => (
+        {products.slice(offset, offset + listPerPage).map((product) => (
           <Product
             key={product.id}
             isVisibleMemoContext={isVisibleMemoContext}
@@ -129,14 +130,6 @@ export function ProductsTable({
           />
         ))}
       </table>
-
-      {LIST_PER_PAGE < totalProducts && (
-        <ProductPagination
-          productsPerPage={LIST_PER_PAGE}
-          offset={offset}
-          totalProducts={totalProducts}
-        />
-      )}
     </>
   );
 }
