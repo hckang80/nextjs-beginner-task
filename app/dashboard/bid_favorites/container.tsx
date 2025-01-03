@@ -1,65 +1,48 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   announcementSteps,
   suggestedStates,
   announcementPrices,
   announcementTypes,
-  Tag,
-  AppliedTag,
   BidAnnouncementContext,
   fetcher
 } from '@/lib';
 import { ProductsTable } from '.';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import useSWR from 'swr';
-import { useFavoriteList } from './context/UseFavoriteListContext';
 import useAppStore from '@/app/store';
+import { useLayoutData } from './LayoutContextProvider';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Container({ offset }: { offset: number }) {
   const [isVisibleMemoContext, setIsVisibleMemoContext] = useState(true);
 
-  const { setTags, setAppliedTags, setBidAnnouncementsContext } = useFavoriteList();
-
-  // TODO: react-query로 스펙 통일 필요
-  const { data, error } = useSWR(
-    ['/bidAnnouncementContext.json', '/tags.json', '/appliedTags.json'],
-    ([url1, url2, url3]) =>
-      Promise.all([
-        fetcher<BidAnnouncementContext>(url1),
-        fetcher<Tag[]>(url2),
-        fetcher<AppliedTag[]>(url3)
-      ])
-  );
+  const {
+    data: [data]
+  } = useLayoutData();
 
   const currentFavorites = useAppStore((state) => state.values);
 
-  useEffect(() => {
-    if (data) {
-      const [bidAnnouncementContext, myTags, appliedTags] = data;
-      const favoriteProducts = bidAnnouncementContext.products.filter(({ id }) =>
-        currentFavorites.includes(id)
-      );
+  const { data: bidAnnouncementContext } = useQuery({
+    queryKey: ['bidAnnouncementContext'],
+    queryFn: async () => {
+      const resp = await fetcher<BidAnnouncementContext>('/bidAnnouncementContext.json');
+      const favoriteProducts = resp.products.filter(({ id }) => currentFavorites.includes(id));
 
-      setBidAnnouncementsContext({
+      return {
         products: favoriteProducts,
         newOffset: offset,
         totalProducts: favoriteProducts.length
-      });
-      setTags(myTags);
-      setAppliedTags(appliedTags);
+      };
+    },
+    initialData: {
+      products: data.products.filter(({ id }) => currentFavorites.includes(id)),
+      newOffset: offset,
+      totalProducts: data.products.filter(({ id }) => currentFavorites.includes(id)).length
     }
-  }, [currentFavorites, data, setBidAnnouncementsContext, setTags, setAppliedTags, offset]);
-
-  if (error) {
-    return <div>Error loading data</div>;
-  }
-
-  if (!data) {
-    return <div>Loading...</div>;
-  }
+  });
 
   return (
     <>
@@ -117,7 +100,10 @@ export default function Container({ offset }: { offset: number }) {
         </div>
       </Card>
 
-      <ProductsTable isVisibleMemoContext={isVisibleMemoContext} />
+      <ProductsTable
+        isVisibleMemoContext={isVisibleMemoContext}
+        bidAnnouncementContext={bidAnnouncementContext}
+      />
     </>
   );
 }

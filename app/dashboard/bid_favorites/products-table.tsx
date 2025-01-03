@@ -1,30 +1,25 @@
 'use client';
 
-import { AnnouncementContext, BidAnnouncementContext, fetcher } from '@/lib';
+import { AnnouncementContext, BidAnnouncementContext } from '@/lib';
 import { ArrowUpDown } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Product } from '.';
 import { ProductPagination } from '../product-pagination';
 import useAppStore from '@/app/store';
-import { useLayoutData } from './LayoutContextProvider';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface SortConfig {
   key: keyof AnnouncementContext | null;
   direction: 'ascending' | 'descending' | null;
 }
 
-export function ProductsTable({ isVisibleMemoContext }: { isVisibleMemoContext: boolean }) {
-  const {
-    data: [data]
-  } = useLayoutData();
-
-  const { data: bidAnnouncementContext } = useQuery({
-    queryKey: ['bidAnnouncementContext'],
-    queryFn: () => fetcher<BidAnnouncementContext>('/bidAnnouncementContext.json'),
-    initialData: data
-  });
-
+export function ProductsTable({
+  isVisibleMemoContext,
+  bidAnnouncementContext
+}: {
+  isVisibleMemoContext: boolean;
+  bidAnnouncementContext: BidAnnouncementContext;
+}) {
   const queryClient = useQueryClient();
 
   const {
