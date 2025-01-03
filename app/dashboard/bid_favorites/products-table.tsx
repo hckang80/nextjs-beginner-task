@@ -73,10 +73,11 @@ export function ProductsTable({
   const deleteFavorite = (id: number) => {
     updateFavorite(id);
 
-    queryClient.setQueryData(['bidAnnouncementContext'], () => {
+    queryClient.setQueryData<BidAnnouncementContext>(['bidAnnouncementContext'], (oldData) => {
+      if (!oldData) return;
+
       return {
-        newOffset: offset,
-        totalProducts,
+        ...oldData,
         products: products.filter((item) => item.id !== id)
       };
     });
