@@ -2,7 +2,7 @@
 
 import { AnnouncementContext, BidAnnouncementContext } from '@/lib';
 import { ArrowUpDown } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Product } from '.';
 import { ProductPagination } from '../product-pagination';
 import useAppStore from '@/app/store';
@@ -56,18 +56,6 @@ export function ProductsTable({
     setSortConfig({ key, direction });
   };
 
-  const tableRef = useRef<HTMLTableElement | null>(null);
-
-  const focusDataTable = () => {
-    tableRef?.current?.scrollIntoView();
-  };
-
-  useEffect(() => {
-    const isPaginationTouch = new URLSearchParams(location.search).has('offset');
-    if (!isPaginationTouch) return;
-    focusDataTable();
-  }, [offset]);
-
   const updateFavorite = useAppStore((state) => state.save);
 
   const deleteFavorite = (id: number) => {
@@ -85,7 +73,7 @@ export function ProductsTable({
 
   return (
     <>
-      <table className="data-table" ref={tableRef}>
+      <table className="data-table">
         <colgroup>
           <col />
           <col />
