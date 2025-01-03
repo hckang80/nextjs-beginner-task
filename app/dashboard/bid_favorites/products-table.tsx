@@ -22,13 +22,9 @@ export function ProductsTable({
 }) {
   const queryClient = useQueryClient();
 
-  const {
-    products,
-    newOffset: offset,
-    totalProducts
-  } = bidAnnouncementContext || { products: [], newOffset: 0, totalProducts: 0 };
+  const { products, newOffset: offset, totalProducts } = bidAnnouncementContext;
 
-  const LIST_PER_PAGE = 10;
+  const LIST_PER_PAGE = 5;
 
   const [sortConfig, setSortConfig] = useState<SortConfig>({
     key: null,

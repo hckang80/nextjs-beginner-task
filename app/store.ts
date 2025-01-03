@@ -11,7 +11,7 @@ type Action = {
 };
 
 const useAppStore = create<State & Action>((set) => ({
-  values: [1, 3, 5], // Mockup Data
+  values: [1, 2, 3, 4, 5, 6], // Mockup Data
   save: (id: number) =>
     set(({ values }) => ({
       values: values.includes(id)
