@@ -1,7 +1,6 @@
 import { getOrigin, fetcher, BidAnnouncementContext, Tag, AppliedTag } from '@/lib';
 import { QueryClient } from '@tanstack/react-query';
 import { LayoutDataProvider } from './LayoutContextProvider';
-import { FavoriteListProvider } from './context/UseFavoriteListContext';
 
 export default async function BidFavoriteLayout({
   children
@@ -26,9 +25,5 @@ export default async function BidFavoriteLayout({
     })
   ]);
 
-  return (
-    <LayoutDataProvider data={{ data }}>
-      <FavoriteListProvider>{children}</FavoriteListProvider>
-    </LayoutDataProvider>
-  );
+  return <LayoutDataProvider data={{ data }}>{children}</LayoutDataProvider>;
 }
