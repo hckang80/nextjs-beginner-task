@@ -27,6 +27,7 @@ export default function Container({ offset }: { offset: number }) {
   const LIST_PER_PAGE = 5;
 
   const currentFavorites = useAppStore((state) => state.values);
+  const totalProducts = currentFavorites.length;
 
   const { data: bidAnnouncementContext } = useQuery({
     queryKey: ['bidAnnouncementContext'],
@@ -37,7 +38,7 @@ export default function Container({ offset }: { offset: number }) {
       return {
         products: favoriteProducts,
         newOffset: offset,
-        totalProducts: favoriteProducts.length
+        totalProducts
       };
     },
     initialData: {
@@ -46,8 +47,6 @@ export default function Container({ offset }: { offset: number }) {
       totalProducts: data.products.filter(({ id }) => currentFavorites.includes(id)).length
     }
   });
-
-  const { totalProducts } = bidAnnouncementContext;
 
   return (
     <>
