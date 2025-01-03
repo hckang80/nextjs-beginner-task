@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast';
 import {
   AnnouncementContext,
   AppliedTag,
+  fetcher,
   generatedId,
   suggestedStates,
   Tag,
@@ -33,9 +34,10 @@ import { Pencil, Plus, Trash2, X } from 'lucide-react';
 import React, { ReactNode, useState } from 'react';
 import Link from 'next/link';
 import { Input } from '@/components/ui/input';
-import { useFavoriteList } from './context/UseFavoriteListContext';
 import { AlertDialogDescription } from '@radix-ui/react-alert-dialog';
 import { Badge } from '@/components/ui/badge';
+import { useLayoutData } from './LayoutContextProvider';
+import { useQueries, useQueryClient } from '@tanstack/react-query';
 
 export function Product({
   isVisibleMemoContext,
@@ -87,7 +89,23 @@ export function Product({
     });
   };
 
-  const { tags, appliedTags } = useFavoriteList();
+  const { data } = useLayoutData();
+
+  const [{ data: tags }, { data: appliedTags }] = useQueries({
+    queries: [
+      {
+        queryKey: ['tags'],
+        queryFn: () => fetcher<Tag[]>('/tags.json'),
+        initialData: data[1]
+      },
+      {
+        queryKey: ['appliedTags'],
+        queryFn: () => fetcher<AppliedTag[]>('/appliedTags.json'),
+        initialData: data[2]
+      }
+    ]
+  });
+
   const tagsByBId = appliedTags.find((item) => item.id === id);
   const generatedTags = tags.filter((item) => tagsByBId?.tags.includes(item.id));
 
@@ -188,12 +206,28 @@ export function TagEditButton({
 export function TagEditor({ bid, generatedTags }: { bid: number; generatedTags: Tag[] }) {
   const { toast } = useToast();
   const [tag, inputTag] = useState('');
-  const { tags, setTags, appliedTags, setAppliedTags } = useFavoriteList();
+  const queryClient = useQueryClient();
+
+  const { data } = useLayoutData();
+
+  const [{ data: tags }, { data: appliedTags }] = useQueries({
+    queries: [
+      {
+        queryKey: ['tags'],
+        queryFn: () => fetcher<Tag[]>('/tags.json'),
+        initialData: data[1]
+      },
+      {
+        queryKey: ['appliedTags'],
+        queryFn: () => fetcher<AppliedTag[]>('/appliedTags.json'),
+        initialData: data[2]
+      }
+    ]
+  });
 
   const resetTags = (bid: number) => {
-    setAppliedTags((appliedTags) =>
-      appliedTags.map((item) => (item.id === bid ? { ...item, tags: [] } : item))
-    );
+    const result = appliedTags.map((item) => (item.id === bid ? { ...item, tags: [] } : item));
+    queryClient.setQueryData(['appliedTags'], () => result);
   };
 
   const addTag = (event: React.FormEvent<HTMLFormElement>) => {
@@ -211,24 +245,24 @@ export function TagEditor({ bid, generatedTags }: { bid: number; generatedTags: 
         bgColor: 'rgb(166, 161, 219)'
       }
     ];
+    queryClient.setQueryData(['tags'], () => result);
 
-    setTags(result);
     inputTag('');
   };
 
   const applyTag = (bid: number, id: number) => {
     const result = appliedTags.map((item) =>
-      item.id === bid ? { ...item, tags: [...item.tags, id] } : item
+      item.id === bid ? { ...item, tags: [...new Set([...item.tags, id])] } : item
     );
-    setAppliedTags(result);
+    queryClient.setQueryData(['appliedTags'], () => [...result]);
   };
 
   const deleteAppliedTags = (bid: number, id: number) => {
-    const result = (appliedTags: AppliedTag[]) =>
-      appliedTags.map((item) =>
+    queryClient.setQueryData<AppliedTag[]>(['appliedTags'], (appliedTags) =>
+      appliedTags?.map((item) =>
         item.id === bid ? { ...item, tags: item.tags.filter((tag) => tag !== id) } : item
-      );
-    setAppliedTags(result);
+      )
+    );
   };
 
   const [isOpenEditor, setIsOpenEditor] = useState(false);
@@ -264,14 +298,14 @@ export function TagEditor({ bid, generatedTags }: { bid: number; generatedTags: 
         ? { ...selectedTag, bgColor: event.currentTarget.value }
         : tag;
     });
-    setTags(result);
+    queryClient.setQueryData(['tags'], () => result);
   };
 
   const saveTagName = () => {
     const result = tags.map((tag) => {
       return tag.id === selectedTag.id ? selectedTag : tag;
     });
-    setTags(result);
+    queryClient.setQueryData(['tags'], () => result);
 
     toast({
       title: '태그 이름이 수정되었습니다.'
@@ -280,7 +314,7 @@ export function TagEditor({ bid, generatedTags }: { bid: number; generatedTags: 
 
   const deleteTag = (id: number) => {
     const result = tags.filter((tag) => tag.id !== id);
-    setTags(result);
+    queryClient.setQueryData(['tags'], () => result);
     setIsOpenEditor(false);
     toast({
       title: '태그가 삭제되었습니다.'
