@@ -44,6 +44,7 @@ export function AnnouncementDateRow({
                     <Input
                       readOnly={!isFreeInputChecked(announcementDate)}
                       className="w-[140px]"
+                      title="시작 공고일"
                       type="date"
                       {...field}
                     />
@@ -62,6 +63,7 @@ export function AnnouncementDateRow({
                     <Input
                       readOnly={!isFreeInputChecked(announcementDate)}
                       className="w-[140px]"
+                      title="마감 공고일"
                       type="date"
                       {...field}
                     />

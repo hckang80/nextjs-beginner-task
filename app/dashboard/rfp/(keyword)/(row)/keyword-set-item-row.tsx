@@ -141,7 +141,7 @@ export function KeywordSetSelect({
         name={`keywordSets.${target}.type`}
         render={({ field }) => (
           <FormItem>
-            <select value={field.value} onChange={field.onChange}>
+            <select title="검색 항목 선택" value={field.value} onChange={field.onChange}>
               <option value="title">제목</option>
               <option value="text">본문</option>
             </select>
@@ -154,7 +154,7 @@ export function KeywordSetSelect({
         name={`keywordSets.${target}.operation`}
         render={({ field }) => (
           <FormItem>
-            <select value={field.value} onChange={field.onChange}>
+            <select title="검색 방식 선택" value={field.value} onChange={field.onChange}>
               <option value="or">OR</option>
               <option value="and">AND</option>
             </select>

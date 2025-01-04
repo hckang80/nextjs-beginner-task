@@ -16,7 +16,7 @@ export function KeywordSetHeadRow({
       <th>키워드세트</th>
       <td colSpan={5}>
         <div className="flex items-center gap-2">
-          <select className="w-[160px]">
+          <select title="키워드 그룹 선택" className="w-[160px]">
             <option value="">그룹을 선택하세요</option>
             {keywordSets
               ?.filter((item) => item.isPrivate === isPrivate)

@@ -14,7 +14,7 @@ export function ToggleController({
   return (
     <div className={cn('flex items-center gap-1', className)}>
       <span className="shrink-0">공용</span>
-      <Switch checked={data} onCheckedChange={handler} />
+      <Switch title="공용/개인 토글" checked={data} onCheckedChange={handler} />
       <span className="shrink-0">개인</span>
     </div>
   );

@@ -27,6 +27,7 @@ export function BusinessPriceRow({
                   <FormControl>
                     <Input
                       className="w-[140px]"
+                      title="최소 사업 금액"
                       inputMode="numeric"
                       {...field}
                       onChange={(event) =>
@@ -47,6 +48,7 @@ export function BusinessPriceRow({
                   <FormControl>
                     <Input
                       className="w-[140px]"
+                      title="최대 사업 금액"
                       inputMode="numeric"
                       {...field}
                       onChange={(event) =>
