@@ -38,7 +38,7 @@ export function BoardContainer({ product }: { product: AnnouncementContext }) {
   return (
     <tr className="cursor-pointer" onClick={() => handleRowClick(product)}>
       <td>
-        <button onClick={saveFavorite(id)} className="p-[10px]">
+        <button onClick={saveFavorite(id)} className="p-[10px]" title="관심공고 추가/삭제">
           <Star fill={getStateColor(id)} strokeWidth={0} />
         </button>
       </td>

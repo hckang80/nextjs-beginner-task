@@ -92,7 +92,7 @@ export function SettingButton({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost">
+        <Button variant="ghost" title="키워드세트 관리">
           <Settings />
         </Button>
       </DialogTrigger>

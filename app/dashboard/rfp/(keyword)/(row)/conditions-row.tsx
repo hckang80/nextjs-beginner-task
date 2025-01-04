@@ -51,6 +51,7 @@ export function ConditionsRow({
                         <FormControl>
                           <Checkbox
                             checked={field.value.includes(label)}
+                            title={label}
                             onCheckedChange={(checked) => {
                               return checked
                                 ? field.onChange([...field.value, label])

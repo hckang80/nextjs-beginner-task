@@ -88,6 +88,7 @@ export function KeywordSetItemRow({
                   />
                   <Button
                     type="button"
+                    title="검색 키워드 추가"
                     onClick={() =>
                       addTag(`keywordSets.${key}`, form.getValues(`keywordSets.${key}.text`))
                     }
