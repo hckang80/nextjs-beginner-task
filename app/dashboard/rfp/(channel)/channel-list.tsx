@@ -37,7 +37,7 @@ export function ChannelList({
       </tr>
       <tr>
         <td colSpan={2}>
-          <ul className="grid gap-[5px] grid-cols-[repeat(auto-fit,_minmax(140px,_1fr))] auto-rows-fr">
+          <ul className="grid gap-[5px] grid-cols-[repeat(auto-fit,_minmax(140px,160px))] auto-rows-fr text-left">
             {filteredData
               .filter((item) => item.type === type)
               .map((item) => (
