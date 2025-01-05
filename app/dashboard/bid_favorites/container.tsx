@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   announcementSteps,
   suggestedStates,
@@ -29,25 +29,25 @@ export default function Container({ offset }: { offset: number }) {
   const currentFavorites = useAppStore((state) => state.values);
   const totalProducts = currentFavorites.length;
 
-  const { data: bidAnnouncementContext } = useQuery({
+  const { data: queryData } = useQuery({
     queryKey: ['bidAnnouncementContext'],
-    queryFn: async () => {
-      const resp = await fetcher<BidAnnouncementContext>('/bidAnnouncementContext.json');
-      const favoriteProducts = resp.products.filter(({ id }) => currentFavorites.includes(id));
-
-      return {
-        products: favoriteProducts,
-        newOffset: offset,
-        totalProducts
-      };
-    },
+    queryFn: async () => fetcher<BidAnnouncementContext>('/bidAnnouncementContext.json'),
     initialData: {
-      products: data.products.filter(({ id }) => currentFavorites.includes(id)),
+      products: data.products,
       newOffset: offset,
-      totalProducts: data.products.filter(({ id }) => currentFavorites.includes(id)).length
+      totalProducts: data.products.length
     }
   });
 
+  const bidAnnouncementContext = useMemo(() => {
+    const filteredData = queryData.products.filter(({ id }) => currentFavorites.includes(id));
+    return {
+      ...queryData,
+      products: filteredData,
+      newOffset: offset,
+      totalProducts: filteredData.length
+    };
+  }, [queryData, currentFavorites, offset]);
   return (
     <>
       <header className="mb-[15px]">
