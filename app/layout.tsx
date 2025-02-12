@@ -3,9 +3,9 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import Providers from './providers';
 import Image from 'next/image';
-import Aside from './aside';
-import Nav from './nav';
-import Translation from './translation';
+import Aside from './[locale]/aside';
+import Nav from './[locale]/nav';
+import Translation from './[locale]/translation';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
