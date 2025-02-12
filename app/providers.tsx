@@ -2,6 +2,8 @@
 
 import { isServer, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { I18nextProvider } from 'react-i18next';
+import i18next from './i18n';
 import { ReactNode } from 'react';
 
 function makeQueryClient() {
@@ -30,7 +32,7 @@ export default function Providers({ children }: { children: ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {children}
+      <I18nextProvider i18n={i18next}>{children}</I18nextProvider>
       <ReactQueryDevtools />
     </QueryClientProvider>
   );
