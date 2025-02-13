@@ -23,7 +23,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body className="antialiased">
-        <Providers>
+        <Providers locale={locale}>
           <div className="wrap">
             <header className="global-header">
               <h1>

@@ -4,7 +4,7 @@ import { isServer, QueryClient, QueryClientProvider } from '@tanstack/react-quer
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { I18nextProvider } from 'react-i18next';
 import i18next from './i18n';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 function makeQueryClient() {
   return new QueryClient({
@@ -27,8 +27,14 @@ function getQueryClient() {
   }
 }
 
-export default function Providers({ children }: { children: ReactNode }) {
+export default function Providers({ children, locale }: { children: ReactNode; locale: string }) {
   const queryClient = getQueryClient();
+
+  useEffect(() => {
+    if (i18next.language !== locale) {
+      i18next.changeLanguage(locale);
+    }
+  }, [locale]);
 
   return (
     <QueryClientProvider client={queryClient}>
