@@ -1,8 +1,8 @@
 import useAppStore from '@/app/store';
 import { useToast } from '@/hooks/use-toast';
+import { useRouter } from '@/i18n/routing';
 import { AnnouncementContext, toReadableDate } from '@/lib';
 import { Star } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 
 export function BoardContainer({ product }: { product: AnnouncementContext }) {
   const { id, name, price, type, source, createdAt, endedAt } = product;

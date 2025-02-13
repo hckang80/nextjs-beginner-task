@@ -32,7 +32,7 @@ import {
 } from '@/components/ui/dialog';
 import { Pencil, Plus, Trash2, X } from 'lucide-react';
 import React, { ReactNode, useState } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { Input } from '@/components/ui/input';
 import { AlertDialogDescription } from '@radix-ui/react-alert-dialog';
 import { Badge } from '@/components/ui/badge';
