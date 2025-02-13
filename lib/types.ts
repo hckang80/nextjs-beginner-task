@@ -117,3 +117,6 @@ export interface AppliedTag {
   id: number;
   tags: number[];
 }
+
+export const locales = ['en', 'ko'] as const;
+export type Locales = (typeof locales)[number];

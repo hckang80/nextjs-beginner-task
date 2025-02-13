@@ -9,6 +9,7 @@ import Image from 'next/image';
 import Aside from './aside';
 import Nav from './nav';
 import Languages from './locales';
+import type { Locales } from '@/lib';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -20,11 +21,11 @@ export default async function LocaleLayout({
   params
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: Locales }>;
 }>) {
   const { locale } = await params;
 
-  if (!routing.locales.includes(locale as any)) {
+  if (!routing.locales.includes(locale)) {
     notFound();
   }
 
