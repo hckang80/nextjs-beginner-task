@@ -1,13 +1,12 @@
 'use client';
 
-import { usePathname, useParams } from 'next/navigation';
+import { usePathname } from '@/i18n/routing';
 
 function useNavigation() {
   const pathname = usePathname();
-  const { locale } = useParams();
 
   const isActive = (path: string) => {
-    return pathname.startsWith(`/${locale}${path}`);
+    return pathname.startsWith(path);
   };
 
   return {
