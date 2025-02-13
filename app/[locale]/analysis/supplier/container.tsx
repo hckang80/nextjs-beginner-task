@@ -5,6 +5,7 @@ import SupplierChart from './chart';
 import { useLayoutData } from './LayoutContextProvider';
 import { useQuery } from '@tanstack/react-query';
 import { Card } from '@/components/ui/card';
+import { useTranslations } from 'next-intl';
 
 export default function SupplierContainer() {
   const { data } = useLayoutData();
@@ -15,10 +16,12 @@ export default function SupplierContainer() {
     initialData: data
   });
 
+  const t = useTranslations('Navigation');
+
   return (
     <>
       <header className="flex items-center justify-between mb-[15px]">
-        <h2 className="text-[18px] font-bold text-indigo-600">공급 기업</h2>
+        <h2 className="text-[18px] font-bold text-indigo-600">{t('vendors')}</h2>
       </header>
 
       <Card className="p-[20px] grid gap-[10px]">

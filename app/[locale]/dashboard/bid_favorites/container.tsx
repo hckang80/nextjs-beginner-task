@@ -16,6 +16,7 @@ import useAppStore from '@/app/store';
 import { useLayoutData } from './LayoutContextProvider';
 import { useQuery } from '@tanstack/react-query';
 import { ProductPagination } from '../product-pagination';
+import { useTranslations } from 'next-intl';
 
 export default function Container({ offset }: { offset: number }) {
   const [isVisibleMemoContext, setIsVisibleMemoContext] = useState(true);
@@ -23,6 +24,8 @@ export default function Container({ offset }: { offset: number }) {
   const {
     data: [data]
   } = useLayoutData();
+
+  const t = useTranslations('Navigation');
 
   const LIST_PER_PAGE = 5;
 
@@ -51,7 +54,7 @@ export default function Container({ offset }: { offset: number }) {
   return (
     <>
       <header className="mb-[15px]">
-        <h2 className="text-[18px] font-bold text-indigo-600">관심 공고</h2>
+        <h2 className="text-[18px] font-bold text-indigo-600">{t('favoriteNotices')}</h2>
       </header>
 
       <Card className="rounded-[2px] p-[10px]">

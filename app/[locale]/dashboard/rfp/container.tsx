@@ -6,11 +6,14 @@ import { ProductPagination } from '../product-pagination';
 import { useLayoutData } from './LayoutContextProvider';
 import { useQuery } from '@tanstack/react-query';
 import { fetcher, KeywordSet } from '@/lib';
+import { useTranslations } from 'next-intl';
 
 export default function Container({ offset }: { offset: number }) {
   const {
     data: [{ products, totalProducts }, keywordSets]
   } = useLayoutData();
+
+  const t = useTranslations('Navigation');
 
   const LIST_PER_PAGE = 5;
 
@@ -23,7 +26,7 @@ export default function Container({ offset }: { offset: number }) {
   return (
     <div>
       <header className="flex items-center justify-between mb-[15px]">
-        <h2 className="text-[18px] font-bold text-indigo-600">입찰 공고</h2>
+        <h2 className="text-[18px] font-bold text-indigo-600">{t('domesticBidding')}</h2>
       </header>
 
       <div className="grid gap-[15px]">
