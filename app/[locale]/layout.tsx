@@ -31,7 +31,7 @@ export default async function LocaleLayout({
 
   return (
     <>
-      <Providers locale={locale}>
+      <Providers>
         <NextIntlClientProvider messages={messages}>
           <div className="wrap">
             <header className="global-header">
