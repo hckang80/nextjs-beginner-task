@@ -10,5 +10,6 @@ Next.js(React.js)를 이용해 클론 코딩을 진행해봤습니다.
 - Form 관리: React-Hook-Form, Zod
 - UI Kit/Styling: shadcn/ui, Tailwind CSS
 - 패키지 매니저: PNPM
+- 국제화(i18n): next-intl
 
 [https://nextjs-beginner-task.vercel.app](https://nextjs-beginner-task.vercel.app)
