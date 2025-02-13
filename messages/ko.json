@@ -1,5 +1,9 @@
 {
-  "HomePage": {
-    "title": "헬로 월드"
+  "Navigation": {
+    "bidSearch": "입찰검색",
+    "domesticBidding": "국내입찰",
+    "favoriteNotices": "관심공고",
+    "industryAnalysis": "산업분석",
+    "vendors": "공급기업"
   }
 }

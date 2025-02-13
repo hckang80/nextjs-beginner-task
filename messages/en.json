@@ -1,5 +1,9 @@
 {
-  "HomePage": {
-    "title": "Hello world!"
+  "Navigation": {
+    "bidSearch": "Bid Search",
+    "domesticBidding": "Domestic Bidding",
+    "favoriteNotices": "Favorite Notices",
+    "industryAnalysis": "Industry Analysis",
+    "vendors": "Vendors"
   }
 }
