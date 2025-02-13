@@ -8,7 +8,7 @@ import { routing } from '@/i18n/routing';
 import Image from 'next/image';
 import Aside from './aside';
 import Nav from './nav';
-import Locales from './locales';
+import Languages from './locales';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -46,7 +46,7 @@ export default async function LocaleLayout({
                   priority
                 />
               </h1>
-              <Locales />
+              <Languages />
             </header>
             <div className="global-inner">
               <Aside>
