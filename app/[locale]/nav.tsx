@@ -3,10 +3,9 @@
 import { useNavigation } from '@/hooks/use-navigation';
 import { cn } from '@/lib';
 import { ChevronDown } from 'lucide-react';
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
 import { ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/routing';
 
 type Nav = {
   name: string;
@@ -16,7 +15,6 @@ type Nav = {
 
 export default function DashboardNav() {
   const navigation = useNavigation();
-  const { locale } = useParams();
   const t = useTranslations('Navigation');
 
   const mainNav: Nav[] = [
@@ -40,10 +38,7 @@ export default function DashboardNav() {
       {mainNav.map(({ name, path: depth1, items }, i) => (
         <details name="nav" key={depth1} open={!i}>
           <summary
-            className={cn(
-              'global-main-item',
-              navigation.isActive(`/${locale}${depth1}`) ? 'is-active' : ''
-            )}
+            className={cn('global-main-item', navigation.isActive(depth1) ? 'is-active' : '')}
           >
             {name}
             {items && <ChevronDown size={16} />}
@@ -52,10 +47,7 @@ export default function DashboardNav() {
             <List>
               {items.map(({ name, path: depth2 }) => (
                 <List.Item key={depth2}>
-                  <Link
-                    href={`/${locale}${depth2}`}
-                    className={navigation.isActive(`/${locale}${depth2}`) ? 'is-active' : ''}
-                  >
+                  <Link href={depth2} className={navigation.isActive(depth2) ? 'is-active' : ''}>
                     {name}
                   </Link>
                 </List.Item>
