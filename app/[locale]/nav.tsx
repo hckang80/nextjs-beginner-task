@@ -6,7 +6,7 @@ import { ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 type Nav = {
   name: string;
@@ -17,21 +17,21 @@ type Nav = {
 export default function DashboardNav() {
   const navigation = useNavigation();
   const { locale } = useParams();
-  const { t } = useTranslation();
+  const t = useTranslations('Navigation');
 
   const mainNav: Nav[] = [
     {
       name: t('bidSearch'),
       path: '/dashboard',
       items: [
-        { name: '국내입찰', path: '/dashboard/rfp' },
-        { name: '관심공고', path: '/dashboard/bid_favorites' }
+        { name: t('domesticBidding'), path: '/dashboard/rfp' },
+        { name: t('favoriteNotices'), path: '/dashboard/bid_favorites' }
       ]
     },
     {
-      name: '산업분석',
+      name: t('industryAnalysis'),
       path: '/analysis',
-      items: [{ name: '공급기업', path: '/analysis/supplier' }]
+      items: [{ name: t('vendors'), path: '/analysis/supplier' }]
     }
   ];
 

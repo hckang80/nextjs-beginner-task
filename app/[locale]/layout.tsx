@@ -1,6 +1,10 @@
 import type { Metadata } from 'next';
 import { Toaster } from '@/components/ui/toaster';
 import Providers from './providers';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
+import { notFound } from 'next/navigation';
+import { routing } from '../../i18n/routing';
 import Image from 'next/image';
 import Aside from './aside';
 import Nav from './nav';
@@ -19,10 +23,16 @@ export default async function LocaleLayout({
 }>) {
   const { locale } = await params;
 
+  if (!routing.locales.includes(locale as any)) {
+    notFound();
+  }
+
+  const messages = await getMessages();
+
   return (
-    <html lang={locale}>
-      <body className="antialiased">
-        <Providers locale={locale}>
+    <>
+      <Providers locale={locale}>
+        <NextIntlClientProvider messages={messages}>
           <div className="wrap">
             <header className="global-header">
               <h1>
@@ -43,9 +53,9 @@ export default async function LocaleLayout({
               <main className="global-main">{children}</main>
             </div>
           </div>
-        </Providers>
-        <Toaster />
-      </body>
-    </html>
+        </NextIntlClientProvider>
+      </Providers>
+      <Toaster />
+    </>
   );
 }
