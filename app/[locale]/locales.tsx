@@ -9,15 +9,14 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import { useParams, useRouter } from 'next/navigation';
-
-const locales = ['en', 'ko'];
+import { locales, type Locales } from '@/lib';
 
 export default function Locales() {
-  const { locale } = useParams<{ locale: string }>();
+  const { locale } = useParams<{ locale: Locales }>();
   const pathname = usePathname();
   const router = useRouter();
 
-  const handleChange = (locale: string) => {
+  const handleChange = (locale: Locales) => {
     const fullPath = `/${locale}${pathname}`;
     console.log({ fullPath });
     router.push(fullPath);
