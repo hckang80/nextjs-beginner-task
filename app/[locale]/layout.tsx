@@ -32,33 +32,35 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <>
-      <Providers>
-        <NextIntlClientProvider messages={messages}>
-          <div className="wrap">
-            <header className="global-header">
-              <h1>
-                <Image
-                  className="dark:invert"
-                  src="/next.svg"
-                  alt="Next.js"
-                  width={150}
-                  height={30}
-                  priority
-                />
-              </h1>
-              <Languages />
-            </header>
-            <div className="global-inner">
-              <Aside>
-                <Nav />
-              </Aside>
-              <main className="global-main">{children}</main>
+    <html lang={locale}>
+      <body className="antialiased">
+        <Providers>
+          <NextIntlClientProvider messages={messages}>
+            <div className="wrap">
+              <header className="global-header">
+                <h1>
+                  <Image
+                    className="dark:invert"
+                    src="/next.svg"
+                    alt="Next.js"
+                    width={150}
+                    height={30}
+                    priority
+                  />
+                </h1>
+                <Languages />
+              </header>
+              <div className="global-inner">
+                <Aside>
+                  <Nav />
+                </Aside>
+                <main className="global-main">{children}</main>
+              </div>
             </div>
-          </div>
-        </NextIntlClientProvider>
-      </Providers>
-      <Toaster />
-    </>
+          </NextIntlClientProvider>
+        </Providers>
+        <Toaster />
+      </body>
+    </html>
   );
 }
