@@ -4,7 +4,6 @@ import Providers from './providers';
 import Image from 'next/image';
 import Aside from './aside';
 import Nav from './nav';
-import Translation from './translation';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -40,7 +39,6 @@ export default async function LocaleLayout({
             <div className="global-inner">
               <Aside>
                 <Nav />
-                <Translation />
               </Aside>
               <main className="global-main">{children}</main>
             </div>
